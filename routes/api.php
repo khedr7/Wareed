@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Api\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group([
+    'prefix' => '/auth',
+], function () {
+    Route::post('/login', [UserAuthController::class, 'login']);
+    Route::post('/generate-otp', [UserAuthController::class, 'generateOTP']);
+    Route::post('/verify-otp', [UserAuthController::class, 'verifyOTP']);
+    Route::group([], function () {
+        Route::get('/profile-details', [UserAuthController::class, 'getProfileDetails']);
+        Route::post('/logout', [UserAuthController::class, 'logout']);
+        Route::post('/change-password', [UserAuthController::class, 'changePassword']);
+    });
+});
 Route::group([
     'prefix' => '/users',
     'controller' => UserController::class,

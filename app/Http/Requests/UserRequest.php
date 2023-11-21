@@ -28,6 +28,8 @@ class UserRequest extends FormRequest
         return match ($this->route()->getActionMethod()) {
             'store'       =>  $this->getCreateRules(),
             'update'      =>  $this->getUpdateRules(),
+            'generateOTP' =>  $this->generateOTP(),
+            'verifyOTP'   =>    $this->verifyOTP(),
         };
     }
 
@@ -68,6 +70,19 @@ class UserRequest extends FormRequest
             'details'       => '',
             'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'fcm_token'     => ''
+        ];
+    }
+    public function generateOTP()
+    {
+        return [
+            'phone'   => 'required|min:9|max:10|exists:users,phone',
+        ];
+    }
+    public function verifyOTP()
+    {
+        return [
+            'otp'   => 'required',
+            'phone'   => 'required',
         ];
     }
 
