@@ -17,6 +17,7 @@ return [
     'warning'                       => 'هشدار',
     'information'                   => 'اطلاعات',
     'Users'                         => 'المستخدمين',
-    'Countries & Cities'               => 'البلاد والمدن',
+    'Countries & Cities'            => 'البلاد والمدن',
+    'Categories'                    => 'الفئات',
 
 ];

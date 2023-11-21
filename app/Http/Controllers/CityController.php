@@ -23,8 +23,6 @@ class CityController extends Controller
         );
     }
 
-
-
     public function find($cityId)
     {
         $city = $this->cityService->find($cityId);
@@ -47,7 +45,6 @@ class CityController extends Controller
 
         $this->cityService->store($validatedData);
 
-        // return redirect('cities')->with('success', __('messages.dataAddedSuccessfully'));
         return redirect('states/' . $validatedData['state_id'] . '/cities')->with('success', __('messages.dataAddedSuccessfully'));
     }
 
@@ -56,20 +53,16 @@ class CityController extends Controller
         $validatedData = $request->validated();
         $this->cityService->update($validatedData, $cityId);
 
-        return $this->successResponse(
-            null,
-            'dataUpdatedSuccessfully'
-        );
+        return back()->with('success', __('messages.dataUpdatedSuccessfully'));
+
     }
 
     public function delete($cityId)
     {
         $this->cityService->delete($cityId);
 
-        return $this->successResponse(
-            null,
-            'dataDeletedSuccessfully'
-        );
+        return back()->with('success', __('messages.dataAddedSuccessfully'));
+
     }
 
     public function bulkDelete(Request $request)
@@ -83,7 +76,7 @@ class CityController extends Controller
         $this->cityService->bulkDelete($request->checked);
 
 
-        return back()->with('success',  __('messages.Selected Announcement has been deleted.'));
+        return back()->with('success',  __('messages.dataAddedSuccessfully'));
     }
 
 }

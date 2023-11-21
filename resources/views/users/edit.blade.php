@@ -29,20 +29,20 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-									<label>{{ __('Name') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Name') }} <sup style="color: red">*</sup></label>
 									<input required type="text" name="name"
-										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}"
-										value="{{ old('name', $user->name) }}">
+										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Name') }}" value="{{ old('name', $user->name) }}">
 									@include('alerts.feedback', ['field' => 'name'])
 								</div>
 							</div>
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-									<label>{{ __('Email address') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Email') }} <sup style="color: red">*</sup></label>
 									<input required type="email" name="email"
-										class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email address') }}"
-										value="{{ old('email', $user->email) }}">
+										class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Email') }}" value="{{ old('email', $user->email) }}">
 									@include('alerts.feedback', ['field' => 'email'])
 								</div>
 							</div>
@@ -51,19 +51,20 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
-									<label>{{ __('Phone') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Phone') }} <sup style="color: red">*</sup></label>
 									<input required type="text" name="phone"
-										class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}"
-										pattern="[0-9]{9,10}" value="{{ old('phone', $user->phone) }}">
+										class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Phone') }}" pattern="[0-9]{9,10}"
+										value="{{ old('phone', $user->phone) }}">
 									@include('alerts.feedback', ['field' => 'phone'])
 								</div>
 							</div>
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-									<label>{{ __('password') }}</label>
+									<label>{{ __('adminstaticword.Password') }}</label>
 									<input type="text" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-										placeholder="{{ __('password') }}" value="{{ old('password') }}">
+										placeholder="{{ __('adminstaticword.Password') }}" value="{{ old('password') }}">
 									@include('alerts.feedback', ['field' => 'password'])
 									<small class="form-text text-muted">
 										Your password must be at least 6 characters long and contain a mix of letters, numbers, and special characters.
@@ -76,7 +77,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }} form-group">
-									<label>{{ __('City') }}</label>
+									<label>{{ __('adminstaticword.City') }}</label>
 									<select name="city_id" id="city_id"
 										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2">
 										<option selected disabled value="none">{{ __('select') }}</option>
@@ -93,7 +94,7 @@
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
-									<label>{{ __('Role') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
 									<select required name="role" id="role"
 										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}">
 										<option selected disabled value="none">{{ __('select') }}</option>
@@ -110,9 +111,9 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
-									<label>{{ __('address') }}</label>
+									<label>{{ __('adminstaticword.Address') }}</label>
 									<input type="text" name="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
-										placeholder="{{ __('address') }}" value="{{ old('address', $user->address) }}">
+										placeholder="{{ __('adminstaticword.Address') }}" value="{{ old('address', $user->address) }}">
 									@include('alerts.feedback', ['field' => 'address'])
 								</div>
 							</div>
@@ -142,7 +143,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('birthday') ? ' has-danger' : '' }}">
-									<label>{{ __('birth date') }}</label>
+									<label>{{ __('adminstaticword.DateofBirth') }}</label>
 									<input type="date" name="birthday"
 										class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}"
 										value="{{ old('birthday', $user->birthday ? $user->birthday->format('Y-m-d') : '') }}"
@@ -153,13 +154,13 @@
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
-									<label>{{ __('Gender') }} <sup style="color: red">*</sup></label> <br>
+									<label>{{ __('adminstaticword.Gender') }}<sup style="color: red">*</sup></label> <br>
 
 									<div class="form-check form-check-radio form-check-inline">
 										<label class="form-check-label">
 											<input required class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
 												{{ $user->gender == 'male' ? 'checked' : '' }}>
-											{{ __('male') }}
+											{{ __('adminstaticword.Male') }}
 											<span class="form-check-sign"></span>
 										</label>
 									</div>
@@ -167,7 +168,7 @@
 										<label class="form-check-label">
 											<input required class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
 												{{ $user->gender == 'female' ? 'checked' : '' }}>
-											{{ __('female') }}
+											{{ __('adminstaticword.Female') }}
 											<span class="form-check-sign"></span>
 										</label>
 									</div>
@@ -179,7 +180,7 @@
 						<div class="row">
 
 							<div class="col-md-6 form-group">
-								<label>{{ __('status') }}</label> <br>
+								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
 										{{ $user->status == '1' ? 'checked' : '' }}>
@@ -188,7 +189,7 @@
 							</div>
 
 							<div class="col-md-6 form-group">
-								<label>{{ __('Residence') }}</label> <br>
+								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="has_residence" type="checkbox" name="has_residence" class="custom-control-input"
 										{{ $user->has_residence == '1' ? 'checked' : '' }}>
@@ -200,7 +201,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
-									<label for="details">{{ __('Details') }}</label>
+									<label for="details">{{ __('adminstaticword.Details') }}</label>
 									<textarea id="summernote" class="form-control{{ $errors->has('details') ? ' is-invalid' : '' }}" name="details"
 									 rows="10">{{ $user->details }}</textarea>
 									@include('alerts.feedback', ['field' => 'details'])

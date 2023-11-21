@@ -18,4 +18,8 @@ return [
     'information'                   => 'Information',
     'Users'                         => 'Users',
     'Countries & Cities'            => 'Countries & Cities',
+    'Categories'                    => 'Categories',
+    'Services'                      => 'Services',
+    'Payment Methods'               => 'Payment Methods',
+
 ];

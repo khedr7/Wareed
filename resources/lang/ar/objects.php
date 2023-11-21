@@ -8,4 +8,8 @@ return [
     'Part Time'  => 'دوام جزئي',
     'state'      => 'البلد',
     'city'       => 'المدينة',
+    'category'   => 'الفئة',
+    'Service'    => 'الخدمة',
+    'paymentMethod'    => 'وسيلة الدفع',
+
 ];

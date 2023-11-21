@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -64,10 +67,36 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{stateId}/create',  [CityController::class, 'create'])->name('cities.admin.create');
         Route::post('/bulk-delete',      [CityController::class, 'bulkDelete'])->name('cities.admin.bulkDelete');
         Route::post('/',        [CityController::class, 'store'])->name('cities.admin.store');
-        Route::get('/{userId}', [CityController::class, 'show'])->name('cities.admin.show');
-        Route::get('/{userId}/edit',  [CityController::class, 'edit'])->name('cities.admin.edit');
-        Route::post('/{userId}',      [CityController::class, 'update'])->name('cities.admin.update');
-        Route::get('/status/{userId}',  [CityController::class, 'status'])->name('cities.admin.status');
-        Route::delete('/{userId}',      [CityController::class, 'delete'])->name('cities.admin.delete');
+        Route::get('/{cityId}', [CityController::class, 'show'])->name('cities.admin.show');
+        Route::get('/{cityId}/edit',  [CityController::class, 'edit'])->name('cities.admin.edit');
+        Route::post('/{cityId}',      [CityController::class, 'update'])->name('cities.admin.update');
+        Route::get('/status/{cityId}',  [CityController::class, 'status'])->name('cities.admin.status');
+        Route::delete('/{cityId}',      [CityController::class, 'delete'])->name('cities.admin.delete');
+    });
+
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('categories.admin.index');
+        Route::get('/create',   [CategoryController::class, 'create'])->name('categories.admin.create');
+        Route::post('/',        [CategoryController::class, 'store'])->name('categories.admin.store');
+        Route::get('/{categoryId}', [CategoryController::class, 'show'])->name('categories.admin.show');
+        Route::get('/{categoryId}/edit',  [CategoryController::class, 'edit'])->name('categories.admin.edit');
+        Route::post('/{categoryId}',      [CategoryController::class, 'update'])->name('categories.admin.update');
+        Route::delete('/{categoryId}',    [CategoryController::class, 'delete'])->name('categories.admin.delete');
+    });
+
+    Route::group(['prefix' => 'services'], function () {
+        Route::get('/', [ServiceController::class, 'index'])->name('services.admin.index');
+        Route::get('/create',        [ServiceController::class, 'create'])->name('services.admin.create');
+        Route::post('/bulk-delete',  [ServiceController::class, 'bulkDelete'])->name('services.admin.bulkDelete');
+        Route::post('/',        [ServiceController::class, 'store'])->name('services.admin.store');
+        Route::get('/{serviceId}', [ServiceController::class, 'show'])->name('services.admin.show');
+        Route::get('/{serviceId}/edit',  [ServiceController::class, 'edit'])->name('services.admin.edit');
+        Route::post('/{serviceId}',      [ServiceController::class, 'update'])->name('services.admin.update');
+        Route::get('/status/{serviceId}',  [ServiceController::class, 'status'])->name('services.admin.status');
+        Route::delete('/{serviceId}',      [ServiceController::class, 'delete'])->name('services.admin.delete');
+    });
+    Route::group(['prefix' => 'payment-methods'], function () {
+        Route::get('/', [PaymentMethodController::class, 'index'])->name('paymentMethods.admin.index');
+        Route::get('/status/{methodId}',  [PaymentMethodController::class, 'status'])->name('paymentMethods.admin.status');
     });
 });

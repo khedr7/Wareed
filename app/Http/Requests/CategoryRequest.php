@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CityRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,27 +23,29 @@ class CityRequest extends FormRequest
      */
     public function rules()
     {
-
         return match ($this->route()->getActionMethod()) {
             'store'   =>  $this->getCreateRules(),
-            'update'   =>  $this->getUpdateRules(),
+            'update'  =>  $this->getUpdateRules(),
         };
     }
 
     public function getCreateRules()
     {
         return [
-            'name_en'  => 'array',
-            'name_ar'  => 'array',
-            'state_id' => '',
+            'name_en' => 'required|min:2',
+            'name_ar' => 'required|min:2',
+            'image'   => 'required|image|mimes:png,jpg,jpeg',
+
         ];
     }
 
     public function getUpdateRules()
     {
         return [
-            'name_en'  => 'required',
-            'name_ar'  => 'required',
+            'name_en' => 'required|min:2',
+            'name_ar' => 'required|min:2',
+            'image'   => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
+
         ];
     }
 }

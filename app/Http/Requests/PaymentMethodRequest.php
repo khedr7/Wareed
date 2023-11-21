@@ -4,12 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CityRequest extends FormRequest
+class PaymentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
+     * @return bool     
      */
     public function authorize()
     {
@@ -24,26 +24,25 @@ class CityRequest extends FormRequest
     public function rules()
     {
 
-        return match ($this->route()->getActionMethod()) {
-            'store'   =>  $this->getCreateRules(),
+         return match ($this->route()->getActionMethod()) {
+            'create'   =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
         };
     }
 
     public function getCreateRules()
     {
-        return [
-            'name_en'  => 'array',
-            'name_ar'  => 'array',
-            'state_id' => '',
-        ];
+          return [
+            'name' => '',
+            'status' => ''
+          ];
     }
 
     public function getUpdateRules()
     {
-        return [
-            'name_en'  => 'required',
-            'name_ar'  => 'required',
-        ];
+          return [
+            'name' => '',
+            'status' => ''
+          ];
     }
 }

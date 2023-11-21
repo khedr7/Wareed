@@ -28,20 +28,20 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group @error('code') is-invalid @enderror">
-									<label>{{ __('Name') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Name') }}<sup style="color: red">*</sup></label>
 									<input required type="text" name="name"
-										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}"
-										value="{{ old('name') }}">
+										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Name') }}" value="{{ old('name') }}">
 									@include('alerts.feedback', ['field' => 'name'])
 								</div>
 							</div>
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-									<label>{{ __('Email address') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Email') }} <sup style="color: red">*</sup></label>
 									<input required type="email" name="email"
-										class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email address') }}"
-										value="{{ old('email') }}">
+										class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Email') }}" value="{{ old('email') }}">
 									@include('alerts.feedback', ['field' => 'email'])
 								</div>
 							</div>
@@ -50,21 +50,21 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
-									<label>{{ __('Phone') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Phone') }} <sup style="color: red">*</sup></label>
 									<input required type="text" name="phone"
-										class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}"
-										pattern="[0-9]{9,10}" value="{{ old('phone') }}">
+										class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Phone') }}" pattern="[0-9]{9,10}" value="{{ old('phone') }}">
 									@include('alerts.feedback', ['field' => 'phone'])
 								</div>
 							</div>
 
 							<div class="col-md-6">
-								
+
 								<div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-									<label>{{ __('Password') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Password') }} <sup style="color: red">*</sup></label>
 									<input required type="password" name="password"
-										class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}"
-										value="{{ old('password') }}">
+										class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Password') }}" value="{{ old('password') }}">
 									@include('alerts.feedback', ['field' => 'password'])
 
 									<small class="form-text text-muted">
@@ -78,7 +78,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }} form-group">
-									<label>{{ __('City') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.City') }} <sup style="color: red">*</sup></label>
 									<select name="city_id" id="city_id"
 										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2">
 										<option selected disabled value="none">{{ __('select') }}</option>
@@ -95,7 +95,7 @@
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
-									<label>{{ __('Role') }} <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
 									<select required name="role" id="role"
 										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}">
 										<option selected disabled value="none">{{ __('select') }}</option>
@@ -112,9 +112,9 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
-									<label>{{ __('address') }}</label>
+									<label>{{ __('adminstaticword.Address') }}</label>
 									<input type="text" name="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
-										placeholder="{{ __('address') }}" value="{{ old('address') }}">
+										placeholder="{{ __('adminstaticword.Address') }}" value="{{ old('address') }}">
 									@include('alerts.feedback', ['field' => 'address'])
 								</div>
 							</div>
@@ -139,7 +139,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('birthday') ? ' has-danger' : '' }}">
-									<label>{{ __('birth date') }}  <sup style="color: red">*</sup></label>
+									<label>{{ __('adminstaticword.DateofBirth') }} <sup style="color: red">*</sup></label>
 									<input type="date" name="birthday" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}"
 										value="{{ old('birthday') }}" max="{{ date('Y-m-d') }}">
 									@include('alerts.feedback', ['field' => 'birthday'])
@@ -148,13 +148,13 @@
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
-									<label>{{ __('Gender') }} <sup style="color: red">*</sup></label> <br>
+									<label>{{ __('adminstaticword.Gender') }} <sup style="color: red">*</sup></label> <br>
 
 									<div class="form-check form-check-radio form-check-inline">
 										<label class="form-check-label">
 											<input required class="form-check-input" type="radio" name="gender" id="gender-male" value="male"
 												{{ old('gender') == 'male' ? 'checked' : '' }}>
-											{{ __('male') }}
+											{{ __('adminstaticword.Male') }}
 											<span class="form-check-sign"></span>
 										</label>
 									</div>
@@ -162,7 +162,7 @@
 										<label class="form-check-label">
 											<input required class="form-check-input" type="radio" name="gender" id="gender-female" value="female"
 												{{ old('gender') == 'female' ? 'checked' : '' }}>
-											{{ __('female') }}
+											{{ __('adminstaticword.Female') }}
 											<span class="form-check-sign"></span>
 										</label>
 									</div>
@@ -174,7 +174,7 @@
 						<div class="row">
 
 							<div class="col-md-6 form-group">
-								<label>{{ __('status') }}</label> <br>
+								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input">
 									<label class="custom-control-label" for="status"></label>
@@ -182,7 +182,7 @@
 							</div>
 
 							<div class="col-md-6 form-group">
-								<label>{{ __('Residence') }}</label> <br>
+								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input id="has_residence" type="checkbox" value="1" name="has_residence" class="custom-control-input">
 									<label class="custom-control-label" for="has_residence"></label>
@@ -193,14 +193,14 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
-									<label for="details">{{ __('Details') }}</label>
+									<label for="details">{{ __('adminstaticword.Details') }}</label>
 									<textarea id="summernote" class="form-control{{ $errors->has('details') ? ' is-invalid' : '' }}" name="details"
 									 rows="10">{{ old('details') }}</textarea>
 									@include('alerts.feedback', ['field' => 'details'])
 								</div>
 							</div>
 						</div>
-						<div class="card-footer">
+						<div class="">
 							<button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
 						</div>
 					</div>

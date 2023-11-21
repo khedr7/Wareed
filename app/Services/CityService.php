@@ -42,9 +42,14 @@ class CityService
 
     public function update($validatedData, $cityId)
     {
-        $city = $this->findOrFail($cityId);
+        $city = $this->find($cityId);
 
         DB::beginTransaction();
+
+        $validatedData['name'] = [
+            'en' => $validatedData['name_en'],
+            'ar' => $validatedData['name_ar'],
+        ];
 
         $city->update($validatedData);
 

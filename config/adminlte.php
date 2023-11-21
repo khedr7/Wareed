@@ -325,6 +325,11 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
+            'text' => 'change_password',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
             'text' => 'Users',
             'url'  => 'users',
             'icon' => 'fas fa-fw fa-user',
@@ -335,9 +340,19 @@ return [
             'icon' => 'fas fa-fw fa-globe',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Categories',
+            'url'  => 'categories',
+            'icon' => 'fas fa-fw fa-heartbeat',
+        ],
+        [
+            'text' => 'Services',
+            'url'  => 'services',
+            'icon' => 'fas fa-fw fa-medkit',
+        ],
+        [
+            'text' => 'Payment Methods',
+            'url'  => 'payment-methods',
+            'icon' => 'fas fa-fw fa-credit-card',
         ],
         [
             'text'    => 'multilevel',

@@ -17,5 +17,9 @@ return [
     'warning'                       => 'تحذير',
     'information'                   => 'معلومات',
     'Users'                         => 'المستخدمين',
-    'Countries & Cities'               => 'البلاد والمدن',
+    'Countries & Cities'            => 'البلاد والمدن',
+    'Categories'                    => 'الفئات',
+    'Services'                      => 'الخدمات',
+    'Payment Methods'               => 'وسائل الدفع',
+
 ];

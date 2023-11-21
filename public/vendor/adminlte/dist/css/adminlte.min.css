@@ -3650,7 +3650,9 @@ input[type="submit"].btn-block {
 }
 .custom-control-label::before {
     position: absolute;
-    top: 0.25rem;
+    /* top: 0.25rem; */
+    top: -0.25rem;
+
     left: -1.5rem;
     display: block;
     width: 1rem;
@@ -3663,7 +3665,8 @@ input[type="submit"].btn-block {
 }
 .custom-control-label::after {
     position: absolute;
-    top: 0.25rem;
+    /* top: 0.25rem; */
+    top: -0.25rem;
     left: -1.5rem;
     display: block;
     width: 1rem;
@@ -3720,7 +3723,8 @@ input[type="submit"].btn-block {
     border-radius: 2.5rem;
 }
 .custom-switch .custom-control-label::after {
-    top: calc(0.35rem + 2px);
+    /* top: calc(0.35rem + 2px); */
+    top: calc(-0.15rem + 2px);
     left: calc(-2.1rem + 2px);
     width: calc(1.75rem - 4px);
     height: calc(1.75rem - 4px);

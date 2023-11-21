@@ -5,30 +5,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
-class City extends Model
+class Category extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, HasTranslations;
+    use HasFactory, SoftDeletes, HasTranslations, InteractsWithMedia;
 
-    protected $fillable  = ['name', 'state_id'];
+    protected $fillable  = ['name'];
 
     public $translatable = ['name'];
 
     protected $casts = [
-        'name'     => 'string',
-        'state_id' => 'integer',
+        'name' => 'string',
     ];
 
-    public function state()
+    public function services()
     {
-        return $this->belongsTo(State::class, 'state_id', 'id');
+        return $this->hasMany(Service::class);
     }
 
-    public function users()
+    public function getImageAttribute()
     {
-        return $this->hasMany(User::class);
+        if ($this->getMedia('image')->first())
+            return $this->getMedia('image')->first()->getFullUrl();
+        return null;
     }
+
+    protected $appends = ['image'];
 
     public function toArray()
     {
@@ -38,4 +43,5 @@ class City extends Model
         }
         return $attributes;
     }
+
 }

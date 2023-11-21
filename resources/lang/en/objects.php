@@ -8,4 +8,8 @@ return [
     'Part Time'  => 'Part Time',
     'state'      => 'state',
     'city'       => 'city',
+    'category'   => 'category',
+    'Service'    => 'Service',
+    'paymentMethod'    => 'payment Method',
+
 ];

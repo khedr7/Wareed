@@ -15,6 +15,10 @@ class State extends Model
 
     public $translatable = ['name'];
 
+    protected $casts = [
+        'name' => 'string',
+    ];
+
     public function cities()
     {
         return $this->hasMany(City::class);

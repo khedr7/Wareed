@@ -102,6 +102,6 @@ class UserController extends Controller
         $this->userService->bulkDelete($request->checked);
 
 
-        return back()->with('success',  __('messages.Selected Announcement has been deleted.'));
+        return back()->with('success',  __('messages.dataAddedSuccessfully'));
     }
 }

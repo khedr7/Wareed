@@ -14,11 +14,12 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-6">
-							<h3 class="card-title">{{ __('adminstaticword.Cities') }}</h3>
+							<h3 class="card-title">{{ __('adminstaticword.Services') }}</h3>
 						</div>
 						<div class="col-6 text-right">
-							<a href="{{ route('cities.admin.create' , $state->id) }}" class="btn btn-sm btn-primary">
-								{{ __('adminstaticword.AddCity') }}</a>
+							<a href="{{ route('services.admin.create') }}" class="btn btn-sm btn-primary">
+								{{ __('adminstaticword.AddService') }}</a>
+
 							<a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#bulk_delete">
 								{{ __('adminstaticword.Delete selected') }}</a>
 						</div>
@@ -39,44 +40,60 @@
 									</label>
 									<span style="margin-left: 25px;">#</span>
 								</th>
-								<th>{{ __('adminstaticword.Title') }}</th>
-								<th>{{ __('adminstaticword.Country') }}</th>
+								<th>{{ __('adminstaticword.Image') }}</th>
+								<th>{{ __('adminstaticword.Services') }}</th>
+								<th>{{ __('adminstaticword.Category') }}</th>
+								<th>{{ __('adminstaticword.User') }}</th>
+								<th>{{ __('adminstaticword.Status') }}</th>
 								<th>{{ __('adminstaticword.Action') }}</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php $i = 0; ?>
-							@foreach ($state->cities as $city)
+							@foreach ($services as $service)
 								<?php $i++; ?>
 								<tr>
 									<td>
-										<label for='checkbox{{ $city->id }}' class="form-check form-check-label">
+										<label for='checkbox{{ $service->id }}' class="form-check form-check-label">
 											<input type='checkbox' form='bulk_delete_form'
-												class='check form-check-input filled-in material-checkbox-input' name='checked[]' value="{{ $city->id }}"
-												id='checkbox{{ $city->id }}'>
+												class='check form-check-input filled-in material-checkbox-input' name='checked[]'
+												value="{{ $service->id }}" id='checkbox{{ $service->id }}'>
 											<span class="form-check-sign">
 												<span class="check"></span>
 											</span>
 										</label>
 										<span style="margin-left: 25px;"><?php echo $i; ?></span>
 									</td>
+									<td>
+										<img width="75px" height="75px" src="{{ $service->image }}" alt="">
 
-									<td>
-										{{ $city->name }}
 									</td>
 									<td>
-										{{ $state->name }}
+										{{ $service->name }}
 									</td>
 									<td>
-										<button type="button" data-toggle="modal" data-target="#edit-city" data-city-id="{{ $city->id }}"
-											data-name_en="{{ $city->getTranslation('name', 'en', false) }}"
-											data-name_ar="{{ $city->getTranslation('name', 'ar', false) }}" rel="tooltip"
-											class="btn btn-success btn-sm btn-icon edit-city">
+										{{ $service->category->name }}
+									</td>
+									<td>
+										<a href="{{ route('users.admin.edit', $service->user->id) }}">
+											{{ $service->user->name }}</a>
+									</td>
+									<td>
+										<div class="custom-control custom-switch">
+											<input id="status_{{ $service->id }}" type="checkbox" data-id="{{ $service->id }}" name="status"
+												onchange="courceclassstatus('{{ $service->id }}')" class="custom-control-input"
+												{{ $service->status == '1' ? 'checked' : '' }}>
+											<label class="custom-control-label" for="status_{{ $service->id }}"></label>
+										</div>
+									</td>
+									<td>
+
+										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
+											href="{{ route('services.admin.edit', $service->id) }}">
 											<i class="fa fa-pen" aria-hidden="true"></i>
-										</button>
-
-										<button type="button" data-toggle="modal" data-target="#delete-city" data-city-id="{{ $city->id }}"
-											rel="tooltip" class="btn btn-danger btn-sm btn-icon del-city">
+										</a>
+										<button type="button" data-toggle="modal" data-target="#delete-service" data-service-id="{{ $service->id }}"
+											rel="tooltip" class="btn btn-danger btn-sm btn-icon del-service">
 											<i class="fa fa-times" aria-hidden="true"></i>
 
 										</button>
@@ -94,53 +111,9 @@
 	</div>
 
 
-	{{-- edit Modal start --}}
-	<div class="modal fade" id="edit-city" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="edit-city">{{ __('adminstaticword.EditCountry') }}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
-
-				</div>
-				<div class="modal-body">
-					<form id="edit-s-form" method="post" action="" data-parsley-validate
-						class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
-						{{ csrf_field() }}
-
-						<div class="row">
-							<div class="col-md-12">
-								<label for="name_en">{{ __('adminstaticword.English Name') }}:<sup style="color: red">*</sup></label>
-								<input id='name_en' placeholder="{{ __('adminstaticword.English Name') }}" type="text"
-									class="form-control" name="name_en" required="" value="">
-							</div>
-						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="name_ar">{{ __('adminstaticword.Arabic Name') }}:<sup style="color: red">*</sup></label>
-								<input id='name_ar' placeholder=" {{ __('adminstaticword.Arabic Name') }}" type="text"
-									class="form-control" name="name_ar" required="" value="">
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<button type="reset" class="btn btn-danger"><i class="fa fa-ban"></i>
-								{{ __('Reset') }}</button>
-							<button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i>
-								{{ __('Create') }}</button>
-						</div>
-						<div class="clear-both"></div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	{{-- edit Modal end --}}
 
 	{{-- delete Modal start --}}
-	<div class="modal fade bd-example-modal-sm" id="delete-city" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade bd-example-modal-sm" id="delete-service" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -156,7 +129,7 @@
 						{{ __('This process cannot be undone.') }}</p>
 				</div>
 				<div class="modal-footer">
-					<form id="del-c-form" method="post" action="" class="pull-right">
+					<form id="del-u-form" method="post" action="" class="pull-right">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
 						<button type="reset" class="btn btn-secondary" data-dismiss="modal">{{ __('No') }}</button>
@@ -168,7 +141,7 @@
 	</div>
 	{{-- delete Model ended --}}
 
-    	{{-- bulk delete Modal start --}}
+	{{-- bulk delete Modal start --}}
 	<div id="bulk_delete" class="delete-modal modal fade" role="dialog">
 		<div class="modal-dialog modal-sm">
 			<!-- Modal content-->
@@ -185,7 +158,7 @@
 						{{ __('This process cannot be undone.') }}</p>
 				</div>
 				<div class="modal-footer">
-					<form id="bulk_delete_form" method="post" action="{{ route('cities.admin.bulkDelete') }}">
+					<form id="bulk_delete_form" method="post" action="{{ route('services.admin.bulkDelete') }}">
 						@csrf
 						@method('POST')
 						<button type="reset" class="btn btn-secondary translate-y-3"
@@ -197,7 +170,6 @@
 		</div>
 	</div>
 	{{-- bulk delete Model ended --}}
-
 
 @stop
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -228,17 +200,26 @@
 			"info": true,
 			"autoWidth": false,
 			"responsive": true,
-            "columns": [{
-					"width": "20%"
+			"columns": [{
+					"width": "7%"
 				},
 				{
-					"width": "30%"
-				},
-				{
-					"width": "30%"
+					"width": "13%"
 				},
 				{
 					"width": "20%"
+				},
+				{
+					"width": "20%"
+				},
+				{
+					"width": "20%"
+				},
+				{
+					"width": "10%"
+				},
+				{
+					"width": "10%"
 				},
 			]
 		});
@@ -252,24 +233,45 @@
 		});
 	});
 
-	$(document).on('click', '.del-city', function() {
-		var cityId = $(this).data('city-id');
-		$('#del-c-form').attr('action', "{{ url('cities') }}/" + cityId);
-		$('#delete-city').modal('show');
+	$(document).on('click', '.del-service', function() {
+		var serviceId = $(this).data('service-id');
+		$('#del-u-form').attr('action', "{{ url('services') }}/" + serviceId);
+		$('#delete-service').modal('show');
 	});
 
-	$(document).on('click', '.edit-city', function() {
-		var cityId = $(this).data('city-id');
-		var nameEn = $(this).data('name_en');
-		var nameAr = $(this).data('name_ar');
+	function courceclassstatus(id) {
+		var status = $(this).prop('checked') == true ? 1 : 0;
 
-		$('#city-id').val(cityId);
-		$('#name_en').val(nameEn);
-		$('#name_ar').val(nameAr);
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			url: "{{ url('/services/status/') }}/" + id,
+			data: {
+				'status': status,
+				'id': id
+			},
 
-		$('#edit-s-form').attr('action', "{{ url('cities') }}/" + cityId);
-		$('#edit-city').modal('show');
-	});
+			success: function(data) {
+				var notification = new PNotify({
+					title: 'success',
+					text: 'Status Update Successfully',
+					type: 'success',
+					styling: 'bootstrap3', // Use Bootstrap 3 styling
+					addclass: 'bg-success', // Add a class for custom styling
+					desktop: {
+						desktop: true,
+						icon: 'feather icon-thumbs-down'
+					}
+				});
+				setTimeout(function() {
+					notification.remove();
+				}, 5000);
+				notification.get().click(function() {
+					notification.remove();
+				});
+			}
+		});
+	};
 </script>
 
 @if (session('success'))

@@ -47,6 +47,7 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'status'            => 'integer',
         'has_residence'     => 'integer',
+        'city_id'           => 'integer',
         'birthday'          => 'date',
     ];
 

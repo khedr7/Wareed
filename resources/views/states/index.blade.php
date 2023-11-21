@@ -48,7 +48,7 @@
 										{{ $state->name }}
 									</td>
 									<td>
-{{--
+										{{--
 										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
 											href="{{ route('users.admin.edit', $state->id) }}">
 											<i class="fa fa-pen" aria-hidden="true"></i>
@@ -233,6 +233,16 @@
 			"info": true,
 			"autoWidth": false,
 			"responsive": true,
+			"columns": [{
+					"width": "20%"
+				},
+				{
+					"width": "50%"
+				},
+				{
+					"width": "30%"
+				},
+			]
 		});
 	});
 </script>
