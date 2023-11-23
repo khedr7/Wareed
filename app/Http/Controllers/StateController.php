@@ -28,6 +28,8 @@ class StateController extends Controller
     }
 
 
+
+
     public function find($stateId)
     {
         $state = $this->stateService->find($stateId);
@@ -62,5 +64,12 @@ class StateController extends Controller
         $this->stateService->delete($stateId);
 
         return redirect('states')->with('success', __('messages.dataDeletedSuccessfully'));
+    }
+
+    public function dropdownCities($stateId)
+    {
+        $cities = $this->stateService->dropdownCities($stateId);
+
+        return response()->json($cities);
     }
 }

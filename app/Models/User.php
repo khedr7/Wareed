@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
     use InteractsWithMedia, HasRoles;
 
 
@@ -24,7 +24,7 @@ class User extends Authenticatable implements HasMedia
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone', 'role', 'details',
+        'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points',
         'status', 'has_residence', 'gender', 'birthday', 'fcm_token', 'city_id'
     ];
     const PATH = 'users';
@@ -48,6 +48,7 @@ class User extends Authenticatable implements HasMedia
         'status'            => 'integer',
         'has_residence'     => 'integer',
         'city_id'           => 'integer',
+        'points'            => 'double',
         'birthday'          => 'date',
     ];
 
@@ -60,8 +61,13 @@ class User extends Authenticatable implements HasMedia
 
     protected $appends = ['profile'];
 
-    public function userCity()
+    public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

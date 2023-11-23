@@ -76,6 +76,23 @@
 						</div>
 
 						<div class="row">
+
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} form-group">
+									<label>{{ __('adminstaticword.Country') }}</label>
+									<select name="state" id="state"
+										class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} form-control select2">
+										<option selected disabled value="none">{{ __('select') }}</option>
+										@foreach ($states as $state)
+											<option value="{{ $state->id }}" {{ $state->id == old('state') ? 'selected' : '' }}>
+												{{ $state->name }}
+											</option>
+										@endforeach
+									</select>
+									@include('alerts.feedback', ['field' => 'city_id'])
+								</div>
+							</div>
+
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.City') }} <sup style="color: red">*</sup></label>
@@ -93,6 +110,9 @@
 							</div>
 
 
+
+						</div>
+						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
@@ -108,14 +128,23 @@
 									@include('alerts.feedback', ['field' => 'role'])
 								</div>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Address') }}</label>
 									<input type="text" name="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
 										placeholder="{{ __('adminstaticword.Address') }}" value="{{ old('address') }}">
 									@include('alerts.feedback', ['field' => 'address'])
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('birthday') ? ' has-danger' : '' }}">
+									<label>{{ __('adminstaticword.DateofBirth') }} <sup style="color: red">*</sup></label>
+									<input type="date" name="birthday" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+										value="{{ old('birthday') }}" max="{{ date('Y-m-d') }}">
+									@include('alerts.feedback', ['field' => 'birthday'])
 								</div>
 							</div>
 
@@ -138,11 +167,12 @@
 
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group{{ $errors->has('birthday') ? ' has-danger' : '' }}">
-									<label>{{ __('adminstaticword.DateofBirth') }} <sup style="color: red">*</sup></label>
-									<input type="date" name="birthday" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}"
-										value="{{ old('birthday') }}" max="{{ date('Y-m-d') }}">
-									@include('alerts.feedback', ['field' => 'birthday'])
+								<div class="form-group{{ $errors->has('points') ? ' has-danger' : '' }}">
+									<label>{{ __('adminstaticword.Points') }} <sup style="color: red">*</sup></label>
+									<input required type="number" step="0.001" name="points"
+										class="form-control{{ $errors->has('points') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Points') }}" min="0" value="{{ old('points') }}">
+									@include('alerts.feedback', ['field' => 'points'])
 								</div>
 							</div>
 
@@ -169,10 +199,9 @@
 									@include('alerts.feedback', ['field' => 'gender'])
 								</div>
 							</div>
+
 						</div>
-
 						<div class="row">
-
 							<div class="col-md-6 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
@@ -216,7 +245,7 @@
 
 @stop
 
-{{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -242,6 +271,37 @@
 		var label = document.querySelector('.custom-file-label');
 		label.innerText = fileName;
 	}
+
+	$(function() {
+		$('#state').change(function() {
+			var up = $('#city_id').empty();
+			var state_id = $(this).val();
+			if (state_id) {
+				$.ajax({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					type: "GET",
+					url: "{{ url('states/cities-dropdown') }}/" + state_id,
+					success: function(data) {
+						// console.log(data);
+						up.append(
+							'<option selected disabled value="0">{{ __('select') }}</option>'
+							);
+						$.each(data, function(id, name) {
+							up.append($('<option>', {
+								value: id,
+								text: name
+							}));
+						});
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log(XMLHttpRequest);
+					}
+				});
+			}
+		});
+	});
 </script>
 <!-- Summernote -->
 <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script>

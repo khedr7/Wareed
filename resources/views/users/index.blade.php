@@ -85,12 +85,18 @@
 									<td>
 										<div class="custom-control custom-switch">
 											<input id="status_{{ $user->id }}" type="checkbox" data-id="{{ $user->id }}" name="status"
-												onchange="courceclassstatus('{{ $user->id }}')" class="custom-control-input"
+												onchange="userstatus('{{ $user->id }}')" class="custom-control-input"
 												{{ $user->status == '1' ? 'checked' : '' }}>
 											<label class="custom-control-label" for="status_{{ $user->id }}"></label>
 										</div>
 									</td>
 									<td>
+
+										<button type="button" data-toggle="modal" data-target="#add-points" data-user-id="{{ $user->id }}"
+											data-points="{{ $user->points }}" rel="tooltip" class="btn btn-xs btn-primary add-points">
+											{{ __('adminstaticword.AddPoints') }}
+										</button>
+
 
 										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
 											href="{{ route('users.admin.edit', $user->id) }}">
@@ -114,7 +120,49 @@
 		<!-- /.col -->
 	</div>
 
+	{{-- add points Modal start --}}
+	<div class="modal fade" id="add-points" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="add-points">{{ __('adminstaticword.AddPoints') }}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
 
+				</div>
+				<div class="modal-body">
+					<form id="add-points-form" method="post" action="{{ route('categories.admin.create') }}" data-parsley-validate
+						class="form-horizontal form-label-left" autocomplete="off" enctype="multipart/form-data">
+						{{ csrf_field() }}
+
+						<div class="row">
+							<div class="col-md-12">
+								<label for="points">{{ __('adminstaticword.Points') }}:<sup style="color: red">*</sup></label>
+								<input id='points' placeholder="{{ __('adminstaticword.Points') }}" type="text" class="form-control"
+									name="points" required="" value="">
+								<small id="current-points" class="form-text text-muted">
+								</small>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-12">
+
+								<div class="form-group">
+									<button type="reset" class="btn btn-danger"><i class="fa fa-ban"></i>
+										{{ __('Reset') }}</button>
+									<button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i>
+										{{ __('Submit') }}</button>
+								</div>
+							</div>
+						</div>
+						<div class="clear-both"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{-- add points Modal end --}}
 
 	{{-- delete Modal start --}}
 	<div class="modal fade bd-example-modal-sm" id="delete-user" tabindex="-1" role="dialog" aria-hidden="true">
@@ -221,7 +269,20 @@
 		$('#delete-user').modal('show');
 	});
 
-	function courceclassstatus(id) {
+	$(document).on('click', '.add-points', function() {
+		var userId = $(this).data('user-id');
+		var points = $(this).data('points');
+
+		$('#user-id').val(userId);
+		// $('#points').val(points);
+		$('#current-points').text('{{ __('adminstaticword.CurrentPoints') }} : ' + points);
+
+
+		$('#add-points-form').attr('action', "{{ url('users/add-points') }}/" + userId);
+		$('#add-points').modal('show');
+	});
+
+	function userstatus(id) {
 		var status = $(this).prop('checked') == true ? 1 : 0;
 
 		$.ajax({

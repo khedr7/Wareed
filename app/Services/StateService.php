@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\City;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\State;
@@ -18,8 +19,14 @@ class StateService
     public function getCities($stateId)
     {
         return State::where('id', $stateId)->with(['cities' => function ($query) {
-            $query->orderBy('id', 'desc');
+            $query->orderBy('name', 'asc');
         },])->first();
+    }
+
+    public function dropdownCities($stateId)
+    {
+        $cities = City::where('state_id', $stateId)->pluck('name', 'id')->all();
+        return $cities;
     }
 
     public function find($stateId)

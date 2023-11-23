@@ -44,7 +44,7 @@
 									<td>
 										<div class="custom-control custom-switch">
 											<input id="status_{{ $paymentMethod->id }}" type="checkbox" data-id="{{ $paymentMethod->id }}" name="status"
-												onchange="courceclassstatus('{{ $paymentMethod->id }}')" class="custom-control-input"
+												onchange="paymentMethodstatus('{{ $paymentMethod->id }}')" class="custom-control-input"
 												{{ $paymentMethod->status == '1' ? 'checked' : '' }}>
 											<label class="custom-control-label" for="status_{{ $paymentMethod->id }}"></label>
 										</div>
@@ -105,7 +105,7 @@
 </script>
 
 <script>
-	function courceclassstatus(id) {
+	function paymentMethodstatus(id) {
 		var status = $(this).prop('checked') == true ? 1 : 0;
 
 		$.ajax({

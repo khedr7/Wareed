@@ -16,10 +16,14 @@ return [
     'important'                     => 'Important',
     'warning'                       => 'Warning',
     'information'                   => 'Information',
+    'users_section'                 => 'Users Section',
+    'Services_section'              => 'Services Section',
+    'financial_section'             => 'Financial Section',
     'Users'                         => 'Users',
     'Countries & Cities'            => 'Countries & Cities',
     'Categories'                    => 'Categories',
     'Services'                      => 'Services',
     'Payment Methods'               => 'Payment Methods',
+    'Orders'                        => 'Orders',
 
 ];
