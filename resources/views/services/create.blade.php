@@ -30,8 +30,8 @@
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.Name') }} <sup style="color: red">*</sup></label>
 									<input required type="text" name="name"
-										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('adminstaticword.Name') }}"
-										value="{{ old('name') }}">
+										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Name') }}" value="{{ old('name') }}">
 									@include('alerts.feedback', ['field' => 'name'])
 								</div>
 							</div>
@@ -40,8 +40,8 @@
 								<div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Price') }} <sup style="color: red">*</sup></label>
 									<input required type="number" step="0.001" name="price"
-										class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ __('adminstaticword.Price') }}"
-										min="0" value="{{ old('price') }}">
+										class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Price') }}" min="0" value="{{ old('price') }}">
 									@include('alerts.feedback', ['field' => 'price'])
 								</div>
 							</div>
@@ -122,15 +122,13 @@
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.MapLatitude') }} <sup style="color: red">*</sup></label>
 									<input type="text" name="latitude" id="latitude"
-										class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}"
-										value="{{ old('latitude') }}">
+										class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}" value="{{ old('latitude') }}">
 									@include('alerts.feedback', ['field' => 'latitude'])
 								</div>
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.MapLongitude') }} <sup style="color: red">*</sup></label>
 									<input type="text" name="longitude" id="longitude"
-										class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}"
-										value="{{ old('longitude') }}">
+										class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}" value="{{ old('longitude') }}">
 									@include('alerts.feedback', ['field' => 'longitude'])
 								</div>
 							</div>
@@ -174,7 +172,7 @@
 	}
 </style>
 
-{{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -185,7 +183,7 @@
 
 <script>
 	//Initialize Select2 Elements
-	$('.select2').select2()
+	// $('.select2').select2()
 
 	//Initialize Select2 Elements
 	// $('.select2bs4').select2({
@@ -202,29 +200,45 @@
 	}
 </script>
 <!-- Summernote -->
-<script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
 <script type="text/javascript">
 	//$(document.ready(function() {
 	//	$('#summernote').summernote()
 	//}));
 	$(function() {
 		// Summernote
-		$('#summernote').summernote()
+		// $('#summernote').summernote()
 	})
 </script>
 
 {{-- map --}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPsxZeXKcSYK1XXw0O0RbrZiI_Ekou5DY&callback=initMap" async
 	defer></script>
-
 <script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Wait for the DOM to be fully loaded
+		initMapAfterLoad();
+	});
+
+	function initMapAfterLoad() {
+		// Check if the map element is available
+		const mapElement = document.getElementById('map');
+		if (mapElement) {
+			// Initialize the map
+			initMap();
+		} else {
+			// If the map element is not available, wait and try again
+			setTimeout(initMapAfterLoad, 100);
+		}
+	}
+
 	// تهيئة الخريطة
 	function initMap() {
 		const map = new google.maps.Map(document.getElementById('map'), {
 			center: {
 				lat: 33.510414,
 				lng: 36.278336
-			}, // تعيين الموقع الابتدائي
+			},
 			zoom: 8,
 		});
 
@@ -234,9 +248,8 @@
 			const lat = event.latLng.lat();
 			const lng = event.latLng.lng();
 
-            $('#latitude').val(lat);
-            $('#longitude').val(lng);
-
+			$('#latitude').val(lat);
+			$('#longitude').val(lng);
 
 			// يمكنك استخدام lat وlng كما تشاء (مثلاً: تخزينها في متغيرات أو إرسالها إلى خادم)
 			console.log('Latitude: ' + lat + ' , Longitude: ' + lng);

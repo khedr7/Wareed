@@ -17,9 +17,8 @@ class PaymentMethod extends Model
         'status' => 'integer',
     ];
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
-
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

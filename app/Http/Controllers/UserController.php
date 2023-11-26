@@ -23,6 +23,13 @@ class UserController extends Controller
 
         return view('users.index', compact("users"));
     }
+    
+    public function unacceptedUsers(Request $request)
+    {
+        $users = $this->userService->unacceptedUsers($request);
+
+        return view('users.index', compact("users"));
+    }
 
     public function create()
     {
@@ -31,10 +38,11 @@ class UserController extends Controller
         $data = $this->userService->create();
         $roles = $data['roles'];
         $cities = $data['cities'];
+        $states = $data['states'];
 
         DB::commit();
 
-        return view('users.create', compact("roles", 'cities'));
+        return view('users.create', compact("roles", 'cities', 'states'));
     }
 
     public function edit($id)
@@ -45,10 +53,11 @@ class UserController extends Controller
         $user = $data['user'];
         $roles = $data['roles'];
         $cities = $data['cities'];
+        $states = $data['states'];
 
         DB::commit();
 
-        return view('users.edit', compact('user', "roles", 'cities'));
+        return view('users.edit', compact('user', "roles", 'cities', 'states'));
     }
 
     public function store(UserRequest $request)
@@ -74,6 +83,15 @@ class UserController extends Controller
             $user->clearMediaCollection('profile');
             $user->addMedia($request->profile)->toMediaCollection('profile');
         }
+        return redirect('users')->with('success', __('messages.dataUpdatedSuccessfully'));
+    }
+
+    public function addPoints(UserRequest $request, $userId)
+    {
+        $validatedData = $request->validated();
+
+        $user = $this->userService->addPoints($validatedData, $userId);
+
         return redirect('users')->with('success', __('messages.dataUpdatedSuccessfully'));
     }
 
