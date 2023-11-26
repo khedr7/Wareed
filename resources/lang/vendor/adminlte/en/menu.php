@@ -25,5 +25,8 @@ return [
     'Services'                      => 'Services',
     'Payment Methods'               => 'Payment Methods',
     'Orders'                        => 'Orders',
+    'About'                         => 'About',
+    'Terms and Conditions'          => 'Terms and Conditions',
+    'Privacy Policy'                => 'Privacy Policy',
 
 ];

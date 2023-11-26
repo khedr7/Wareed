@@ -4,25 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
-class State extends Model
+class TermsPolicy extends Model
 {
-    use HasFactory, SoftDeletes, HasTranslations;
+    use HasFactory, HasTranslations;
 
-    protected $fillable  = ['name'];
+    protected $fillable  = ['terms', 'policy'];
 
-    public $translatable = ['name'];
-
-    protected $casts = [
-        'name' => 'string',
-    ];
-
-    public function cities()
-    {
-        return $this->hasMany(City::class);
-    }
+    public $translatable = ['terms', 'policy'];
 
     public function toArray()
     {

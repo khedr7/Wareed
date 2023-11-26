@@ -25,7 +25,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $fillable = [
         'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points',
-        'status', 'has_residence', 'gender', 'birthday', 'fcm_token', 'city_id'
+        'status', 'has_residence', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
     ];
     const PATH = 'users';
     /**
@@ -46,6 +46,7 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
         'status'            => 'integer',
+        'accepted'          => 'integer',
         'has_residence'     => 'integer',
         'city_id'           => 'integer',
         'points'            => 'double',

@@ -361,7 +361,17 @@ return [
             'url'  => 'payment-methods',
             'icon' => 'fas fa-fw fa-credit-card',
         ],
-
+        ['header' => 'About'],
+        [
+            'text' => 'Terms and Conditions',
+            'url'  => 'terms',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [
+            'text' => 'Privacy Policy',
+            'url'  => 'policy',
+            'icon' => 'fas fa-fw fa-file',
+        ],
         // [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',

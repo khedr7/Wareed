@@ -16,7 +16,12 @@ class UserService
 
     public function getAll()
     {
-        return User::orderBy('role', 'asc')->get();
+        return User::where('accepted', 1)->orderBy('role', 'asc')->get();
+    }
+
+    public function unacceptedUsers()
+    {
+        return User::where('accepted', 0)->orderBy('role', 'asc')->get();
     }
 
     public function find($userId)
@@ -50,6 +55,7 @@ class UserService
         DB::beginTransaction();
 
         $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['accepted'] = 1;
 
         $user = User::create($validatedData);
 

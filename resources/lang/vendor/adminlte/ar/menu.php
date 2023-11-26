@@ -25,5 +25,8 @@ return [
     'Services'                      => 'الخدمات',
     'Payment Methods'               => 'وسائل الدفع',
     'Orders'                        => 'الطلبات',
+    'About'                         => 'عن المنصة',
+    'Terms and Conditions'          => 'الأحكام والشروط',
+    'Privacy Policy'                => 'سياسة الخصوصية',
 
 ];

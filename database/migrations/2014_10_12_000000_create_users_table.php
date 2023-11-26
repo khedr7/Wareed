@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('role');
             $table->boolean('status')->default(1);
+            $table->boolean('accepted')->default(0);
             $table->boolean('has_residence')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->date('birthday')->nullable();

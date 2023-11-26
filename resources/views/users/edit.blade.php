@@ -134,7 +134,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							{{-- <div class="col-md-6">
 								<div class="form-group{{ $errors->has('points') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Points') }} <sup style="color: red">*</sup></label>
 									<input required type="number" step="0.001" name="points"
@@ -142,11 +142,7 @@
 										placeholder="{{ __('adminstaticword.Points') }}" min="0" value="{{ old('points', $user->points) }}">
 									@include('alerts.feedback', ['field' => 'points'])
 								</div>
-							</div>
-
-						</div>
-
-						<div class="row">
+							</div> --}}
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
@@ -156,8 +152,9 @@
 									@include('alerts.feedback', ['field' => 'address'])
 								</div>
 							</div>
+						</div>
 
-
+						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>{{ __('adminstaticword.Image') }}</label>
@@ -178,10 +175,7 @@
 								</div>
 							</div>
 
-						</div>
-
-						<div class="row">
-							<div class="col-md-4">
+                            <div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }}<sup style="color: red">*</sup></label> <br>
 
@@ -205,7 +199,10 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 form-group">
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
@@ -214,7 +211,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 form-group">
+							<div class="col-md-6 form-group">
 								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="has_residence" type="checkbox" name="has_residence" class="custom-control-input"
@@ -255,7 +252,7 @@
 
 <script>
 	//Initialize Select2 Elements
-	$('.select2').select2()
+	// $('.select2').select2()
 
 	//Initialize Select2 Elements
 	// $('.select2bs4').select2({
@@ -287,7 +284,7 @@
 						// console.log(data);
 						up.append(
 							'<option selected disabled value="0">{{ __('select') }}</option>'
-							);
+						);
 						$.each(data, function(id, name) {
 							up.append($('<option>', {
 								value: id,
@@ -304,13 +301,13 @@
 	});
 </script>
 <!-- Summernote -->
-<script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
 <script type="text/javascript">
 	//$(document.ready(function() {
 	//	$('#summernote').summernote()
 	//}));
 	$(function() {
 		// Summernote
-		$('#summernote').summernote()
+		// $('#summernote').summernote()
 	})
 </script>

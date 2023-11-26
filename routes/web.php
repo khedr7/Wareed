@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\TermsPolicyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -107,5 +108,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [OrderController::class, 'index'])->name('orders.admin.index');
         Route::get('/payment-status/{orderId}',  [OrderController::class, 'paymentStatus'])->name('orders.admin.paymentStatus');
         Route::post('/status/{orderId}',  [OrderController::class, 'status'])->name('orders.admin.status');
+    });
+
+    Route::group(['prefix' => 'terms'], function () {
+        Route::get('/',  [TermsPolicyController::class, 'editTerms'])->name('terms.admin.edit');
+        Route::post('/', [TermsPolicyController::class, 'update'])->name('terms.admin.update');
+    });
+
+    Route::group(['prefix' => 'policy'], function () {
+        Route::get('/',  [TermsPolicyController::class, 'editPolicy'])->name('policy.admin.edit');
     });
 });

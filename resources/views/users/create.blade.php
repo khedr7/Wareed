@@ -165,7 +165,7 @@
 
 						</div>
 
-						<div class="row">
+						{{-- <div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('points') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Points') }} <sup style="color: red">*</sup></label>
@@ -175,8 +175,11 @@
 									@include('alerts.feedback', ['field' => 'points'])
 								</div>
 							</div>
+						</div> --}}
 
-							<div class="col-md-6">
+						<div class="row">
+
+							<div class="col-md-4">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }} <sup style="color: red">*</sup></label> <br>
 
@@ -200,9 +203,7 @@
 								</div>
 							</div>
 
-						</div>
-						<div class="row">
-							<div class="col-md-6 form-group">
+							<div class="col-md-4 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input">
@@ -210,7 +211,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 form-group">
+							<div class="col-md-4 form-group">
 								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input id="has_residence" type="checkbox" value="1" name="has_residence" class="custom-control-input">
@@ -247,7 +248,7 @@
 
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
-<script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script> --}}
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- jquery-validation -->
@@ -256,7 +257,7 @@
 
 <script>
 	//Initialize Select2 Elements
-	$('.select2').select2()
+	// $('.select2').select2()
 
 	//Initialize Select2 Elements
 	// $('.select2bs4').select2({
@@ -304,15 +305,15 @@
 	});
 </script>
 <!-- Summernote -->
-<script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
 <script type="text/javascript">
 	//$(document.ready(function() {
 	//	$('#summernote').summernote()
 	//}));
-	$(function() {
-		// Summernote
-		$('#summernote').summernote()
-	})
+	// $(function() {
+	// 	// Summernote
+	// 	$('#summernote').summernote()
+	// })
 </script>
 
 {{-- <script>

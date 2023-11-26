@@ -92,10 +92,10 @@
 									</td>
 									<td>
 
-										<button type="button" data-toggle="modal" data-target="#add-points" data-user-id="{{ $user->id }}"
+										{{-- <button type="button" data-toggle="modal" data-target="#add-points" data-user-id="{{ $user->id }}"
 											data-points="{{ $user->points }}" rel="tooltip" class="btn btn-xs btn-primary add-points">
 											{{ __('adminstaticword.AddPoints') }}
-										</button>
+										</button> --}}
 
 
 										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
