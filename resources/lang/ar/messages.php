@@ -22,12 +22,14 @@ return [
     'currentPasswordIncorrect'       => 'كلمة المرور الحالية لا تتطابق مع التي تم ادخالها. يرجى إعادة المحاولة',
     'passwordConfirmationNotMatch'   => 'تأكيد كلمة المرور غير متطابقة. يرجى إعادة المحاولة',
     'credentialsError'               => 'خطأ في الرقم الوطني او كلمة المرور',
-    'incorrect_password'             => 'كلمة السر خاطئة',
+    'incorrectPassword'             => 'كلمة السر خاطئة',
 
     'Unauthorized'                   => 'لا تملك صلاحيات للقيام بهذا الإجراء',
     'Unauthenticated'                => 'الرجاء تسجيل الدخول اولاً',
 
     'blockedUser'                    => 'المستخدم محظور',
+    'userNotFound'                   => 'الحساب غير موجود',
+
 
     // General msgs
     'dataAddedSuccessfully'          => 'تمت إضافة البيانات بنجاح',

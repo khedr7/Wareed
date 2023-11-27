@@ -26,10 +26,13 @@ class UserRequest extends FormRequest
     {
 
         return match ($this->route()->getActionMethod()) {
-            'store'       =>  $this->getCreateRules(),
-            'update'      =>  $this->getUpdateRules(),
-            'generateOTP' =>  $this->generateOTP(),
-            'verifyOTP'   =>    $this->verifyOTP(),
+            'store'           =>  $this->getCreateRules(),
+            'update'          =>  $this->getUpdateRules(),
+            'generateOTP'     =>  $this->generateOTP(),
+            'verifyOTP'       =>  $this->verifyOTP(),
+            'resetPassword'   =>  $this->resetPassword(),
+            'updateProfile'   =>  $this->getUpdateRules(),
+            'register'        =>  $this->getCreateRules(),
         };
     }
 
@@ -38,11 +41,11 @@ class UserRequest extends FormRequest
         return [
             'name'          => 'required|min:3',
             'email'         => 'required|email',
-            'password'      => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            'password'      => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
             'address'       => '',
             'phone'         => 'required|min:9|max:10|unique:users,phone',
-            'role'          => 'required|exists:roles,name',
-            'city_id'       => 'required|exists:cities,id',
+            'role'          => 'sometimes|required|exists:roles,name',
+            'city_id'       => 'sometimes|required|exists:cities,id',
             'status'        => '',
             'has_residence' => '',
             'gender'        => 'required',
@@ -56,20 +59,21 @@ class UserRequest extends FormRequest
     public function getUpdateRules()
     {
         return [
-            'name'          => 'required|min:3',
-            'email'         => 'required|email',
-            'password'      => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
-            'address'       => '',
-            'phone'         => 'required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
-            'role'          => 'required|exists:roles,name',
-            'city_id'       => 'required|exists:cities,id',
-            'status'        => '',
-            'has_residence' => '',
-            'gender'        => 'required',
-            'birthday'      => '',
-            'details'       => '',
-            'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
-            'fcm_token'     => ''
+            'name'                 => 'sometimes|required|min:3',
+            'email'                => 'sometimes|required|email|unique:users,email,' . auth()->id(),
+            'password'             => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
+            'address'              => '',
+            // 'phone'                => 'sometimes|required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
+            'role'                 => 'sometimes|required|exists:roles,name',
+            'city_id'              => 'sometimes|required|exists:cities,id',
+            'status'               => 'sometimes|required|boolean',
+            'has_residence'        => '',
+            'gender'               => 'sometimes|required',
+            'birthday'             => 'sometimes|required|date',
+            'details'              => '',
+            'profile'              => 'sometimes|required|image|mimes:png,jpg,jpeg',
+            'fcm_token'            => '',
+            'confirm_password'     => 'sometimes|required|same:password'
         ];
     }
     public function generateOTP()
@@ -85,5 +89,12 @@ class UserRequest extends FormRequest
             'phone'   => 'required',
         ];
     }
-
+    public function resetPassword()
+    {
+        return [
+            'phone'            => 'required|exists:users,phone',
+            'password'         => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
+            'confirm_password' => 'required|same:password',
+        ];
+    }
 }

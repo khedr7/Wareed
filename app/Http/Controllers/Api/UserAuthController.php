@@ -64,4 +64,23 @@ class UserAuthController extends Controller
         $this->userAuthService->verifyOTP($validatedData);
         return $this->successResponse('dataFetchedSuccessfully', 200);
     }
+    public function resetPassword(UserRequest $request)
+    {
+        $validatedData = $request->validated();
+        $this->userAuthService->resetPassword($validatedData);
+        return $this->successResponse('dataUpdatedSuccessfully', 200);
+    }
+    public function updateProfile(UserRequest $request)
+    {
+        $validatedData = $request->validated();
+        $this->userAuthService->updateProfile($validatedData);
+        return $this->successResponse('dataUpdatedSuccessfully', 200);
+    }
+    public function register(UserRequest $request)
+    {
+        
+        $validatedData = $request->validated();
+        $details = $this->userAuthService->register($validatedData);
+        return $this->successResponse($details,'dataUpdatedSuccessfully', 200);
+    }
 }

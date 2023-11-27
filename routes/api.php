@@ -20,7 +20,10 @@ Route::group([
     Route::post('/login', [UserAuthController::class, 'login']);
     Route::post('/generate-otp', [UserAuthController::class, 'generateOTP']);
     Route::post('/verify-otp', [UserAuthController::class, 'verifyOTP']);
+    Route::post('/register', [UserAuthController::class, 'register']);
     Route::group([], function () {
+        Route::post('/reset-password', [UserAuthController::class, 'resetPassword']);
+        Route::post('/update-profile', [UserAuthController::class, 'updateProfile']);
         Route::get('/profile-details', [UserAuthController::class, 'getProfileDetails']);
         Route::post('/logout', [UserAuthController::class, 'logout']);
         Route::post('/change-password', [UserAuthController::class, 'changePassword']);

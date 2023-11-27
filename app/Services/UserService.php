@@ -44,6 +44,7 @@ class UserService
 
     public function store($validatedData)
     {
+        
         DB::beginTransaction();
 
         $validatedData['password'] = Hash::make($validatedData['password']);

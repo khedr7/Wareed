@@ -29,6 +29,8 @@ return [
 
     'blockedUser'                    => 'the user is blocked',
 
+    'userNotFound'                    => 'Account Not Found',
+
     // General msgs
     'dataAddedSuccessfully'          => 'Data added successfully',
     'dataUpdatedSuccessfully'        => 'Data updated successfully',
