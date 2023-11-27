@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         //added if auth package was passport besides to add auth:api in 
         // 'api' => [
         //     'driver'   => 'passport',
