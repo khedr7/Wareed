@@ -100,3 +100,27 @@ Route::group([
     Route::put('/{id}', 'update');
     Route::delete('/{id}', 'delete');
 });
+
+Route::group([
+    'prefix' => '/orders',
+    'controller' => OrderController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});
+
+Route::group([
+    'prefix' => '/terms_policies',
+    'controller' => TermsPolicyController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});

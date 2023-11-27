@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\City;
+use App\Models\State;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\User;
@@ -15,7 +16,12 @@ class UserService
 
     public function getAll()
     {
-        return User::get();
+        return User::where('accepted', 1)->orderBy('role', 'asc')->get();
+    }
+
+    public function unacceptedUsers()
+    {
+        return User::where('accepted', 0)->orderBy('role', 'asc')->get();
     }
 
     public function find($userId)
@@ -27,7 +33,8 @@ class UserService
     {
         $data = [
             'roles'  => Role::orderBy('name')->get(),
-            'cities' => City::orderBy('name')->get()
+            'cities' => City::orderBy('name')->get(),
+            'states' => State::orderBy('name')->get()
         ];
         return $data;
     }
@@ -35,9 +42,10 @@ class UserService
     public function edit($id)
     {
         $data = [
-            'user'   => User::where('id', $id)->first(),
+            'user'   => User::where('id', $id)->with('city')->first(),
             'roles'  => Role::orderBy('name')->get(),
-            'cities' => City::orderBy('name')->get()
+            'cities' => City::orderBy('name')->get(),
+            'states' => State::orderBy('name')->get()
         ];
         return $data;
     }
@@ -48,6 +56,7 @@ class UserService
         DB::beginTransaction();
 
         $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['accepted'] = 1;
 
         $user = User::create($validatedData);
 
@@ -67,6 +76,18 @@ class UserService
 
         $user->update($validatedData);
         $user->assignRole($validatedData['role']);
+        DB::commit();
+
+        return $user;
+    }
+
+    public function addPoints($validatedData, $userId)
+    {
+        $user = $this->findByIdOrFail(User::class, 'user', $userId);
+
+        DB::beginTransaction();
+        $user->points += $validatedData['points'];
+        $user->save();
         DB::commit();
 
         return $user;

@@ -178,7 +178,7 @@
 	}
 </style>
 
-{{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
 <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -189,7 +189,7 @@
 
 <script>
 	//Initialize Select2 Elements
-	$('.select2').select2()
+	// $('.select2').select2()
 
 	//Initialize Select2 Elements
 	// $('.select2bs4').select2({
@@ -206,14 +206,14 @@
 	}
 </script>
 <!-- Summernote -->
-<script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
 <script type="text/javascript">
 	//$(document.ready(function() {
 	//	$('#summernote').summernote()
 	//}));
 	$(function() {
 		// Summernote
-		$('#summernote').summernote()
+		// $('#summernote').summernote()
 	})
 </script>
 
@@ -222,6 +222,23 @@
 	defer></script>
 
 <script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Wait for the DOM to be fully loaded
+		initMapAfterLoad();
+	});
+
+	function initMapAfterLoad() {
+		// Check if the map element is available
+		const mapElement = document.getElementById('map');
+		if (mapElement) {
+			// Initialize the map
+			initMap();
+		} else {
+			// If the map element is not available, wait and try again
+			setTimeout(initMapAfterLoad, 100);
+		}
+	}
+    
 	// تهيئة الخريطة
 	function initMap() {
 		const latt = {{ $service->latitude }}

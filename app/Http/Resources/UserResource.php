@@ -17,13 +17,13 @@ class UserResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
-             default => $this->defaultResource(),
+            default => $this->defaultResource(),
         };
     }
 
     public function getAllResource()
     {
-          return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
@@ -33,18 +33,19 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'role' => $this->role,
             'status' => $this->status,
+            'accepted' => $this->accepted,
             'has_residence' => $this->has_residence,
             'gender' => $this->gender,
             'birthday' => $this->birthday,
             'details' => $this->details,
             'fcm_token' => $this->fcm_token,
             'created_at' => $this->created_at
-          ];
+        ];
     }
 
     public function defaultResource()
     {
-          return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
@@ -54,12 +55,13 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'role' => $this->role,
             'status' => $this->status,
+            'accepted' => $this->accepted,
             'has_residence' => $this->has_residence,
             'gender' => $this->gender,
             'birthday' => $this->birthday,
             'details' => $this->details,
             'fcm_token' => $this->fcm_token,
             'created_at' => $this->created_at
-          ];
+        ];
     }
 }

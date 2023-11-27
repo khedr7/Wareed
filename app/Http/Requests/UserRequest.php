@@ -33,6 +33,7 @@ class UserRequest extends FormRequest
             'resetPassword'   =>  $this->resetPassword(),
             'updateProfile'   =>  $this->getUpdateRules(),
             'register'        =>  $this->getCreateRules(),
+            'addPoints'   =>  $this->getAddPointsRules(),
         };
     }
 
@@ -52,6 +53,7 @@ class UserRequest extends FormRequest
             'birthday'      => '',
             'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'details'       => '',
+            'points'        => 'nullable|numeric',
             'fcm_token'     => ''
         ];
     }
@@ -95,6 +97,28 @@ class UserRequest extends FormRequest
             'phone'            => 'required|exists:users,phone',
             'password'         => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
             'confirm_password' => 'required|same:password',
+            'name'          => 'required|min:3',
+            'email'         => 'required|email',
+            'password'      => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            'address'       => '',
+            // 'phone'         => 'required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
+            'role'          => 'required|exists:roles,name',
+            'city_id'       => 'required|exists:cities,id',
+            'status'        => '',
+            'has_residence' => '',
+            'gender'        => 'required',
+            'birthday'      => '',
+            'details'       => '',
+            'points'        => 'nullable|numeric',
+            'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
+            'fcm_token'     => '',
+        ];
+    }
+    public function getAddPointsRules()
+    {
+        return [
+            'points' => 'required|numeric',
+
         ];
     }
 }

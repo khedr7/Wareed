@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\TermsPolicyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');;
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
@@ -46,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/',        [UserController::class, 'store'])->name('users.admin.store');
         Route::get('/{userId}', [UserController::class, 'show'])->name('users.admin.show');
         Route::get('/{userId}/edit',  [UserController::class, 'edit'])->name('users.admin.edit');
+        Route::post('/add-points/{userId}',   [UserController::class, 'addPoints'])->name('users.admin.addPoints');
         Route::post('/{userId}',      [UserController::class, 'update'])->name('users.admin.update');
         Route::get('/status/{userId}',  [UserController::class, 'status'])->name('users.admin.status');
         Route::delete('/{userId}',      [UserController::class, 'delete'])->name('users.admin.delete');
@@ -54,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'states'], function () {
         Route::get('/', [StateController::class, 'index'])->name('states.admin.index');
         Route::get('/{stateId}/cities', [StateController::class, 'getCities'])->name('states.admin.cities');
+        Route::get('/cities-dropdown/{stateId}', [StateController::class, 'dropdownCities'])->name('states.admin.dropdownCities');
         Route::get('/create',   [StateController::class, 'create'])->name('states.admin.create');
         Route::post('/',        [StateController::class, 'store'])->name('states.admin.store');
         Route::get('/{stateId}', [StateController::class, 'show'])->name('states.admin.show');
@@ -98,5 +102,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'payment-methods'], function () {
         Route::get('/', [PaymentMethodController::class, 'index'])->name('paymentMethods.admin.index');
         Route::get('/status/{methodId}',  [PaymentMethodController::class, 'status'])->name('paymentMethods.admin.status');
+    });
+
+    Route::group(['prefix' => 'orders'], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders.admin.index');
+        Route::get('/payment-status/{orderId}',  [OrderController::class, 'paymentStatus'])->name('orders.admin.paymentStatus');
+        Route::post('/status/{orderId}',  [OrderController::class, 'status'])->name('orders.admin.status');
+    });
+
+    Route::group(['prefix' => 'terms'], function () {
+        Route::get('/',  [TermsPolicyController::class, 'editTerms'])->name('terms.admin.edit');
+        Route::post('/', [TermsPolicyController::class, 'update'])->name('terms.admin.update');
+    });
+
+    Route::group(['prefix' => 'policy'], function () {
+        Route::get('/',  [TermsPolicyController::class, 'editPolicy'])->name('policy.admin.edit');
     });
 });

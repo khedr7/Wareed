@@ -17,13 +17,14 @@ class Service extends Model implements HasMedia
         'name', 'details', 'price', 'latitude',
         'longitude', 'status', 'featured', 'category_id', 'user_id',
     ];
+    const PATH = 'services';
 
     // public $translatable = ['name', 'details'];
 
     protected $casts = [
-        'price'       => 'float',
-        'latitude'    => 'float',
-        'longitude'   => 'float',
+        'price'       => 'double',
+        'latitude'    => 'double',
+        'longitude'   => 'double',
         'status'      => 'integer',
         'featured'    => 'integer',
         'user_id'     => 'integer',
@@ -38,6 +39,11 @@ class Service extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function getImageAttribute()

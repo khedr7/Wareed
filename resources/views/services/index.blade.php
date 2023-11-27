@@ -75,13 +75,14 @@
 										{{ $service->category->name }}
 									</td>
 									<td>
-										<a href="{{ route('users.admin.edit', $service->user->id) }}">
-											{{ $service->user->name }}</a>
+										{{-- <a href="{{ route('users.admin.edit', $service->user->id) }}"> --}}
+											{{ $service->user->name }}
+                                        {{-- </a> --}}
 									</td>
 									<td>
 										<div class="custom-control custom-switch">
 											<input id="status_{{ $service->id }}" type="checkbox" data-id="{{ $service->id }}" name="status"
-												onchange="courceclassstatus('{{ $service->id }}')" class="custom-control-input"
+												onchange="servicestatus('{{ $service->id }}')" class="custom-control-input"
 												{{ $service->status == '1' ? 'checked' : '' }}>
 											<label class="custom-control-label" for="status_{{ $service->id }}"></label>
 										</div>
@@ -239,7 +240,7 @@
 		$('#delete-service').modal('show');
 	});
 
-	function courceclassstatus(id) {
+	function servicestatus(id) {
 		var status = $(this).prop('checked') == true ? 1 : 0;
 
 		$.ajax({

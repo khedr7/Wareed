@@ -10,6 +10,8 @@ return [
     'city'       => 'المدينة',
     'category'   => 'الفئة',
     'Service'    => 'الخدمة',
+    'order'      => 'الطلب',
     'paymentMethod'    => 'وسيلة الدفع',
+
 
 ];

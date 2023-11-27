@@ -11,10 +11,10 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">DataTable with minimal features & hover style</h3>
+					<h3 class="card-title">Welcom ..</h3>
 				</div>
 				<!-- /.card-header -->
-				<div class="card-body">
+				{{-- <div class="card-body">
 					<table id="example1" class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -56,12 +56,12 @@
 							</tr>
 						</tfoot>
 					</table>
-				</div>
+				</div> --}}
 				<!-- /.card-body -->
 			</div>
 			<!-- /.card -->
 
-			<div class="card">
+			{{-- <div class="card">
 				<div class="card-header">
 					<h3 class="card-title">DataTable with default features</h3>
 				</div>
@@ -172,7 +172,7 @@
 					</table>
 				</div>
 				<!-- /.card-body -->
-			</div>
+			</div> --}}
 			<!-- /.card -->
 		</div>
 		<!-- /.col -->

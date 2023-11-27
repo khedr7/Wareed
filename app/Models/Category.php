@@ -20,6 +20,7 @@ class Category extends Model implements HasMedia
     protected $casts = [
         'name' => 'string',
     ];
+    const PATH = 'categories';
 
     public function services()
     {
