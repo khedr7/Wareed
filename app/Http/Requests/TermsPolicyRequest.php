@@ -25,7 +25,7 @@ class TermsPolicyRequest extends FormRequest
     {
 
         return match ($this->route()->getActionMethod()) {
-            'create'   =>  $this->getCreateRules(),
+            'store'    =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
         };
     }
@@ -33,8 +33,8 @@ class TermsPolicyRequest extends FormRequest
     public function getCreateRules()
     {
         return [
-            'terms_en' => '',
-            'terms_ar' => '',
+            'terms_en'  => '',
+            'terms_ar'  => '',
             'policy_en' => '',
             'policy_ar' => ''
         ];
@@ -43,8 +43,8 @@ class TermsPolicyRequest extends FormRequest
     public function getUpdateRules()
     {
         return [
-            'terms_en' => '',
-            'terms_ar' => '',
+            'terms_en'  => '',
+            'terms_ar'  => '',
             'policy_en' => '',
             'policy_ar' => ''
         ];
