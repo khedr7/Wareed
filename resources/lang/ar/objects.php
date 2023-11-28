@@ -11,6 +11,7 @@ return [
     'category'   => 'الفئة',
     'Service'    => 'الخدمة',
     'order'      => 'الطلب',
+    'banner'     => 'الاعلان',
     'paymentMethod'    => 'وسيلة الدفع',
 
 

@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedBigInteger('state_id');
-            $table->softDeletes();
+            $table->string('link')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('expiration_date')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('banners');
     }
 };

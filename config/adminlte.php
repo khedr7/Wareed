@@ -332,7 +332,7 @@ return [
         [
             'text' => 'Users',
             'url'  => 'users',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-users',
         ],
         [
             'text' => 'Countries & Cities',
@@ -362,6 +362,11 @@ return [
             'icon' => 'fas fa-fw fa-credit-card',
         ],
         ['header' => 'About'],
+        [
+            'text' => 'Banners',
+            'url'  => 'banners',
+            'icon' => 'fas fa-fw fa-image',
+        ],
         [
             'text' => 'Terms and Conditions',
             'url'  => 'terms',

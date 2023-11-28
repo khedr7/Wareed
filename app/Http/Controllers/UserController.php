@@ -23,7 +23,7 @@ class UserController extends Controller
 
         return view('users.index', compact("users"));
     }
-    
+
     public function unacceptedUsers(Request $request)
     {
         $users = $this->userService->unacceptedUsers($request);

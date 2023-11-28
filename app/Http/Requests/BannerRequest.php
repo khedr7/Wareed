@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class BannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +23,20 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+
         return match ($this->route()->getActionMethod()) {
-            'store'   =>  $this->getCreateRules(),
-            'update'  =>  $this->getUpdateRules(),
+            'store'    =>  $this->getCreateRules(),
+            'update'   =>  $this->getUpdateRules(),
         };
     }
 
     public function getCreateRules()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'link'            => 'required',
+            'start_date'      => 'required|date',
+            'expiration_date' => 'nullable|date|after:start_date',
+            'status'          => '',
             'image'   => 'required|image|mimes:png,jpg,jpeg',
         ];
     }
@@ -41,8 +44,10 @@ class CategoryRequest extends FormRequest
     public function getUpdateRules()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'link'            => 'required',
+            'start_date'      => 'required|date',
+            'expiration_date' => 'nullable|date|after:start_date',
+            'status'          => '',
             'image'   => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
         ];
     }

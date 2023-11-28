@@ -28,5 +28,6 @@ return [
     'About'                         => 'عن المنصة',
     'Terms and Conditions'          => 'الأحكام والشروط',
     'Privacy Policy'                => 'سياسة الخصوصية',
+    'Banners'                       => 'الإعلانات',
 
 ];

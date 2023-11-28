@@ -10,6 +10,7 @@ return [
     'city'       => 'city',
     'category'   => 'category',
     'Service'    => 'Service',
+    'banner'     => 'banner',
     'order'      => 'order',
     'paymentMethod'    => 'payment Method',
 

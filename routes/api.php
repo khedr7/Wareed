@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::group([
     'prefix' => '/auth',
 ], function () {
@@ -22,10 +23,10 @@ Route::group([
     Route::post('/verify-otp', [UserAuthController::class, 'verifyOTP']);
     Route::post('/register', [UserAuthController::class, 'register']);
     Route::group([], function () {
-        Route::post('/reset-password', [UserAuthController::class, 'resetPassword']);
-        Route::post('/update-profile', [UserAuthController::class, 'updateProfile']);
-        Route::get('/profile-details', [UserAuthController::class, 'getProfileDetails']);
-        Route::post('/logout', [UserAuthController::class, 'logout']);
+        Route::post('/reset-password',  [UserAuthController::class, 'resetPassword']);
+        Route::post('/update-profile',  [UserAuthController::class, 'updateProfile']);
+        Route::get('/profile-details',  [UserAuthController::class, 'getProfileDetails']);
+        Route::post('/logout',          [UserAuthController::class, 'logout']);
         Route::post('/change-password', [UserAuthController::class, 'changePassword']);
     });
 });
@@ -116,6 +117,18 @@ Route::group([
 Route::group([
     'prefix' => '/terms_policies',
     'controller' => TermsPolicyController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});
+
+Route::group([
+    'prefix' => '/banners',
+    'controller' => BannerController::class,
     // 'middleware' => ''
 ], function () {
     Route::get('/', 'getAll');

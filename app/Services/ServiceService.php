@@ -26,7 +26,7 @@ class ServiceService
     {
         $data = [
             'categories' => Category::orderBy('name')->get(),
-            'users'      => User::orderBy('name')->get()
+            'users'      => User::where('role', 'admin')->orWhere('role', 'provider')->orderBy('name')->get()
         ];
 
         return $data;
@@ -36,7 +36,7 @@ class ServiceService
         $data = [
             'service'    => $this->find($id),
             'categories' => Category::orderBy('name')->get(),
-            'users'      => User::orderBy('name')->get()
+            'users'      => User::where('role', 'admin')->orWhere('role', 'provider')->orderBy('name')->get()
         ];
         return $data;
     }
