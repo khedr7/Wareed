@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserAuthRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Services\UserAuthService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class UserAuthController extends Controller
             'password' => 'required',
         ]);
         $details = $this->userAuthService->login($validatedData);
+        $details['user'] = UserResource::make($details['user']);
         return $this->successResponse($details, 'userSuccessfullySignedIn', 200);
     }
 
@@ -66,28 +68,30 @@ class UserAuthController extends Controller
     {
         $validatedData = $request->validated();
         $this->userAuthService->verifyOTP($validatedData);
-        return $this->successResponse('dataFetchedSuccessfully', 200);
+        return $this->successResponse([],'dataFetchedSuccessfully', 200);
     }
 
     public function resetPassword(UserRequest $request)
     {
         $validatedData = $request->validated();
         $this->userAuthService->resetPassword($validatedData);
-        return $this->successResponse('dataUpdatedSuccessfully', 200);
+        return $this->successResponse([], 'dataUpdatedSuccessfully', 200);
     }
 
     public function updateProfile(UserRequest $request)
     {
         $validatedData = $request->validated();
-        $this->userAuthService->updateProfile($validatedData);
-        return $this->successResponse('dataUpdatedSuccessfully', 200);
+        $data = $this->userAuthService->updateProfile($validatedData);
+        $user = UserResource::make($data);
+        return $this->successResponse($user, 'dataUpdatedSuccessfully', 200);
     }
 
     public function register(UserRequest $request)
     {
         $validatedData = $request->validated();
         $details = $this->userAuthService->register($validatedData);
-        return $this->successResponse($details, 'dataUpdatedSuccessfully', 200);
+        $details['user'] = UserResource::make($details['user']);
+        return $this->successResponse($details, 'userSuccessfullySignedIn', 200);
     }
 
     public function getAllProviders()
