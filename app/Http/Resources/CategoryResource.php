@@ -17,25 +17,25 @@ class CategoryResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
-             default => $this->defaultResource(),
+            default => $this->defaultResource(),
         };
     }
 
     public function getAllResource()
     {
-          return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->created_at
-          ];
+            'image' => $this->image,
+        ];
     }
 
     public function defaultResource()
     {
-          return [
+        return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->created_at
-          ];
+            'image' => $this->image,
+        ];
     }
 }

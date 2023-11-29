@@ -9,7 +9,7 @@ return [
     'state'      => 'البلد',
     'city'       => 'المدينة',
     'category'   => 'الفئة',
-    'Service'    => 'الخدمة',
+    'service'    => 'الخدمة',
     'order'      => 'الطلب',
     'banner'     => 'الاعلان',
     'paymentMethod'    => 'وسيلة الدفع',

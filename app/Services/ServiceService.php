@@ -12,9 +12,14 @@ class ServiceService
 {
     use ModelHelper;
 
-    public function getAll()
+    public function getAll($request)
     {
-        return Service::with(['user:id,name', 'category:id,name'])->orderBy('id', 'desc')->get();
+        return Service::with(['user', 'category:id,name'])->orderBy('id', 'desc')->get();
+    }
+
+    public function getTopRated()
+    {
+        return Service::with(['user', 'category:id,name'])->orderBy('id', 'desc')->get()->take(5);
     }
 
     public function find($serviceId)
@@ -26,7 +31,7 @@ class ServiceService
     {
         $data = [
             'categories' => Category::orderBy('name')->get(),
-            'users'      => User::where('role', 'admin')->orWhere('role', 'provider')->orderBy('name')->get()
+            'users'      => User::Where('role', 'provider')->orderBy('name')->get()
         ];
 
         return $data;
@@ -36,7 +41,7 @@ class ServiceService
         $data = [
             'service'    => $this->find($id),
             'categories' => Category::orderBy('name')->get(),
-            'users'      => User::where('role', 'admin')->orWhere('role', 'provider')->orderBy('name')->get()
+            'users'      => User::Where('role', 'provider')->orderBy('name')->get()
         ];
         return $data;
     }

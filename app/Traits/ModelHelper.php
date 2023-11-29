@@ -16,7 +16,7 @@ trait ModelHelper
             } else {
                 $objectType = 'messages.objectNotFound';
             }
-            throw new Exception(__($objectType, ['object' => __('objects.'.$object)]), 404);
+            throw new Exception(__($objectType, ['object' => __('objects.' . $object)]), 404);
         }
         return $model;
     }

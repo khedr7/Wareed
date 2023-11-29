@@ -16,7 +16,7 @@ class ServiceController extends Controller
 
     public function index(Request $request)
     {
-        $services = $this->serviceService->getAll();
+        $services = $this->serviceService->getAll($request);
 
         return view('services.index', compact("services"));
     }
@@ -61,7 +61,6 @@ class ServiceController extends Controller
 
         return redirect('services')->with('success', __('messages.dataAddedSuccessfully'));
     }
-
 
     public function update(ServiceRequest $request, $serviceId)
     {

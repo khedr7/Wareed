@@ -71,4 +71,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Order::class);
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }

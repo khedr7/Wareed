@@ -15,6 +15,16 @@ class BannerService
         return Banner::all();
     }
 
+    public function getAllActive()
+    {
+        return Banner::where(function ($query) {
+            $query->where('start_date', '<=', now())
+                ->where('expiration_date', '>=', now());
+        })
+            ->orWhere('expiration_date', null)
+            ->get();
+    }
+
     public function find($bannerId)
     {
         return $this->findByIdOrFail(Banner::class, 'banner', $bannerId);

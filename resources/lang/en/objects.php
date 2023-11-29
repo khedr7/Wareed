@@ -9,7 +9,7 @@ return [
     'state'      => 'state',
     'city'       => 'city',
     'category'   => 'category',
-    'Service'    => 'Service',
+    'service'    => 'service',
     'banner'     => 'banner',
     'order'      => 'order',
     'paymentMethod'    => 'payment Method',

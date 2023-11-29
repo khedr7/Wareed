@@ -19,6 +19,16 @@ class UserService
         return User::where('accepted', 1)->orderBy('role', 'asc')->get();
     }
 
+    public function getTopRated()
+    {
+        return User::where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
+    }
+
+    public function getAllProviders()
+    {
+        return User::where('accepted', 1)->where('status', 1)->where('role', 'provider')->get();
+    }
+
     public function unacceptedUsers()
     {
         return User::where('accepted', 0)->orderBy('role', 'asc')->get();
@@ -52,7 +62,7 @@ class UserService
 
     public function store($validatedData)
     {
-        
+
         DB::beginTransaction();
 
         $validatedData['password'] = Hash::make($validatedData['password']);

@@ -16,6 +16,13 @@ class StateService
         return State::orderBy('id', 'desc')->get();
     }
 
+    public function getAllApp()
+    {
+        return State::with(['cities' => function ($query) {
+            $query->orderBy('name', 'asc');
+        },])->orderBy('name', 'asc')->get();
+    }
+
     public function getCities($stateId)
     {
         return State::where('id', $stateId)->with(['cities' => function ($query) {
