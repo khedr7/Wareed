@@ -3,7 +3,7 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-	<h1 class="m-0 text-dark">Dashboard</h1>
+	<h1 class="m-0 text-dark">{{ __('adminstaticword.Dashboard') }}</h1>
 @stop
 
 @section('content')
@@ -123,6 +123,8 @@
 							</div>
 						</div>
 
+
+
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('birthday') ? ' has-danger' : '' }}">
@@ -175,7 +177,7 @@
 								</div>
 							</div>
 
-                            <div class="col-md-6">
+							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }}<sup style="color: red">*</sup></label> <br>
 
@@ -310,4 +312,5 @@
 		// Summernote
 		// $('#summernote').summernote()
 	})
+
 </script>

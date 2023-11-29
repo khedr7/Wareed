@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TermsPolicyRequest extends FormRequest
+class BannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,20 +33,22 @@ class TermsPolicyRequest extends FormRequest
     public function getCreateRules()
     {
         return [
-            'terms_en'  => '',
-            'terms_ar'  => '',
-            'policy_en' => '',
-            'policy_ar' => ''
+            'link'            => 'required',
+            'start_date'      => 'required|date',
+            'expiration_date' => 'nullable|date|after:start_date',
+            'status'          => '',
+            'image'   => 'required|image|mimes:png,jpg,jpeg',
         ];
     }
 
     public function getUpdateRules()
     {
         return [
-            'terms_en'  => '',
-            'terms_ar'  => '',
-            'policy_en' => '',
-            'policy_ar' => ''
+            'link'            => 'required',
+            'start_date'      => 'required|date',
+            'expiration_date' => 'nullable|date|after:start_date',
+            'status'          => '',
+            'image'   => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
         ];
     }
 }

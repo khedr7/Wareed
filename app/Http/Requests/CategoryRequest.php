@@ -35,7 +35,6 @@ class CategoryRequest extends FormRequest
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
             'image'   => 'required|image|mimes:png,jpg,jpeg',
-
         ];
     }
 
@@ -45,7 +44,6 @@ class CategoryRequest extends FormRequest
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
             'image'   => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
-
         ];
     }
 }

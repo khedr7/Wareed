@@ -66,7 +66,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  background-color: #f4f6f9 !important;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -44537,6 +44537,7 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
 
 .img-size-32 {
   width: 32px;
+  height: 32px; !important
 }
 
 .size-32,
@@ -53025,4 +53026,7 @@ a.text-muted:hover {
 .bg-success {
     background-color: green !important;
     color: white !important;
+}
+.sidebar-mini{
+    background-color: #f4f6f9 !important;
 }

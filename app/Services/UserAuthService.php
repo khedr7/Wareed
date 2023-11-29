@@ -17,7 +17,7 @@ class UserAuthService
     public function __construct(private UserService $userService)
     {
     }
-   
+
     public function login($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();
@@ -38,7 +38,7 @@ class UserAuthService
         $token = Auth::attempt($attemptedData);
         $accessToken = $user->createToken('auth');
         return [
-            'role' => $user,
+            'user'  => $user,
             'token' => $accessToken->plainTextToken
         ];
     }
@@ -48,7 +48,7 @@ class UserAuthService
         /**
          * @var $user=App\Models\Employee
          */
-        $user = Auth::guard('user')->user();
+        $user = Auth::guard('sanctum')->user();
 
         DB::beginTransaction();
 
@@ -59,7 +59,7 @@ class UserAuthService
 
     public function logout()
     {
-        Auth::guard('user')->logout();
+        Auth::guard('sanctum')->logout();
     }
     public function generateOTP($validatedData)
     {
@@ -112,6 +112,24 @@ class UserAuthService
     }
     public function register($validatedData)
     {
-       return $this->userService->store($validatedData);
+
+        DB::beginTransaction();
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['status']   = 1;
+        $validatedData['accepted'] = 1;
+        $validatedData['role'] = 'user';
+
+        $user = User::create($validatedData);
+
+        $user->assignRole('user');
+        $accessToken = $user->createToken('auth');
+
+        DB::commit();
+
+        return [
+            'user'  => $user,
+            'token' => $accessToken->plainTextToken
+        ];
     }
 }

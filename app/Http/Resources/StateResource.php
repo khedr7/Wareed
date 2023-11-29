@@ -17,25 +17,25 @@ class StateResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
-             default => $this->defaultResource(),
+            default => $this->defaultResource(),
         };
     }
 
     public function getAllResource()
     {
-          return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'created_at' => $this->created_at
-          ];
+        return [
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'cities' =>  CityResource::collection($this->cities),
+        ];
     }
 
     public function defaultResource()
     {
-          return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'created_at' => $this->created_at
-          ];
+        return [
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'cities' =>  CityResource::collection($this->cities),
+        ];
     }
 }

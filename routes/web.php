@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\OrderController;
@@ -27,15 +28,14 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');;
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+// Route::get('/home', function () {
+//     return view('home');
+// })->name('home')->middleware('auth');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/status/{serviceId}',  [ServiceController::class, 'status'])->name('services.admin.status');
         Route::delete('/{serviceId}',      [ServiceController::class, 'delete'])->name('services.admin.delete');
     });
+
     Route::group(['prefix' => 'payment-methods'], function () {
         Route::get('/', [PaymentMethodController::class, 'index'])->name('paymentMethods.admin.index');
         Route::get('/status/{methodId}',  [PaymentMethodController::class, 'status'])->name('paymentMethods.admin.status');
@@ -117,5 +118,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'policy'], function () {
         Route::get('/',  [TermsPolicyController::class, 'editPolicy'])->name('policy.admin.edit');
+    });
+
+    Route::group(['prefix' => 'banners'], function () {
+        Route::get('/', [BannerController::class, 'index'])->name('banners.admin.index');
+        Route::post('/bulk-delete',  [BannerController::class, 'bulkDelete'])->name('banners.admin.bulkDelete');
+        Route::post('/',             [BannerController::class, 'store'])->name('banners.admin.store');
+        Route::get('/{bannerId}',    [BannerController::class, 'show'])->name('banners.admin.show');
+        Route::post('/{bannerId}',        [BannerController::class, 'update'])->name('banners.admin.update');
+        Route::get('/status/{bannerId}',  [BannerController::class, 'status'])->name('banners.admin.status');
+        Route::delete('/{bannerId}',      [BannerController::class, 'delete'])->name('banners.admin.delete');
     });
 });

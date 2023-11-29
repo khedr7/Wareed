@@ -3,7 +3,7 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-	<h1 class="m-0 text-dark">Dashboard</h1>
+	<h1 class="m-0 text-dark">{{ __('adminstaticword.Dashboard') }}</h1>
 @stop
 
 @section('content')
@@ -238,7 +238,7 @@
 			setTimeout(initMapAfterLoad, 100);
 		}
 	}
-    
+
 	// تهيئة الخريطة
 	function initMap() {
 		const latt = {{ $service->latitude }}

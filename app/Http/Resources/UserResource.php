@@ -14,54 +14,79 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        if (request()->routeIs('app.service.find')) {
+            return $this->getAllResource();
+        }
+
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
-            'getAll' => $this->getAllResource(),
-            default => $this->defaultResource(),
+            'getAll'          => $this->getAllResource(),
+            'getAllProviders' => $this->getAllResource(),
+            default           => $this->defaultResource(),
         };
     }
 
     public function getAllResource()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'email_verified_at' => $this->email_verified_at,
-            'password' => $this->password,
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'role' => $this->role,
-            'status' => $this->status,
-            'accepted' => $this->accepted,
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'email'         => $this->email,
+            'address'       => $this->address,
+            'profile'       => $this->profile,
+            'phone'         => $this->phone,
+            'role'          => $this->role,
+            'status'        => $this->status,
+            'accepted'      => $this->accepted,
             'has_residence' => $this->has_residence,
-            'gender' => $this->gender,
-            'birthday' => $this->birthday,
-            'details' => $this->details,
-            'fcm_token' => $this->fcm_token,
-            'created_at' => $this->created_at
+            'gender'        => $this->gender,
+            'birthday'      => $this->birthday,
+            'details'       => $this->details,
+            'fcm_token'     => $this->fcm_token,
+            'created_at'    => $this->created_at
         ];
     }
 
     public function defaultResource()
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'email_verified_at' => $this->email_verified_at,
-            'password' => $this->password,
-            'address' => $this->address,
-            'phone' => $this->phone,
-            'role' => $this->role,
-            'status' => $this->status,
-            'accepted' => $this->accepted,
-            'has_residence' => $this->has_residence,
-            'gender' => $this->gender,
-            'birthday' => $this->birthday,
-            'details' => $this->details,
-            'fcm_token' => $this->fcm_token,
-            'created_at' => $this->created_at
-        ];
+
+        if ($this->role == 'provider') {
+            return [
+                'id'            => $this->id,
+                'name'          => $this->name,
+                'email'         => $this->email,
+                'address'       => $this->address,
+                'profile'       => $this->profile,
+                'phone'         => $this->phone,
+                'role'          => $this->role,
+                'status'        => $this->status,
+                'accepted'      => $this->accepted,
+                'has_residence' => $this->has_residence,
+                'gender'        => $this->gender,
+                'birthday'      => $this->birthday,
+                'details'       => $this->details,
+                'fcm_token'     => $this->fcm_token,
+                'created_at'    => $this->created_at,
+                'services'      => ServiceResource::collection($this->services)
+            ];
+        } else {
+            return [
+                'id'            => $this->id,
+                'name'          => $this->name,
+                'email'         => $this->email,
+                'address'       => $this->address,
+                'profile'       => $this->profile,
+                'phone'         => $this->phone,
+                'role'          => $this->role,
+                'status'        => $this->status,
+                'accepted'      => $this->accepted,
+                'has_residence' => $this->has_residence,
+                'gender'        => $this->gender,
+                'birthday'      => $this->birthday,
+                'details'       => $this->details,
+                'fcm_token'     => $this->fcm_token,
+                'created_at'    => $this->created_at
+            ];
+        }
     }
 }

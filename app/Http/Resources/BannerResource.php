@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class BannerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,18 +24,25 @@ class CategoryResource extends JsonResource
     public function getAllResource()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'image' => $this->image,
+            'id'              => $this->id,
+            'link'            => $this->link,
+            'start_date'      => $this->start_date,
+            'expiration_date' => $this->expiration_date,
+            'image'           => $this->image,
+            'created_at'      => $this->created_at
         ];
     }
 
     public function defaultResource()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'image' => $this->image,
+            'id'              => $this->id,
+            'link'            => $this->link,
+            'start_date'      => $this->start_date,
+            'expiration_date' => $this->expiration_date,
+            'status'          => $this->status,
+            'image'           => $this->image,
+            'created_at'      => $this->created_at
         ];
     }
 }

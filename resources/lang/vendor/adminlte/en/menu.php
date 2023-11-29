@@ -28,5 +28,6 @@ return [
     'About'                         => 'About',
     'Terms and Conditions'          => 'Terms and Conditions',
     'Privacy Policy'                => 'Privacy Policy',
+    'Banners'                       => 'Banners',
 
 ];
