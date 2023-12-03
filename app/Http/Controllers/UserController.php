@@ -35,14 +35,15 @@ class UserController extends Controller
     {
         DB::beginTransaction();
 
-        $data = $this->userService->create();
-        $roles = $data['roles'];
+        $data   = $this->userService->create();
+        $roles  = $data['roles'];
         $cities = $data['cities'];
         $states = $data['states'];
+        $days   = $data['days'];
 
         DB::commit();
 
-        return view('users.create', compact("roles", 'cities', 'states'));
+        return view('users.create', compact("roles", 'cities', 'states', 'days'));
     }
 
     public function edit($id)
@@ -54,21 +55,22 @@ class UserController extends Controller
         $roles = $data['roles'];
         $cities = $data['cities'];
         $states = $data['states'];
+        $days   = $data['days'];
 
         DB::commit();
 
-        return view('users.edit', compact('user', "roles", 'cities', 'states'));
+        return view('users.edit', compact('user', "roles", 'cities', 'states', 'days'));
     }
 
     public function store(UserRequest $request)
     {
         $validatedData = $request->validated();
-
         $user = $this->userService->store($validatedData);
 
         if ($request->file('profile') && $request->file('profile')->isValid()) {
             $user->addMedia($request->profile)->toMediaCollection('profile');
         }
+
 
         return redirect('users')->with('success', __('messages.dataAddedSuccessfully'));
     }

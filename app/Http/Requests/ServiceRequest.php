@@ -33,32 +33,34 @@ class ServiceRequest extends FormRequest
     public function getCreateRules()
     {
         return [
-            'name'        => 'required',
-            'details'     => '',
-            'price'       => 'nullable|numeric',
-            'latitude'    => 'nullable|numeric',
-            'longitude'   => 'nullable|numeric',
-            'status'      => '',
-            'featured'    => '',
-            'image'       => 'required|nullable|image|mimes:png,jpg,jpeg',
-            'category_id' => 'required|exists:categories,id',
-            'user_id'     => 'required|exists:users,id',
+            'name'               => 'required',
+            'details'            => '',
+            'price'              => 'nullable|numeric',
+            'latitude'           => 'nullable|numeric',
+            'longitude'          => 'nullable|numeric',
+            'status'             => '',
+            'featured'           => '',
+            'on_patient_site'    => '',
+            'image'              => 'required|nullable|image|mimes:png,jpg,jpeg',
+            'category_id'        => 'required|exists:categories,id',
+            'user_id'            => 'required|exists:users,id',
         ];
     }
 
     public function getUpdateRules()
     {
         return [
-            'name'        => 'required',
-            'details'     => '',
-            'price'       => 'nullable|numeric',
-            'latitude'    => 'nullable|numeric',
-            'longitude'   => 'nullable|numeric',
-            'status'      => '',
-            'featured'    => '',
-            'image'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
-            'category_id' => 'required|exists:categories,id',
-            'user_id'     => 'required|exists:users,id',
+            'name'               => 'required',
+            'details'            => '',
+            'price'              => 'nullable|numeric',
+            'latitude'           => 'nullable|numeric',
+            'longitude'          => 'nullable|numeric',
+            'status'             => '',
+            'featured'           => '',
+            'on_patient_site'    => '',
+            'image'              => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
+            'category_id'        => 'required|exists:categories,id',
+            'user_id'            => 'required|exists:users,id',
         ];
     }
 }

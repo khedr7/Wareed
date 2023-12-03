@@ -55,7 +55,10 @@ class UserRequest extends FormRequest
             'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'details'       => '',
             'points'        => 'nullable|numeric',
-            'fcm_token'     => ''
+            'fcm_token'     => '',
+            'days'          => 'sometimes|array',
+            'latitude'      => 'nullable|numeric',
+            'longitude'     => 'nullable|numeric',
         ];
     }
     public function getRegisterRules()
@@ -73,7 +76,9 @@ class UserRequest extends FormRequest
             'profile'       => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'details'       => '',
             'points'        => 'nullable|numeric',
-            'fcm_token'     => ''
+            'fcm_token'     => '',
+            'latitude'      => 'nullable|numeric',
+            'longitude'     => 'nullable|numeric',
         ];
     }
 
@@ -81,7 +86,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name'                 => 'required|min:3',
-            'email'                => 'required|email|unique:users,email,' . auth()->id(),
+            'email'                => 'required|email|unique:users,email,' . request()->old_email . ',email',
             'password'             => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
             'address'              => '',
             // 'phone'                => 'sometimes|required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
@@ -94,7 +99,10 @@ class UserRequest extends FormRequest
             'details'              => '',
             'profile'              => 'sometimes|image|mimes:png,jpg,jpeg',
             'fcm_token'            => '',
-            'confirm_password'     => 'sometimes|same:password'
+            'confirm_password'     => 'sometimes|same:password',
+            'days'                 => 'sometimes|array',
+            'latitude'             => 'nullable|numeric',
+            'longitude'            => 'nullable|numeric',
         ];
     }
 
@@ -113,14 +121,16 @@ class UserRequest extends FormRequest
             'details'              => '',
             'profile'              => 'sometimes|image|mimes:png,jpg,jpeg',
             'fcm_token'            => '',
-            'confirm_password'     => 'sometimes|same:password'
+            'confirm_password'     => 'sometimes|same:password',
+            'latitude'             => 'nullable|numeric',
+            'longitude'            => 'nullable|numeric',
         ];
     }
 
     public function generateOTP()
     {
         return [
-            'phone'   => 'required|min:9|max:10|exists:users,phone',
+            'phone'   => 'required|min:9|max:10',
         ];
     }
     public function verifyOTP()

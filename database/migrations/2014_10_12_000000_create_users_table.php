@@ -24,10 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->boolean('status')->default(1);
             $table->boolean('accepted')->default(0);
-            $table->boolean('has_residence')->nullable();
+            $table->boolean('has_residence')->default(0)->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->date('birthday')->nullable();
             $table->text('details')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->double('points')->default(0)->nullable();
             $table->string('fcm_token', 255)->nullable();
             $table->rememberToken();

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\City;
+use App\Models\Day;
 use App\Models\State;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
@@ -16,22 +17,22 @@ class UserService
 
     public function getAll()
     {
-        return User::where('accepted', 1)->orderBy('role', 'asc')->get();
+        return User::with('days')->where('accepted', 1)->orderBy('role', 'asc')->get();
     }
 
     public function getTopRated()
     {
-        return User::where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
+        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
     }
 
     public function getAllProviders()
     {
-        return User::where('accepted', 1)->where('status', 1)->where('role', 'provider')->get();
+        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get();
     }
 
     public function unacceptedUsers()
     {
-        return User::where('accepted', 0)->orderBy('role', 'asc')->get();
+        return User::with('days')->where('accepted', 0)->orderBy('role', 'asc')->get();
     }
 
     public function find($userId)
@@ -44,7 +45,8 @@ class UserService
         $data = [
             'roles'  => Role::orderBy('name')->get(),
             'cities' => City::orderBy('name')->get(),
-            'states' => State::orderBy('name')->get()
+            'states' => State::orderBy('name')->get(),
+            'days'   => Day::orderBy('id')->get()
         ];
         return $data;
     }
@@ -52,10 +54,11 @@ class UserService
     public function edit($id)
     {
         $data = [
-            'user'   => User::where('id', $id)->with('city')->first(),
+            'user'   => User::where('id', $id)->with(['city', 'days'])->first(),
             'roles'  => Role::orderBy('name')->get(),
             'cities' => City::orderBy('name')->get(),
-            'states' => State::orderBy('name')->get()
+            'states' => State::orderBy('name')->get(),
+            'days'   => Day::orderBy('id')->get()
         ];
         return $data;
     }
@@ -71,6 +74,8 @@ class UserService
         $user = User::create($validatedData);
 
         $user->assignRole($validatedData['role']);
+        if (isset($validatedData['days']))
+            $user->days()->sync($validatedData['days']);
 
         DB::commit();
 
@@ -80,12 +85,15 @@ class UserService
     public function update($validatedData, $userId)
     {
         $user = $this->findByIdOrFail(User::class, 'user', $userId);
-
         DB::beginTransaction();
         $validatedData['password'] = $validatedData['password'] ? Hash::make($validatedData['password']) : $user->password;
 
         $user->update($validatedData);
         $user->assignRole($validatedData['role']);
+        if (!isset($validatedData['days']))
+            $validatedData['days'] = [];
+        $user->days()->sync($validatedData['days']);
+
         DB::commit();
 
         return $user;

@@ -26,6 +26,8 @@
 
 						@include('alerts.success')
 						{{-- <input hidden type="text" name="old_phone" value="{{ $user->phone }}"> --}}
+						<input hidden type="text" name="old_email" value="{{ $user->email }}">
+
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -62,9 +64,9 @@
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
-									<label>{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
+									<label for="role">{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
 									<select required name="role" id="role"
-										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}">
+										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }} select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($roles as $role)
 											<option value="{{ $role->name }}" {{ $role->name == $user->role ? 'selected' : '' }}>
@@ -95,10 +97,11 @@
 								<div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.Country') }}</label>
 									<select name="state" id="state"
-										class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} form-control select2">
+										class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} form-control select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($states as $state)
-											<option value="{{ $state->id }}" {{ $state->id == $user->city->state_id ? 'selected' : '' }}>
+											<option value="{{ $state->id }}"
+												{{ $user->city ? ($state->id == $user->city->state_id ? 'selected' : '') : '' }}>
 												{{ $state->name }}
 											</option>
 										@endforeach
@@ -110,7 +113,7 @@
 								<div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.City') }}</label>
 									<select name="city_id" id="city_id"
-										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2">
+										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($cities as $city)
 											<option value="{{ $city->id }}" {{ $city->id == $user->city_id ? 'selected' : '' }}>
@@ -122,8 +125,6 @@
 								</div>
 							</div>
 						</div>
-
-
 
 						<div class="row">
 							<div class="col-md-6">
@@ -204,7 +205,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 form-group">
+							<div class="col-md-3 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
@@ -213,7 +214,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 form-group">
+							<div class="col-md-3 form-group">
 								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="has_residence" type="checkbox" name="has_residence" class="custom-control-input"
@@ -221,8 +222,49 @@
 									<label class="custom-control-label" for="has_residence"></label>
 								</div>
 							</div>
+
+							<div class="col-md-6" @if ($user->role != 'provider') style="display: none;" @endif id="rolebox">
+								<div class="form-group{{ $errors->has('days[]') ? ' has-danger' : '' }}">
+									<label for="days">{{ __('adminstaticword.Days') }} <sup style="color: red">*</sup></label>
+									<select class="select2bs4 form-control{{ $errors->has('days[]') ? ' is-invalid' : '' }}" multiple
+										name="days[]" id="days">
+										@foreach ($days as $day)
+											<option value="{{ $day->id }}"
+												{{ in_array($day->id, $user->days->pluck('id')->toArray()) ? 'selected' : '' }}>
+												{{ $day->name }}
+											</option>
+										@endforeach
+									</select>
+									@include('alerts.feedback', ['field' => 'days'])
+								</div>
+							</div>
 						</div>
 						<br>
+
+						<div class="row">
+
+							<div class="col-md-6 form-group">
+								<div class="form-group @error('code') is-invalid @enderror">
+									<label>{{ __('adminstaticword.MapLatitude') }} <sup style="color: red">*</sup></label>
+									<input type="text" name="latitude" id="latitude"
+										class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}"
+										value="{{ old('latitude', $user->latitude) }}">
+									@include('alerts.feedback', ['field' => 'latitude'])
+								</div>
+								<div class="form-group @error('code') is-invalid @enderror">
+									<label>{{ __('adminstaticword.MapLongitude') }} <sup style="color: red">*</sup></label>
+									<input type="text" name="longitude" id="longitude"
+										class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}"
+										value="{{ old('longitude', $user->longitude) }}">
+									@include('alerts.feedback', ['field' => 'longitude'])
+								</div>
+							</div>
+
+							<div class="col-md-6 form-group">
+								<div class="map" id="map"></div>
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
@@ -233,7 +275,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-footer">
+
+						<div class="">
 							<button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>
 						</div>
 					</div>
@@ -249,17 +292,99 @@
 
 @stop
 
+<style>
+	.map {
+		height: 250px;
+		width: 350px;
+	}
+</style>
+
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+
+{{-- map --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPsxZeXKcSYK1XXw0O0RbrZiI_Ekou5DY&callback=initMap" async
+	defer></script>
 
 <script>
-	//Initialize Select2 Elements
-	// $('.select2').select2()
+	document.addEventListener('DOMContentLoaded', function() {
+		// Wait for the DOM to be fully loaded
+		initMapAfterLoad();
+	});
 
-	//Initialize Select2 Elements
-	// $('.select2bs4').select2({
-	// 	theme: 'bootstrap4'
-	// })
+	function initMapAfterLoad() {
+		// Check if the map element is available
+		const mapElement = document.getElementById('map');
+		if (mapElement) {
+			// Initialize the map
+			initMap();
+		} else {
+			// If the map element is not available, wait and try again
+			setTimeout(initMapAfterLoad, 100);
+		}
+	}
+
+	// تهيئة الخريطة
+	function initMap() {
+		console.log(document.getElementById('map'));
+		const latt = {{ $user->latitude }}
+		const long = {{ $user->longitude }}
+		if (latt != null && long != null) {
+			const map = new google.maps.Map(document.getElementById('map'), {
+				center: {
+					lat: latt,
+					lng: long
+				}, // تعيين الموقع الابتدائي
+				zoom: 15,
+			});
+			// إضافة حدث النقر على الخريطة
+			google.maps.event.addListener(map, 'click', function(event) {
+				// الحصول على الإحداثيات عند النقر
+				const lat = event.latLng.lat();
+				const lng = event.latLng.lng();
+
+				$('#latitude').val(lat);
+				$('#longitude').val(lng);
+
+
+				// يمكنك استخدام lat وlng كما تشاء (مثلاً: تخزينها في متغيرات أو إرسالها إلى خادم)
+				console.log('Latitude: ' + lat + ' , Longitude: ' + lng);
+			});
+		} else {
+			const map = new google.maps.Map(document.getElementById('map'), {
+				center: {
+					lat: 33.510414,
+					lng: 36.278336
+				}, // تعيين الموقع الابتدائي
+				zoom: 15,
+			});
+			// إضافة حدث النقر على الخريطة
+			google.maps.event.addListener(map, 'click', function(event) {
+				// الحصول على الإحداثيات عند النقر
+				const lat = event.latLng.lat();
+				const lng = event.latLng.lng();
+
+				$('#latitude').val(lat);
+				$('#longitude').val(lng);
+
+
+				// يمكنك استخدام lat وlng كما تشاء (مثلاً: تخزينها في متغيرات أو إرسالها إلى خادم)
+				console.log('Latitude: ' + lat + ' , Longitude: ' + lng);
+			});
+		}
+
+	}
+</script>
+
+<script>
+	$(function() {
+		//Initialize Select2 Elements
+		$('.select2').select2()
+
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme: 'bootstrap4'
+		})
+	});
 </script>
 
 <script>
@@ -302,15 +427,18 @@
 		});
 	});
 </script>
-<!-- Summernote -->
-{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
-<script type="text/javascript">
-	//$(document.ready(function() {
-	//	$('#summernote').summernote()
-	//}));
-	$(function() {
-		// Summernote
-		// $('#summernote').summernote()
-	})
 
+<script type="text/javascript">
+	$(function() {
+		$('#role').on('change', function() {
+			var opt = $(this).val();
+
+			if (opt == 'provider') {
+				$('#rolebox').show();
+
+			} else {
+				$('#rolebox').hide('fast');
+			}
+		});
+	});
 </script>

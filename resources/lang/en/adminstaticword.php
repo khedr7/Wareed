@@ -53,6 +53,7 @@ return array (
   'Affiliate' => 'Affiliate',
   'Affiliate&Wallet' => 'Affiliate & Wallet',
   'Affiliate&Transactions' => 'Affiliate & Transactions',
+
   'Agenda' => 'Agenda',
   'All' => 'All',
   'AllAssignments' => 'All Assignments',
@@ -389,6 +390,7 @@ return array (
   'ONESIGNALRESTAPIKEY' => 'ONESIGNAL REST API KEY',
   'OnesignalKeys' => 'Onesignal Keys',
   'Online' => 'Online',
+  'on_patient_site' => 'On patient site',
   'Order' => 'Order',
   'OrderID' => 'Order ID',
   'OrderId' => 'Order Id',

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('longitude')->nullable();
             $table->boolean('status')->default(1);
             $table->boolean('featured')->default(0);
+            $table->boolean('on_patient_site')->default(0)->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->unsignedBigInteger('user_id');
