@@ -81,7 +81,7 @@
 								<div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.Country') }}</label>
 									<select name="state" id="state"
-										class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} form-control select2">
+										class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }} form-control select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($states as $state)
 											<option value="{{ $state->id }}" {{ $state->id == old('state') ? 'selected' : '' }}>
@@ -97,7 +97,7 @@
 								<div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.City') }} <sup style="color: red">*</sup></label>
 									<select name="city_id" id="city_id"
-										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2">
+										class="form-control{{ $errors->has('city_id') ? ' is-invalid' : '' }} form-control select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($cities as $city)
 											<option value="{{ $city->id }}" {{ $city->id == old('city_id') ? 'selected' : '' }}>
@@ -115,9 +115,9 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
-									<label>{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
+									<label for="role">{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
 									<select required name="role" id="role"
-										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}">
+										class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }} select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($roles as $role)
 											<option value="{{ $role->name }}" {{ $role->name == old('role') ? 'selected' : '' }}>
@@ -128,6 +128,7 @@
 									@include('alerts.feedback', ['field' => 'role'])
 								</div>
 							</div>
+
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Address') }}</label>
@@ -179,7 +180,26 @@
 
 						<div class="row">
 
-							<div class="col-md-4">
+							<div class="col-md-6 form-group">
+								<label>{{ __('adminstaticword.Status') }}</label> <br>
+								<div class="custom-switch">
+									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input">
+									<label class="custom-control-label" for="status"></label>
+								</div>
+							</div>
+
+							<div class="col-md-6 form-group">
+								<label>{{ __('adminstaticword.Residence') }}</label> <br>
+								<div class="custom-switch">
+									<input id="has_residence" type="checkbox" value="1" name="has_residence" class="custom-control-input">
+									<label class="custom-control-label" for="has_residence"></label>
+								</div>
+							</div>
+						</div>
+						<br>
+
+						<div class="row">
+							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }} <sup style="color: red">*</sup></label> <br>
 
@@ -203,23 +223,43 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 form-group">
-								<label>{{ __('adminstaticword.Status') }}</label> <br>
-								<div class="custom-switch">
-									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input">
-									<label class="custom-control-label" for="status"></label>
-								</div>
-							</div>
-
-							<div class="col-md-4 form-group">
-								<label>{{ __('adminstaticword.Residence') }}</label> <br>
-								<div class="custom-switch">
-									<input id="has_residence" type="checkbox" value="1" name="has_residence" class="custom-control-input">
-									<label class="custom-control-label" for="has_residence"></label>
+							<div class="col-md-6" style="display: none;" id="rolebox">
+								<div class="form-group{{ $errors->has('days[]') ? ' has-danger' : '' }}">
+									<label for="days">{{ __('adminstaticword.Days') }} <sup style="color: red">*</sup></label>
+									<select class="select2bs4" multiple name="days[]" id="days"
+										class="form-control{{ $errors->has('days') ? ' is-invalid' : '' }}">
+										@foreach ($days as $day)
+											<option value="{{ $day->id }}" {{ $day->id == old('day[]') ? 'selected' : '' }}>
+												{{ $day->name }}
+											</option>
+										@endforeach
+									</select>
+									@include('alerts.feedback', ['field' => 'days'])
 								</div>
 							</div>
 						</div>
-						<br>
+
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<div class="form-group @error('code') is-invalid @enderror">
+									<label>{{ __('adminstaticword.MapLatitude') }}</label>
+									<input type="text" name="latitude" id="latitude"
+										class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}" value="{{ old('latitude') }}">
+									@include('alerts.feedback', ['field' => 'latitude'])
+								</div>
+								<div class="form-group @error('code') is-invalid @enderror">
+									<label>{{ __('adminstaticword.MapLongitude') }}</label>
+									<input type="text" name="longitude" id="longitude"
+										class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}" value="{{ old('longitude') }}">
+									@include('alerts.feedback', ['field' => 'longitude'])
+								</div>
+							</div>
+
+							<div class="col-md-6 form-group">
+								<div class="map" id="map"></div>
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
@@ -245,24 +285,39 @@
 
 
 @stop
+<style>
+	.map {
+		height: 250px;
+		width: 350px;
+	}
+</style>
 
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
-{{-- <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script> --}}
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- jquery-validation -->
 <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-validation/additional-methods.min.js') }}"></script>
 
-<script>
-	//Initialize Select2 Elements
-	// $('.select2').select2()
+<style>
+	.map {
+		height: 250px;
+		width: 350px;
+	}
+</style>
 
-	//Initialize Select2 Elements
-	// $('.select2bs4').select2({
-	// 	theme: 'bootstrap4'
-	// })
+
+<script>
+	$(function() {
+		//Initialize Select2 Elements
+		$('.select2').select2()
+
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme: 'bootstrap4'
+		})
+	});
 </script>
 
 <script>
@@ -288,7 +343,7 @@
 						// console.log(data);
 						up.append(
 							'<option selected disabled value="0">{{ __('select') }}</option>'
-							);
+						);
 						$.each(data, function(id, name) {
 							up.append($('<option>', {
 								value: id,
@@ -303,106 +358,63 @@
 			}
 		});
 	});
-</script>
-<!-- Summernote -->
-{{-- <script src="{{ asset('vendor/summernote/summernote-bs4.min.js') }}"></script> --}}
-<script type="text/javascript">
-	//$(document.ready(function() {
-	//	$('#summernote').summernote()
-	//}));
-	// $(function() {
-	// 	// Summernote
-	// 	$('#summernote').summernote()
-	// })
-</script>
 
-{{-- <script>
-	document.getElementById('create-user').addEventListener('submit', function(event) {
-		var password = document.getElementById('password').value;
-		var passwordRegex = /^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/;
-
-		if (!passwordRegex.test(password)) {
-			alert('Password does not meet the requirements.');
-			event.preventDefault(); // Prevent form submission
-		}
-	});
-</script> --}}
-
-
-{{-- <script>
 	$(function() {
-		$.validator.setDefaults({
-			submitHandler: function() {
-				alert("Form successful submitted!");
-			}
-		});
-		$('#create-user').validate({
-			rules: {
-				name: {
-					required: true,
-					minlength: 2
-				},
-				email: {
-					required: true,
-					email: true,
-				},
-				password: {
-					required: true,
-					minlength: 6
-				},
-				city_id: {
-					required: true
-				},
-				role: {
-					required: true
-				},
-				profile: {
-					image: true
-				},
+		$('#role').on('change', function() {
+			var opt = $(this).val();
 
-				gender: {
-					required: true
-				},
+			if (opt == 'provider') {
+				$('#rolebox').show();
 
-			},
-			messages: {
-				name: {
-					required: "Please enter a email address",
-					minlength: "The name must be at least 3 characters long"
-				},
-				email: {
-					required: "Please enter a email address",
-					email: "Please enter a valid email address"
-				},
-				password: {
-					required: "Please provide a password",
-					minlength: "Your password must be at least 6 characters long"
-				},
-				city_id: {
-					required: "Please provide a city",
-				},
-				role: {
-					required: "Please provide a role",
-				},
-
-				birthday: {
-					required: "Please provide a birthday",
-				},
-				gender: {
-					required: "Please provide a gender",
-				},
-			},
-			errorElement: 'span',
-			errorPlacement: function(error, element) {
-				error.addClass('invalid-feedback');
-				element.closest('.form-group').append(error);
-			},
-			highlight: function(element, errorClass, validClass) {
-				$(element).addClass('is-invalid');
-			},
-			unhighlight: function(element, errorClass, validClass) {
-				$(element).removeClass('is-invalid');
+			} else {
+				$('#rolebox').hide('fast');
 			}
 		});
 	});
-</script> --}}
+</script>
+
+{{-- map --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPsxZeXKcSYK1XXw0O0RbrZiI_Ekou5DY&callback=initMap" async
+	defer></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Wait for the DOM to be fully loaded
+		initMapAfterLoad();
+	});
+
+	function initMapAfterLoad() {
+		// Check if the map element is available
+		const mapElement = document.getElementById('map');
+		if (mapElement) {
+			// Initialize the map
+			initMap();
+		} else {
+			// If the map element is not available, wait and try again
+			setTimeout(initMapAfterLoad, 100);
+		}
+	}
+
+	// تهيئة الخريطة
+	function initMap() {
+		const map = new google.maps.Map(document.getElementById('map'), {
+			center: {
+				lat: 33.510414,
+				lng: 36.278336
+			},
+			zoom: 8,
+		});
+
+		// إضافة حدث النقر على الخريطة
+		google.maps.event.addListener(map, 'click', function(event) {
+			// الحصول على الإحداثيات عند النقر
+			const lat = event.latLng.lat();
+			const lng = event.latLng.lng();
+
+			$('#latitude').val(lat);
+			$('#longitude').val(lng);
+
+			// يمكنك استخدام lat وlng كما تشاء (مثلاً: تخزينها في متغيرات أو إرسالها إلى خادم)
+			console.log('Latitude: ' + lat + ' , Longitude: ' + lng);
+		});
+	}
+</script>

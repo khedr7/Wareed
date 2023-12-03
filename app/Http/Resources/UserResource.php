@@ -22,6 +22,8 @@ class UserResource extends JsonResource
         return match ($actionMethod) {
             'getAll'          => $this->getAllResource(),
             'getAllProviders' => $this->getAllResource(),
+            'login'           => $this->getAllResource(),
+            'register'        => $this->getAllResource(),
             default           => $this->defaultResource(),
         };
     }
@@ -42,8 +44,11 @@ class UserResource extends JsonResource
             'gender'        => $this->gender,
             'birthday'      => $this->birthday,
             'details'       => $this->details,
+            'latitude'      => $this->latitude,
+            'longitude'     => $this->longitude,
             'fcm_token'     => $this->fcm_token,
-            'created_at'    => $this->created_at
+            'created_at'    => $this->created_at,
+            'days'          => $this->days->pluck('name')->toArray(),
         ];
     }
 
@@ -65,8 +70,11 @@ class UserResource extends JsonResource
                 'gender'        => $this->gender,
                 'birthday'      => $this->birthday,
                 'details'       => $this->details,
+                'latitude'      => $this->latitude,
+                'longitude'     => $this->longitude,
                 'fcm_token'     => $this->fcm_token,
                 'created_at'    => $this->created_at,
+                'days'          => $this->days->pluck('name')->toArray(),
                 'services'      => ServiceResource::collection($this->services)
             ];
         } else {
@@ -84,8 +92,11 @@ class UserResource extends JsonResource
                 'gender'        => $this->gender,
                 'birthday'      => $this->birthday,
                 'details'       => $this->details,
+                'latitude'      => $this->latitude,
+                'longitude'     => $this->longitude,
                 'fcm_token'     => $this->fcm_token,
-                'created_at'    => $this->created_at
+                'created_at'    => $this->created_at,
+                'days'          => $this->days->pluck('name')->toArray(),
             ];
         }
     }

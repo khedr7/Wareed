@@ -140,6 +140,7 @@
 			<livewire:scripts />
 		@endif
 	@endif
+    
 
 	{{-- Custom Scripts --}}
 	@yield('adminlte_js')

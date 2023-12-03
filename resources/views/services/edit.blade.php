@@ -101,7 +101,7 @@
 									@endif
 								</div>
 							</div>
-							<div class="col-md-3 form-group">
+							<div class="col-md-2 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input"
@@ -110,12 +110,20 @@
 								</div>
 							</div>
 
-							<div class="col-md-3 form-group">
+							<div class="col-md-2 form-group">
 								<label>{{ __('adminstaticword.Featured') }}</label> <br>
 								<div class="custom-switch">
 									<input id="featured" type="checkbox" value="1" name="featured" class="custom-control-input"
 										{{ $service->featured == '1' ? 'checked' : '' }}>
 									<label class="custom-control-label" for="featured"></label>
+								</div>
+							</div>
+							<div class="col-md-2 form-group">
+								<label>{{ __('adminstaticword.on_patient_site') }}</label> <br>
+								<div class="custom-switch">
+									<input id="on_patient_site" type="checkbox" value="1" name="on_patient_site" class="custom-control-input"
+										{{ $service->on_patient_site == '1' ? 'checked' : '' }}>
+									<label class="custom-control-label" for="on_patient_site"></label>
 								</div>
 							</div>
 						</div>

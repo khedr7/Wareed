@@ -14,7 +14,7 @@ class Service extends Model implements HasMedia
     use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable  = [
-        'name', 'details', 'price', 'latitude',
+        'name', 'details', 'price', 'latitude', 'on_patient_site',
         'longitude', 'status', 'featured', 'category_id', 'user_id',
     ];
     const PATH = 'services';
@@ -29,6 +29,7 @@ class Service extends Model implements HasMedia
         'featured'    => 'integer',
         'user_id'     => 'integer',
         'category_id' => 'integer',
+        'on_patient_site'   => 'integer',
     ];
 
     public function category()

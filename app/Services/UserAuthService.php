@@ -33,7 +33,7 @@ class UserAuthService
             'password' => $validatedData['password']
         ];
         if (!Auth::attempt($attemptedData)) {
-            throw new Exception(__('messages.incorrectPassword'), 401);
+            throw new Exception(__('messages.incorrect_password'), 401);
         }
         $token = Auth::attempt($attemptedData);
         $accessToken = $user->createToken('auth');
@@ -59,8 +59,9 @@ class UserAuthService
 
     public function logout()
     {
-        Auth::guard('sanctum')->logout();
+        return Auth::guard('sanctum')->user()->currentAccessToken()->delete();
     }
+
     public function generateOTP($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();

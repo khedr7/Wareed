@@ -221,10 +221,11 @@ form.was-validated
     padding-right: 0.75rem;
     margin-top: calc(0.375rem - 2px);
     margin-right: 0.375rem;
-    color: #495057;
+    color: #fff;
     cursor: pointer;
-    border: 1px solid #bdc6d0;
+    border: 1px solid #007bff;
     border-radius: 0.2rem;
+    background: #007bff;
 }
 .select2-container--bootstrap4
     .select2-selection--multiple
@@ -246,7 +247,7 @@ form.was-validated
     margin-right: 1px;
     margin-left: 3px;
     font-weight: 700;
-    color: #bdc6d0;
+    color: #fff;
 }
 .select2-container--bootstrap4
     .select2-selection--multiple

@@ -386,6 +386,7 @@ return array(
     'ONESIGNALRESTAPIKEY' => 'Onesignal بقية API المفتاح',
     'OnesignalKeys' => 'مفاتيح Ensignal',
     'Online' => 'متصل',
+    'on_patient_site' => 'في مكان المريض',
     'Order' => 'الطلب #٪ s',
     'OrderID' => 'رقم التعريف الخاص بالطلب',
     'OrderId' => 'رقم التعريف الخاص بالطلب',
