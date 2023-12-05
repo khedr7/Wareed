@@ -128,13 +128,13 @@
 							<div class="col-md-6 form-group">
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.MapLatitude') }} <sup style="color: red">*</sup></label>
-									<input type="text" name="latitude" id="latitude"
+									<input required type="text" name="latitude" id="latitude"
 										class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}" value="{{ old('latitude') }}">
 									@include('alerts.feedback', ['field' => 'latitude'])
 								</div>
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.MapLongitude') }} <sup style="color: red">*</sup></label>
-									<input type="text" name="longitude" id="longitude"
+									<input required type="text" name="longitude" id="longitude"
 										class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}" value="{{ old('longitude') }}">
 									@include('alerts.feedback', ['field' => 'longitude'])
 								</div>

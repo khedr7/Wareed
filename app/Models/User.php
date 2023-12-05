@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
@@ -83,5 +84,55 @@ class User extends Authenticatable implements HasMedia
     public function days()
     {
         return $this->belongsToMany(Day::class, 'day_user', 'user_id', 'day_id');
+    }
+
+
+    public function scopeApp($query)
+    {
+
+        $newQuery = $query
+            ->when(request()->status == 1, function ($query) {
+                return $query->where('status', 1);
+            })
+            ->when(request()->accepted == 1, function ($query) {
+                return $query->where('accepted', 1);
+            })
+            ->when(request()->category_id, function ($query) {
+                return $query->whereHas('services', function ($query) {
+                    $query->where('category_id', request()->category_id)->where('status', 1);
+                });
+            })
+            ->when(request()->city_id, function ($query) {
+                return $query->where('city_id', request()->city_id);
+            })
+            ->when(request()->gender, function ($query) {
+                return $query->where('gender', request()->gender);
+            })
+            ->when(request()->search, function ($query) {
+                return $query->Where("name", 'like', '%' . request()->search . '%');
+            })
+            ->when(isset(request()->sort_by_name), function ($query) {
+                $sortOrder = request()->sort_by_name == '1' ? 'ASC' : 'DESC';
+                return $query->orderBy('name', $sortOrder);
+            })
+            ->when(isset(request()->recent), function ($query) {
+                $sortOrder = request()->recent == '1' ? 'ASC' : 'DESC';
+                return $query->orderBy('created_at', $sortOrder);
+            });
+
+        if (request()->latitude != null && request()->longitude != null) {
+            $latitude  = request()->latitude;
+            $longitude = request()->longitude;
+            $radius    = 5;
+            $newQuery->whereRaw('ST_Distance(point(map_lat, map_lng), point(?, ?)) <= ?', [$longitude, $latitude, $radius * 1000]);
+        }
+
+        if (request()->skip_count != null && request()->max_count != null) {
+            $skipCount = request()->skip_count;
+            $maxCount  = request()->max_count;
+            $newQuery  = $newQuery->skip($skipCount)->take($maxCount);
+        }
+
+        return $newQuery->get();
     }
 }

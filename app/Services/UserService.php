@@ -25,9 +25,9 @@ class UserService
         return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
     }
 
-    public function getAllProviders()
+    public function getAllProviders($request)
     {
-        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get();
+        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
     }
 
     public function unacceptedUsers()

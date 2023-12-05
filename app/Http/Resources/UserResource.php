@@ -75,7 +75,7 @@ class UserResource extends JsonResource
                 'fcm_token'     => $this->fcm_token,
                 'created_at'    => $this->created_at,
                 'days'          => $this->days->pluck('name')->toArray(),
-                'services'      => ServiceResource::collection($this->services)
+                'services'      => ServiceResource::collection($this->services->where('status', 1))
             ];
         } else {
             return [

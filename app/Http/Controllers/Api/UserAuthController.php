@@ -94,9 +94,9 @@ class UserAuthController extends Controller
         return $this->successResponse($details, 'userSuccessfullySignedIn', 200);
     }
 
-    public function getAllProviders()
+    public function getAllProviders(Request $request)
     {
-        $providers = $this->userService->getAllProviders();
+        $providers = $this->userService->getAllProviders($request);
 
         return $this->successResponse(
             $this->resource($providers, UserResource::class),

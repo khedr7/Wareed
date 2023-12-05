@@ -129,9 +129,18 @@ class UserRequest extends FormRequest
 
     public function generateOTP()
     {
-        return [
-            'phone'   => 'required|min:9|max:10',
-        ];
+        if (request()->is_register == 1) {
+            return [
+                'phone'       => 'required|min:9|max:10',
+                'is_register' => '',
+            ];
+        } else {
+            return [
+                'phone'       => 'required|min:9|max:10|exists:users,phone',
+                'is_register' => '',
+
+            ];
+        }
     }
     public function verifyOTP()
     {
