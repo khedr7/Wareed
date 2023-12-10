@@ -131,7 +131,7 @@ class UserRequest extends FormRequest
     {
         if (request()->is_register == 1) {
             return [
-                'phone'       => 'required|min:9|max:10',
+                'phone'       => 'required|min:9|max:10|unique:users,phone',
                 'is_register' => '',
             ];
         } else {

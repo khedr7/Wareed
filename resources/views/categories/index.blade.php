@@ -280,12 +280,6 @@
 </script>
 
 <script>
-	// $(document).ready(function() {
-	// 	$("#checkboxAll").on('click', function() {
-	// 		$('input.check').not(this).prop('checked', this.checked);
-	// 	});
-	// });
-
 	$(document).on('click', '.del-category', function() {
 		var categoryId = $(this).data('category-id');
 		$('#del-s-form').attr('action', "{{ url('categories') }}/" + categoryId);

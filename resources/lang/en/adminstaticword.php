@@ -154,6 +154,8 @@ return array (
   'ColorSettings' => 'Color Settings',
   'ComingSoon' => 'Coming Soon',
   'CompletedPayout' => 'Completed Payout',
+  'Complaints' => 'Complaints',
+  'Complaint'  => 'Complaint',
   'ConfirmPassword' => 'Confirm Password',
   'Contact' => 'Contact',
   'ContactPageImage' => 'Contact Page Image',

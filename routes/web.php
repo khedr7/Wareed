@@ -3,6 +3,8 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\ComplaintReplyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
@@ -103,6 +105,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'payment-methods'], function () {
         Route::get('/', [PaymentMethodController::class, 'index'])->name('paymentMethods.admin.index');
         Route::get('/status/{methodId}',  [PaymentMethodController::class, 'status'])->name('paymentMethods.admin.status');
+    });
+
+    Route::group(['prefix' => 'complaints'], function () {
+        Route::get('/', [ComplaintController::class, 'index'])->name('complaints.admin.index');
+        Route::get('/{complaintId}', [ComplaintController::class, 'show'])->name('complaints.admin.show');
+    });
+    Route::group(['prefix' => 'complaint-replies'], function () {
+        Route::post('', [ComplaintReplyController::class, 'store'])->name('replies.admin.store');
     });
 
     Route::group(['prefix' => 'orders'], function () {

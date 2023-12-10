@@ -80,6 +80,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Service::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(ComplaintReply::class);
+    }
+
     // many to many
     public function days()
     {

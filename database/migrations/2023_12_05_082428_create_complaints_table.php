@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('day_user', function (Blueprint $table) {
+        Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->onDelete('set null')->nullable();
-            $table->foreignId('day_id')->onDelete('set null')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('day_id')->references('id')->on('days')->onDelete('set null');
+            $table->string('title');
+            $table->text('details');
+            $table->foreignId('user_id')->onDelete('cascade')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('complaints');
     }
 };

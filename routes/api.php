@@ -124,3 +124,27 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::delete('/{id}', 'delete');
     });
 });
+
+Route::group([
+    'prefix' => '/complaints',
+    'controller' => ComplaintController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});
+
+Route::group([
+    'prefix' => '/complaint_replies',
+    'controller' => ComplaintReplyController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});
