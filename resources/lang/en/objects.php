@@ -13,5 +13,6 @@ return [
     'banner'     => 'banner',
     'order'      => 'order',
     'paymentMethod'    => 'payment Method',
+    'complaint'    => 'complaint',
 
 ];

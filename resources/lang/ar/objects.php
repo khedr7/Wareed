@@ -12,6 +12,7 @@ return [
     'service'    => 'الخدمة',
     'order'      => 'الطلب',
     'banner'     => 'الاعلان',
+    'complaint'  => 'الشكوى',
     'paymentMethod'    => 'وسيلة الدفع',
 
 

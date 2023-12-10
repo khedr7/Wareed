@@ -14,12 +14,12 @@ class ServiceService
 
     public function getAll($request)
     {
-        return Service::with(['user', 'category:id,name'])->orderBy('id', 'desc')->get();
+        return Service::with(['user', 'category:id,name'])->orderBy('id', 'desc')->app();
     }
 
     public function getTopRated()
     {
-        return Service::with(['user', 'category:id,name'])->orderBy('id', 'desc')->get()->take(5);
+        return Service::with(['user', 'category:id,name'])->where('status', 1)->orderBy('id', 'desc')->get()->take(5);
     }
 
     public function find($serviceId)

@@ -64,6 +64,37 @@ class UserAuthService
 
     public function generateOTP($validatedData)
     {
+        if (isset($validatedData['is_register'])) {
+            if ($validatedData['is_register'] == 1) {
+                $otp = OTP::where('phone', $validatedData['phone'])
+                    ->first();
+                if (isset($otp)) {
+                    $otp->delete();
+                }
+                $data = [
+                    'phone' => $validatedData['phone'],
+                    'otp' => random_int(100000, 999999),
+                ];
+                $otp = OTP::create($data);
+                return $otp;
+            } else {
+                $user = User::where('phone', $validatedData['phone'])->first();
+                $otp = OTP::where('phone', $validatedData['phone'])
+                    ->first();
+                if (isset($otp)) {
+                    $otp->delete();
+                }
+                if (isset($user)) {
+                    $data = [
+                        'phone' => $validatedData['phone'],
+                        'otp' => random_int(100000, 999999),
+                    ];
+                    $otp = OTP::create($data);
+                    return $otp;
+                }
+                throw new Exception(__('messages.userNotFound'), 403);
+            }
+        }
         $user = User::where('phone', $validatedData['phone'])->first();
         $otp = OTP::where('phone', $validatedData['phone'])
             ->first();
@@ -72,7 +103,7 @@ class UserAuthService
         }
         if (isset($user)) {
             $data = [
-                'phone' => $user->phone,
+                'phone' => $validatedData['phone'],
                 'otp' => random_int(100000, 999999),
             ];
             $otp = OTP::create($data);

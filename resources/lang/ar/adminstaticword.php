@@ -151,6 +151,8 @@ return array(
     'ColorSettings' => 'إعدادات الألوان',
     'ComingSoon' => 'قريبا',
     'CompletedPayout' => 'الانتهاء من الدفع',
+    'Complaint' => 'الشكوى',
+    'Complaints' => 'الشكاوي',
     'ConfirmPassword' => 'تأكيد كلمة المرور',
     'Contact' => 'اتصال',
     'ContactPageImage' => 'صورة الصفحة اتصل',

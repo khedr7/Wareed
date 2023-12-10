@@ -368,6 +368,11 @@ return [
             'icon' => 'fas fa-fw fa-image',
         ],
         [
+            'text' => 'Complaints',
+            'url'  => 'complaints',
+            'icon' => 'fas fa-fw fa-comments',
+        ],
+        [
             'text' => 'Terms and Conditions',
             'url'  => 'terms',
             'icon' => 'fas fa-fw fa-file',
@@ -377,6 +382,7 @@ return [
             'url'  => 'policy',
             'icon' => 'fas fa-fw fa-file',
         ],
+
         // [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',
