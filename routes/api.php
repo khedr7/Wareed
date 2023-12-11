@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\UserAuthController;
+use App\Http\Controllers\Api\OrderController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -91,11 +94,12 @@ Route::group(['middleware' => 'SetLanguage'], function () {
     Route::group([
         'prefix' => '/orders',
         'controller' => OrderController::class,
-        // 'middleware' => ''
+        'middleware' => 'auth:sanctum'
     ], function () {
-        Route::get('/', 'getAll');
+        Route::get('/', 'getAll')->name('app.orders.getAll');
         Route::get('/{id}', 'find');
-        Route::post('/', 'create');
+        Route::post('/', 'create')->name('app.orders.create');
+        Route::post('/status/{orderId}', 'status')->name('app.orders.status');
         Route::put('/{id}', 'update');
         Route::delete('/{id}', 'delete');
     });

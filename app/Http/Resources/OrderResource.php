@@ -26,7 +26,6 @@ class OrderResource extends JsonResource
           return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'service_id' => $this->service_id,
             'payment_method_id' => $this->payment_method_id,
             'status' => $this->status,
             'payment_status' => $this->payment_status,
@@ -34,26 +33,27 @@ class OrderResource extends JsonResource
             'note' => $this->note,
             'user_id' => $this->user_id,
             'service_id' => $this->service_id,
-            'payment_method_id' => $this->payment_method_id,
+            'patients_number' => $this->patients_number,
+            'end_date' => $this->end_date,
             'created_at' => $this->created_at
           ];
     }
 
     public function defaultResource()
     {
-          return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'service_id' => $this->service_id,
-            'payment_method_id' => $this->payment_method_id,
-            'status' => $this->status,
-            'payment_status' => $this->payment_status,
-            'date' => $this->date,
-            'note' => $this->note,
-            'user_id' => $this->user_id,
-            'service_id' => $this->service_id,
-            'payment_method_id' => $this->payment_method_id,
-            'created_at' => $this->created_at
-          ];
+      return [
+        'id' => $this->id,
+        'user_id' => $this->user_id,
+        'payment_method_id' => $this->payment_method_id,
+        'status' => $this->status,
+        'payment_status' => $this->payment_status,
+        'date' => $this->date,
+        'note' => $this->note,
+        'user_id' => $this->user_id,
+        'service_id' => $this->service_id,
+        'patients_number' => $this->patients_number,
+        'end_date' => $this->end_date,
+        'created_at' => $this->created_at
+      ];
     }
 }

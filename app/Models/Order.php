@@ -12,17 +12,20 @@ class Order extends Model
 
     protected $fillable  = [
         'user_id', 'service_id', 'payment_method_id',
-        'status', 'payment_status', 'date', 'note',
+        'status', 'payment_status', 'date', 'note','patients_number',
+        'end_date'
     ];
 
     protected $casts = [
         'user_id'           => 'integer',
-        'service_id'       => 'integer',
+        'service_id'        => 'integer',
         'payment_method_id' => 'integer',
         'status'            => 'string',
         'payment_status'    => 'integer',
-        'date'              => 'dateTime',
+        'date'              => 'date',
         'note'              => 'string',
+        'patients_number'   => 'integer',
+        'end_date'          => 'date'
     ];
 
     public function user()
@@ -38,5 +41,16 @@ class Order extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
+    }
+
+    public function scopeApp($query)
+    {
+
+        $newQuery = $query
+            ->when(request()->has('status'), function ($query) {
+                return $query->where('status', request()->status);
+            });
+
+        return $newQuery->get();
     }
 }

@@ -17,7 +17,7 @@ class UserAuthService
     public function __construct(private UserService $userService)
     {
     }
-
+   
     public function login($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();
@@ -33,12 +33,12 @@ class UserAuthService
             'password' => $validatedData['password']
         ];
         if (!Auth::attempt($attemptedData)) {
-            throw new Exception(__('messages.incorrect_password'), 401);
+            throw new Exception(__('messages.incorrectPassword'), 401);
         }
         $token = Auth::attempt($attemptedData);
         $accessToken = $user->createToken('auth');
         return [
-            'user'  => $user,
+            'user' => $user,
             'token' => $accessToken->plainTextToken
         ];
     }
@@ -48,7 +48,7 @@ class UserAuthService
         /**
          * @var $user=App\Models\Employee
          */
-        $user = Auth::guard('sanctum')->user();
+        $user = Auth::guard('user')->user();
 
         DB::beginTransaction();
 
@@ -59,42 +59,10 @@ class UserAuthService
 
     public function logout()
     {
-        return Auth::guard('sanctum')->user()->currentAccessToken()->delete();
+        Auth::guard('user')->logout();
     }
-
     public function generateOTP($validatedData)
     {
-        if (isset($validatedData['is_register'])) {
-            if ($validatedData['is_register'] == 1) {
-                $otp = OTP::where('phone', $validatedData['phone'])
-                    ->first();
-                if (isset($otp)) {
-                    $otp->delete();
-                }
-                $data = [
-                    'phone' => $validatedData['phone'],
-                    'otp' => random_int(100000, 999999),
-                ];
-                $otp = OTP::create($data);
-                return $otp;
-            } else {
-                $user = User::where('phone', $validatedData['phone'])->first();
-                $otp = OTP::where('phone', $validatedData['phone'])
-                    ->first();
-                if (isset($otp)) {
-                    $otp->delete();
-                }
-                if (isset($user)) {
-                    $data = [
-                        'phone' => $validatedData['phone'],
-                        'otp' => random_int(100000, 999999),
-                    ];
-                    $otp = OTP::create($data);
-                    return $otp;
-                }
-                throw new Exception(__('messages.userNotFound'), 403);
-            }
-        }
         $user = User::where('phone', $validatedData['phone'])->first();
         $otp = OTP::where('phone', $validatedData['phone'])
             ->first();
@@ -103,7 +71,7 @@ class UserAuthService
         }
         if (isset($user)) {
             $data = [
-                'phone' => $validatedData['phone'],
+                'phone' => $user->phone,
                 'otp' => random_int(100000, 999999),
             ];
             $otp = OTP::create($data);
@@ -144,24 +112,6 @@ class UserAuthService
     }
     public function register($validatedData)
     {
-
-        DB::beginTransaction();
-
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['status']   = 1;
-        $validatedData['accepted'] = 1;
-        $validatedData['role'] = 'user';
-
-        $user = User::create($validatedData);
-
-        $user->assignRole('user');
-        $accessToken = $user->createToken('auth');
-
-        DB::commit();
-
-        return [
-            'user'  => $user,
-            'token' => $accessToken->plainTextToken
-        ];
+       return $this->userService->store($validatedData);
     }
 }

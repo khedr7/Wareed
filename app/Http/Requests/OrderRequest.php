@@ -26,6 +26,7 @@ class OrderRequest extends FormRequest
 
         return match ($this->route()->getActionMethod()) {
             'store'    =>  $this->getCreateRules(),
+            'create'   =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
             'status'   =>  $this->getStatusRules(),
         };
@@ -43,7 +44,9 @@ class OrderRequest extends FormRequest
             'note' => '',
             'user_id' => '',
             'service_id' => '',
-            'payment_method_id' => ''
+            'payment_method_id' => '',
+            'patients_number' => '',
+            'end_date' => ''
         ];
     }
 
@@ -59,7 +62,9 @@ class OrderRequest extends FormRequest
             'note' => '',
             'user_id' => '',
             'service_id' => '',
-            'payment_method_id' => ''
+            'payment_method_id' => '',
+            'patients_number' => '',
+            'end_date' => ''
         ];
     }
 
