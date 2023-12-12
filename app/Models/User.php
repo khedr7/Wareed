@@ -27,7 +27,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $fillable = [
         'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points',
-        'latitude', 'longitude', 'status', 'has_residence', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
+        'latitude', 'longitude', 'status', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
     ];
     const PATH = 'users';
     /**
@@ -49,7 +49,6 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'status'            => 'integer',
         'accepted'          => 'integer',
-        'has_residence'     => 'integer',
         'city_id'           => 'integer',
         'points'            => 'double',
         'latitude'          => 'double',
@@ -103,9 +102,9 @@ class User extends Authenticatable implements HasMedia
             ->when(request()->accepted == 1, function ($query) {
                 return $query->where('accepted', 1);
             })
-            ->when(request()->has_residence == 1, function ($query) {
-                return $query->where('has_residence', 1);
-            })
+            // ->when(request()->has_residence == 1, function ($query) {
+            //     return $query->where('has_residence', 1);
+            // })
             ->when(request()->category_id, function ($query) {
                 return $query->whereHas('services', function ($query) {
                     $query->where('category_id', request()->category_id)->where('status', 1);
