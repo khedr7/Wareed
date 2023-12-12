@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Codebyray\ReviewRateable\Contracts\ReviewRateable;
+use Codebyray\ReviewRateable\Models\Rating;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,11 +14,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Codebyray\ReviewRateable\Traits\ReviewRateable as ReviewRateableTrait;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia , ReviewRateable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use InteractsWithMedia, HasRoles;
+    use InteractsWithMedia, HasRoles, ReviewRateableTrait;
 
 
     /**
@@ -91,6 +94,10 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Day::class, 'day_user', 'user_id', 'day_id');
     }
 
+    public function userRating()
+    {
+        return $this->morphMany(Rating::class, 'reviewrateable');
+    }
 
     public function scopeApp($query)
     {

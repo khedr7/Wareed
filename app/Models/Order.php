@@ -22,10 +22,10 @@ class Order extends Model
         'payment_method_id' => 'integer',
         'status'            => 'string',
         'payment_status'    => 'integer',
-        'date'              => 'date',
+        'date'              => 'datetime',
         'note'              => 'string',
         'patients_number'   => 'integer',
-        'end_date'          => 'date'
+        'end_date'          => 'datetime'
     ];
 
     public function user()

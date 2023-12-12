@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\UserAuthController;
 use App\Http\Controllers\Api\OrderController;
-
+use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -145,6 +145,18 @@ Route::group([
     'prefix' => '/complaint_replies',
     'controller' => ComplaintReplyController::class,
     // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});
+
+Route::group([
+    'prefix' => '/reviews',
+    'controller' => ReviewController::class,
+    'middleware' => 'auth:sanctum'
 ], function () {
     Route::get('/', 'getAll');
     Route::get('/{id}', 'find');
