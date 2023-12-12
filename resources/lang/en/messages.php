@@ -24,10 +24,12 @@ return [
     'credentialsError'               => 'Wrong ID or password',
     'incorrect_password'             => 'incorrect password',
 
+    'Your request is being processed.'  => 'Your request is being processed.',
     'Unauthorized'                   => 'You do not have permissions to perform this action',
     'Unauthenticated'                => 'PLease login first',
 
     'blockedUser'                    => 'the user is blocked',
+    'UnacceptedUser'                 => 'the user is unaccepted',
 
     'userNotFound'                    => 'Account Not Found',
 

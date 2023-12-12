@@ -14,11 +14,11 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-6">
-							<h3 class="card-title">{{ __('adminstaticword.Users') }}</h3>
+							<h3 class="card-title">{{ __('adminstaticword.Providers Requests') }}</h3>
 						</div>
 						<div class="col-6 text-right">
-							<a href="{{ route('users.admin.create') }}" class="btn btn-sm btn-primary">
-								{{ __('adminstaticword.AddUser') }}</a>
+							{{-- <a href="{{ route('users.admin.create') }}" class="btn btn-sm btn-primary">
+								{{ __('adminstaticword.AddUser') }}</a> --}}
 
 							<a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#bulk_delete">
 								{{ __('adminstaticword.Delete selected') }}</a>
@@ -42,8 +42,7 @@
 								</th>
 								<th>{{ __('adminstaticword.Image') }}</th>
 								<th>{{ __('adminstaticword.Users') }}</th>
-								<th>{{ __('adminstaticword.Role') }}</th>
-								<th>{{ __('adminstaticword.Status') }}</th>
+								<th>{{ __('adminstaticword.Accept') }}</th>
 								<th>{{ __('adminstaticword.Action') }}</th>
 							</tr>
 						</thead>
@@ -55,8 +54,8 @@
 									<td>
 										<label for='checkbox{{ $user->id }}' class="form-check form-check-label">
 											<input type='checkbox' form='bulk_delete_form'
-												class='check form-check-input filled-in material-checkbox-input' name='checked[]'
-												value="{{ $user->id }}" id='checkbox{{ $user->id }}'>
+												class='check form-check-input filled-in material-checkbox-input' name='checked[]' value="{{ $user->id }}"
+												id='checkbox{{ $user->id }}'>
 											<span class="form-check-sign">
 												<span class="check"></span>
 											</span>
@@ -79,19 +78,16 @@
 											<b>{{ __('Phone') }}</b>: {{ $user->phone }}
 										</p>
 									</td>
-									<td>
-										{{ $user->role }}
-									</td>
+
 									<td>
 										<div class="custom-control custom-switch">
-											<input id="status_{{ $user->id }}" type="checkbox" data-id="{{ $user->id }}" name="status"
-												onchange="userstatus('{{ $user->id }}')" class="custom-control-input"
-												{{ $user->status == '1' ? 'checked' : '' }}>
-											<label class="custom-control-label" for="status_{{ $user->id }}"></label>
+											<input id="accepted_{{ $user->id }}" type="checkbox" data-id="{{ $user->id }}" name="accepted"
+												onchange="userAccepted('{{ $user->id }}')" class="custom-control-input"
+												{{ $user->accepted == '1' ? 'checked' : '' }}>
+											<label class="custom-control-label" for="accepted_{{ $user->id }}"></label>
 										</div>
 									</td>
 									<td>
-
 										{{-- <button type="button" data-toggle="modal" data-target="#add-points" data-user-id="{{ $user->id }}"
 											data-points="{{ $user->points }}" rel="tooltip" class="btn btn-xs btn-primary add-points">
 											{{ __('adminstaticword.AddPoints') }}
@@ -108,10 +104,6 @@
 											<i class="fa fa-eye" aria-hidden="true"></i>
 										</button>
 
-										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
-											href="{{ route('users.admin.edit', $user->id) }}">
-											<i class="fa fa-pen" aria-hidden="true"></i>
-										</a>
 										<button type="button" data-toggle="modal" data-target="#delete-user" data-user-id="{{ $user->id }}"
 											rel="tooltip" class="btn btn-danger btn-sm btn-icon del-user">
 											<i class="fa fa-times" aria-hidden="true"></i>
@@ -371,7 +363,7 @@
 		});
 	});
 
-	$(document).on('click', '.show-user', function() {
+    $(document).on('click', '.show-user', function() {
 		var userId = $(this).data('user-id');
 		var userName = $(this).data('user-name');
 		var userRole = $(this).data('user-role');
@@ -418,22 +410,22 @@
 		$('#add-points').modal('show');
 	});
 
-	function userstatus(id) {
-		var status = $(this).prop('checked') == true ? 1 : 0;
+	function userAccepted(id) {
+		var accepted = $(this).prop('checked') == true ? 1 : 0;
 
 		$.ajax({
 			type: "GET",
 			dataType: "json",
-			url: "{{ url('/users/status/') }}/" + id,
+			url: "{{ url('/users/accept/') }}/" + id,
 			data: {
-				'status': status,
+				'accepted': accepted,
 				'id': id
 			},
 
 			success: function(data) {
 				var notification = new PNotify({
 					title: 'success',
-					text: 'Status Update Successfully',
+					text: 'Data Update Successfully',
 					type: 'success',
 					styling: 'bootstrap3', // Use Bootstrap 3 styling
 					addclass: 'bg-success', // Add a class for custom styling
@@ -452,6 +444,25 @@
 		});
 	};
 </script>
+
+<style>
+	.message-scroll {
+		overflow-y: scroll !important;
+		max-height: 450px !important;
+
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgb(165, 160, 160);
+		}
+	}
+</style>
 
 @if (session('success'))
 	<script>

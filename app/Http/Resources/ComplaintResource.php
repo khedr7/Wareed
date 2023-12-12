@@ -17,31 +17,31 @@ class ComplaintResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
-             default => $this->defaultResource(),
+            default => $this->defaultResource(),
         };
     }
 
     public function getAllResource()
     {
-          return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'details' => $this->details,
-            'user_id' => $this->user_id,
-            'user_id' => $this->user_id,
-            'created_at' => $this->created_at
-          ];
+        return [
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'details'    => $this->details,
+            'user_id'    => $this->user_id,
+            'created_at' => $this->created_at,
+            'replies'    => ComplaintReplyResource::collection($this->replies),
+        ];
     }
 
     public function defaultResource()
     {
-          return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'details' => $this->details,
-            'user_id' => $this->user_id,
-            'user_id' => $this->user_id,
-            'created_at' => $this->created_at
-          ];
+        return [
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'details'    => $this->details,
+            'user_id'    => $this->user_id,
+            'created_at' => $this->created_at,
+            'replies'    => ComplaintReplyResource::collection($this->replies),
+        ];
     }
 }

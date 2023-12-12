@@ -20,6 +20,16 @@ class UserService
         return User::with('days')->where('accepted', 1)->orderBy('role', 'asc')->get();
     }
 
+    public function indexProviders()
+    {
+        return User::with('days')->where('role', 'provider')->where('accepted', 1)->get();
+    }
+
+    public function providersRequests()
+    {
+        return User::with('days')->where('role', 'provider')->where('accepted', 0)->get();
+    }
+
     public function getTopRated()
     {
         return User::with('days')->withAvg('userRating','rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
@@ -157,6 +167,34 @@ class UserService
             ];
         } else {
             $user->status = 0;
+            $user->save();
+            $message = [
+                'status'   => 'delete',
+                'message'  => 'Status changed to deactive !',
+            ];
+        }
+
+        DB::commit();
+
+        return $message;
+    }
+
+    public function accept($userId)
+    {
+        $user = $this->find($userId);
+
+        DB::beginTransaction();
+
+        if ($user->accepted == 0) {
+            $user->status   = 1;
+            $user->accepted = 1;
+            $user->save();
+            $message = [
+                'status'   => 'success',
+                'message'  => 'Status changed to active !',
+            ];
+        } else {
+            $user->accepted = 0;
             $user->save();
             $message = [
                 'status'   => 'delete',

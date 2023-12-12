@@ -178,7 +178,16 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+                            <div class="col-md-3 form-group">
+								<label>{{ __('adminstaticword.Status') }}</label> <br>
+								<div class="custom-switch">
+									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
+										{{ $user->status == '1' ? 'checked' : '' }}>
+									<label class="custom-control-label" for="status"></label>
+								</div>
+							</div>
+
+							<div class="col-md-3    ">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }}<sup style="color: red">*</sup></label> <br>
 
@@ -205,23 +214,16 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-3 form-group">
-								<label>{{ __('adminstaticword.Status') }}</label> <br>
-								<div class="custom-switch">
-									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
-										{{ $user->status == '1' ? 'checked' : '' }}>
-									<label class="custom-control-label" for="status"></label>
-								</div>
-							</div>
 
-							<div class="col-md-3 form-group">
+
+							{{-- <div class="col-md-3 form-group">
 								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="has_residence" type="checkbox" name="has_residence" class="custom-control-input"
 										{{ $user->has_residence == '1' ? 'checked' : '' }}>
 									<label class="custom-control-label" for="has_residence"></label>
 								</div>
-							</div>
+							</div> --}}
 
 							<div class="col-md-6" @if ($user->role != 'provider') style="display: none;" @endif id="rolebox">
 								<div class="form-group{{ $errors->has('days[]') ? ' has-danger' : '' }}">

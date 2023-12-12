@@ -188,18 +188,15 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 form-group">
+							{{-- <div class="col-md-6 form-group">
 								<label>{{ __('adminstaticword.Residence') }}</label> <br>
 								<div class="custom-switch">
 									<input id="has_residence" type="checkbox" value="1" name="has_residence" class="custom-control-input">
 									<label class="custom-control-label" for="has_residence"></label>
 								</div>
-							</div>
-						</div>
-						<br>
+							</div> --}}
 
-						<div class="row">
-							<div class="col-md-6">
+                            <div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }} <sup style="color: red">*</sup></label> <br>
 
@@ -222,7 +219,10 @@
 									@include('alerts.feedback', ['field' => 'gender'])
 								</div>
 							</div>
+						</div>
+						<br>
 
+						<div class="row">
 							<div class="col-md-6" style="display: none;" id="rolebox">
 								<div class="form-group{{ $errors->has('days[]') ? ' has-danger' : '' }}">
 									<label for="days">{{ __('adminstaticword.Days') }} <sup style="color: red">*</sup></label>
@@ -236,6 +236,9 @@
 									</select>
 									@include('alerts.feedback', ['field' => 'days'])
 								</div>
+							</div>
+
+                            <div class="col-md-6">
 							</div>
 						</div>
 

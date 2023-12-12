@@ -157,7 +157,7 @@
 				<div class="modal-body">
 					<div class="col-lg-12">
 						<div class="card m-b-30">
-							<div class="card-body py-5">
+							<div class="card-body py-5 message-scroll">
 								<div class="row">
 									{{-- <div class="user-modal">
 										@if ($image = @file_get_contents('../public/images/user_img/' . $user_img))
@@ -363,6 +363,25 @@
 		});
 	};
 </script>
+
+<style>
+	.message-scroll {
+		overflow-y: scroll !important;
+		max-height: 450px !important;
+
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgb(165, 160, 160);
+		}
+	}
+</style>
 
 @if (session('success'))
 	<script>

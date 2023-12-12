@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Codebyray\ReviewRateable\Contracts\ReviewRateable;
 use Codebyray\ReviewRateable\Models\Rating;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,7 +30,7 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
      */
     protected $fillable = [
         'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points',
-        'latitude', 'longitude', 'status', 'has_residence', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
+        'latitude', 'longitude', 'status', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
     ];
     const PATH = 'users';
     /**
@@ -51,7 +52,6 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
         'email_verified_at' => 'datetime',
         'status'            => 'integer',
         'accepted'          => 'integer',
-        'has_residence'     => 'integer',
         'city_id'           => 'integer',
         'points'            => 'double',
         'latitude'          => 'double',
@@ -109,9 +109,17 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
             ->when(request()->accepted == 1, function ($query) {
                 return $query->where('accepted', 1);
             })
+            // ->when(request()->has_residence == 1, function ($query) {
+            //     return $query->where('has_residence', 1);
+            // })
             ->when(request()->category_id, function ($query) {
                 return $query->whereHas('services', function ($query) {
                     $query->where('category_id', request()->category_id)->where('status', 1);
+                });
+            })
+            ->when(request()->date, function ($query) {
+                return $query->whereHas('days', function ($query) {
+                    $query->Where("name", 'like', '%' . Carbon::parse(request()->date)->dayName . '%');
                 });
             })
             ->when(request()->city_id, function ($query) {

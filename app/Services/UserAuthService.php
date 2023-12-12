@@ -25,6 +25,9 @@ class UserAuthService
         if (!$user) {
             throw new Exception(__('messages.credentialsError'), 401);
         }
+        if ($user->accepted == 0) {
+            throw new Exception(__('messages.UnacceptedUser'), 401);
+        }
         if ($user->status == 0) {
             throw new Exception(__('messages.blockedUser'), 401);
         }
@@ -113,5 +116,23 @@ class UserAuthService
     public function register($validatedData)
     {
        return $this->userService->store($validatedData);
+    }
+
+    public function providerRegister($validatedData)
+    {
+        DB::beginTransaction();
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['status']   = 0;
+        $validatedData['accepted'] = 0;
+        $validatedData['role'] = 'provider';
+
+        $user = User::create($validatedData);
+
+        $user->assignRole('provider');
+
+        DB::commit();
+
+        return true;
     }
 }

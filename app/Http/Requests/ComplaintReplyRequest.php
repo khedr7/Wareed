@@ -27,6 +27,7 @@ class ComplaintReplyRequest extends FormRequest
         return match ($this->route()->getActionMethod()) {
             'store'    =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
+            'reply'    =>  $this->getCreateRules(),
         };
     }
 

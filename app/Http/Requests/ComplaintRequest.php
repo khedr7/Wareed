@@ -9,7 +9,7 @@ class ComplaintRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool     
+     * @return bool
      */
     public function authorize()
     {
@@ -24,7 +24,7 @@ class ComplaintRequest extends FormRequest
     public function rules()
     {
 
-         return match ($this->route()->getActionMethod()) {
+        return match ($this->route()->getActionMethod()) {
             'create'   =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
         };
@@ -32,21 +32,17 @@ class ComplaintRequest extends FormRequest
 
     public function getCreateRules()
     {
-          return [
-            'title' => '',
-            'details' => '',
-            'user_id' => '',
-            'user_id' => ''
-          ];
+        return [
+            'title'   => 'required',
+            'details' => 'required',
+        ];
     }
 
     public function getUpdateRules()
     {
-          return [
-            'title' => '',
-            'details' => '',
-            'user_id' => '',
-            'user_id' => ''
-          ];
+        return [
+            'title'   => 'required',
+            'details' => 'required',
+        ];
     }
 }
