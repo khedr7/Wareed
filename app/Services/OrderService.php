@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderService
 {
@@ -12,13 +13,34 @@ class OrderService
 
     public function getAll()
     {
+        if(request()->has('provider_id'))
+        {
+           
+            return Order::with([
+                'user:id,name',
+                'paymentMethod:id,name'
+            ])->whereHas('service', function ($query) {
+                $query->where('user_id', request()->provider_id);
+            })
+            ->orderBy('id', 'desc')->app();
+        }
+        if(request()->routeIs('app.orders.getAll'))
+        {
+            return Order::where('user_id',Auth::user()->id)->with([
+                'user:id,name',
+                'service' => function ($query) {
+                    $query->with('user:id,name')->select('id', 'name', 'user_id');
+                },
+                'paymentMethod:id,name'
+            ])->orderBy('id', 'desc')->app();
+        }
         return Order::with([
             'user:id,name',
             'service' => function ($query) {
                 $query->with('user:id,name')->select('id', 'name', 'user_id');
             },
             'paymentMethod:id,name'
-        ])->orderBy('id', 'desc')->get();
+        ])->orderBy('id', 'desc')->app();
     }
 
     public function find($orderId)
@@ -30,6 +52,7 @@ class OrderService
     {
         DB::beginTransaction();
 
+        $validatedData['user_id'] = Auth::user()->id;
         $order = Order::create($validatedData);
 
         DB::commit();

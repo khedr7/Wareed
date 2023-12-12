@@ -22,6 +22,8 @@ return new class extends Migration
             $table->boolean('payment_status')->default(0);
             $table->dateTime('date')->nullable();
             $table->text('note')->nullable();
+            $table->integer('patients_number')->nullable();
+            $table->date('end_date')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');

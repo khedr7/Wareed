@@ -22,6 +22,7 @@ class UserResource extends JsonResource
         return match ($actionMethod) {
             'getAll'          => $this->getAllResource(),
             'getAllProviders' => $this->getAllResource(),
+            'appHomePage'     => $this->getAllResource(),
             'login'           => $this->getAllResource(),
             'register'        => $this->getAllResource(),
             default           => $this->defaultResource(),
@@ -30,6 +31,7 @@ class UserResource extends JsonResource
 
     public function getAllResource()
     {
+       
         return [
             'id'            => $this->id,
             'name'          => $this->name,
@@ -49,6 +51,8 @@ class UserResource extends JsonResource
             'fcm_token'     => $this->fcm_token,
             'created_at'    => $this->created_at,
             'days'          => $this->days->pluck('name')->toArray(),
+            'avg_rating'    => $this->user_rating_avg_rating ?? 0,
+            
         ];
     }
 
@@ -75,7 +79,11 @@ class UserResource extends JsonResource
                 'fcm_token'     => $this->fcm_token,
                 'created_at'    => $this->created_at,
                 'days'          => $this->days->pluck('name')->toArray(),
-                'services'      => ServiceResource::collection($this->services->where('status', 1))
+                'services'      => ServiceResource::collection($this->services->where('status', 1)),
+                'avg_rating'    => $this->averageRating() ?? 0,
+                'reviews'       => ReviewResource::collection($this->userRating) ,
+
+
             ];
         } else {
             return [

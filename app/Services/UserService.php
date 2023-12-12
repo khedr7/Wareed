@@ -32,12 +32,12 @@ class UserService
 
     public function getTopRated()
     {
-        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
+        return User::with('days')->withAvg('userRating','rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
     }
 
     public function getAllProviders($request)
     {
-        return User::with('days')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
+        return User::with('days')->withAvg('userRating','rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
     }
 
     public function unacceptedUsers()
@@ -47,7 +47,7 @@ class UserService
 
     public function find($userId)
     {
-        return $this->findByIdOrFail(User::class, 'user', $userId);
+        return User::with('userRating.author')->findOrFail($userId);
     }
 
     public function create()
