@@ -267,10 +267,9 @@
 
 	function submitForm() {
 		// Serialize the form data
-        console.log(complaintData.complaint.id);
+		var complaintId = complaintData.complaint.id;
 		var formData = $("#demo-form2").serialize();
-        formData += "&complaint_id=" + complaintData.complaint.id;
-        console.log(formData);
+        formData += "&complaint_id=" + complaintId;
 
 		// Make an AJAX request
 		$.ajax({
@@ -364,6 +363,7 @@
 		}
 	}
 </style>
+
 <style>
 	.modal-v2 {
 		width: 490px;

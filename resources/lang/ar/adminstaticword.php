@@ -294,6 +294,7 @@ return array(
     'InstructorPayout' => 'المدافعين المدربين',
     'InstructorPlan' => 'خطة المدرب',
     'InstructorRequest' => 'طلب المدربين',
+    'Providers Requests' => 'طلبات مقدمي الخدمة',
     'InstructorRevenue' => 'إيرادات المدربين',
     'InstructorSettings' => 'إعدادات المدرب',
     'InstructorSubscription' => 'اشتراك المدرب',

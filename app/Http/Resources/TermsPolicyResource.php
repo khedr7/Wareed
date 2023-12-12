@@ -24,20 +24,20 @@ class TermsPolicyResource extends JsonResource
     public function getAllResource()
     {
         return [
-            'id' => $this->id,
-            'terms' => $this->terms,
-            'policy' => $this->policy,
-            'created_at' => $this->created_at
+            // 'id'         => $this->id,
+            'terms'      => $this->terms,
+            'policy'     => $this->policy,
+            // 'created_at' => $this->created_at
         ];
     }
 
     public function defaultResource()
     {
         return [
-            'id' => $this->id,
-            'terms' => $this->terms,
+            // 'id'     => $this->id,
+            'terms'  => $this->terms,
             'policy' => $this->policy,
-            'created_at' => $this->created_at
+            // 'created_at' => $this->created_at
         ];
     }
 }

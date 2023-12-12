@@ -24,10 +24,14 @@ return [
     'credentialsError'               => 'خطأ في الرقم الوطني او كلمة المرور',
     'incorrectPassword'             => 'كلمة السر خاطئة',
 
+    'Your request is being processed.'  => '.طلبك قيد المعالجة',
+
     'Unauthorized'                   => 'لا تملك صلاحيات للقيام بهذا الإجراء',
     'Unauthenticated'                => 'الرجاء تسجيل الدخول اولاً',
 
     'blockedUser'                    => 'المستخدم محظور',
+    'UnacceptedUser'                 => 'لم يتم قبول المستخدم بعد',
+
     'userNotFound'                   => 'الحساب غير موجود',
 
 

@@ -26,15 +26,16 @@ class UserRequest extends FormRequest
     {
 
         return match ($this->route()->getActionMethod()) {
-            'store'           =>  $this->getCreateRules(),
-            'update'          =>  $this->getUpdateRules(),
-            'generateOTP'     =>  $this->generateOTP(),
-            'verifyOTP'       =>  $this->verifyOTP(),
-            'resetPassword'   =>  $this->resetPassword(),
-            'changePassword'  =>  $this->changePassword(),
-            'updateProfile'   =>  $this->getUpdateProfileRules(),
-            'register'        =>  $this->getRegisterRules(),
-            'addPoints'       =>  $this->getAddPointsRules(),
+            'store'            =>  $this->getCreateRules(),
+            'update'           =>  $this->getUpdateRules(),
+            'generateOTP'      =>  $this->generateOTP(),
+            'verifyOTP'        =>  $this->verifyOTP(),
+            'resetPassword'    =>  $this->resetPassword(),
+            'changePassword'   =>  $this->changePassword(),
+            'updateProfile'    =>  $this->getUpdateProfileRules(),
+            'register'         =>  $this->getRegisterRules(),
+            'providerRegister' =>  $this->getRegisterRules(),
+            'addPoints'        =>  $this->getAddPointsRules(),
         };
     }
 
