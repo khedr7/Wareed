@@ -36,13 +36,13 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            'on_patient_site'    => $this->on_patient_site,
+            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            'user_id'            => $this->user_id,
+            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
-            'user'               => UserResource::make($this->user),
+            'users'               => UserResource::collection($this->users),
         ];
     }
 
@@ -57,13 +57,13 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            'on_patient_site'    => $this->on_patient_site,
+            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            'user_id'            => $this->user_id,
+            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
-            'user'               => UserResource::make($this->user),
+            'users'               => UserResource::collection($this->users),
         ];
     }
 
@@ -78,9 +78,9 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            'on_patient_site'    => $this->on_patient_site,
+            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            'user_id'            => $this->user_id,
+            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),

@@ -40,10 +40,10 @@ class ServiceRequest extends FormRequest
             // 'longitude'          => 'nullable|numeric',
             'status'             => '',
             'featured'           => '',
-            'on_patient_site'    => '',
+            // 'on_patient_site'    => '',
             'image'              => 'required|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
-            'user_id'            => 'required|exists:users,id',
+            // 'user_id'            => 'required|exists:users,id',
         ];
     }
 
@@ -57,10 +57,10 @@ class ServiceRequest extends FormRequest
             // 'longitude'          => 'nullable|numeric',
             'status'             => '',
             'featured'           => '',
-            'on_patient_site'    => '',
+            // 'on_patient_site'    => '',
             'image'              => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
-            'user_id'            => 'required|exists:users,id',
+            // 'user_id'            => 'required|exists:users,id',
         ];
     }
 }

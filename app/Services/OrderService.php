@@ -15,7 +15,6 @@ class OrderService
     {
         if(request()->has('provider_id'))
         {
-           
             return Order::with([
                 'user:id,name',
                 'paymentMethod:id,name'

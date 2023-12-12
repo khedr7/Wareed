@@ -43,8 +43,9 @@
 								<th>{{ __('adminstaticword.Image') }}</th>
 								<th>{{ __('adminstaticword.Services') }}</th>
 								<th>{{ __('adminstaticword.Category') }}</th>
-								<th>{{ __('adminstaticword.User') }}</th>
+								<th>{{ __('adminstaticword.Price') }}</th>
 								<th>{{ __('adminstaticword.Status') }}</th>
+								<th>{{ __('adminstaticword.User') }}</th>
 								<th>{{ __('adminstaticword.Action') }}</th>
 							</tr>
 						</thead>
@@ -75,10 +76,9 @@
 										{{ $service->category->name }}
 									</td>
 									<td>
-										{{-- <a href="{{ route('users.admin.edit', $service->user->id) }}"> --}}
-											{{ $service->user->name }}
-                                        {{-- </a> --}}
+										{{ $service->price }}
 									</td>
+
 									<td>
 										<div class="custom-control custom-switch">
 											<input id="status_{{ $service->id }}" type="checkbox" data-id="{{ $service->id }}" name="status"
@@ -87,8 +87,14 @@
 											<label class="custom-control-label" for="status_{{ $service->id }}"></label>
 										</div>
 									</td>
+                                    <td>
+										<button type="button" data-toggle="modal" data-target="#show-users" data-service-id="{{ $service->id }}"
+											data-service-users="{{ $service->users }}" rel="tooltip"
+											class="btn btn-primary btn-sm btn-icon show-users">
+											<i class="fa fa-eye" aria-hidden="true"></i>
+										</button>
+									</td>
 									<td>
-
 										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
 											href="{{ route('services.admin.edit', $service->id) }}">
 											<i class="fa fa-pen" aria-hidden="true"></i>
@@ -111,7 +117,43 @@
 		<!-- /.col -->
 	</div>
 
-
+	{{-- show user Modal start --}}
+	<div class="modal fade" id="show-users" tabindex="-1" role="dialog" aria-labelledby="show-usersLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						{{ __('adminstaticword.Providers') }}
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="col-lg-12">
+						<div class="card m-b-30">
+							<div class="card-body py-5 message-scroll">
+								<div class="row">
+									<div class="col-lg-12">
+										<h4 class="text-center">
+										</h4>
+										<div class="table-responsive">
+											<table class="table table-borderless mb-0 user-table table-striped">
+												<tbody id="show-providers">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{-- show user Modal end --}}
 
 	{{-- delete Modal start --}}
 	<div class="modal fade bd-example-modal-sm" id="delete-service" tabindex="-1" role="dialog" aria-hidden="true">
@@ -214,7 +256,10 @@
 					"width": "20%"
 				},
 				{
-					"width": "20%"
+					"width": "10%"
+				},
+				{
+					"width": "10%"
 				},
 				{
 					"width": "10%"
@@ -238,6 +283,34 @@
 		var serviceId = $(this).data('service-id');
 		$('#del-u-form').attr('action', "{{ url('services') }}/" + serviceId);
 		$('#delete-service').modal('show');
+	});
+
+	$(document).on('click', '.show-users', function() {
+		var serviceId = $(this).data('service-id');
+		var serviceUsers = $(this).data('service-users');
+		var detailsHtml = '';
+		var counter = 1;
+
+		if (serviceUsers.length == 0) {
+			detailsHtml +=
+				"<tr>" +
+				"<th scope='row' class='p-1 col-md-12'>" +
+				'There is no providers' +
+				"</th>" +
+				"/td> </tr>"
+		} else {
+			serviceUsers.forEach(element => {
+				detailsHtml +=
+					"<tr>" +
+					"<th scope='row' class='p-1 col-md-12'>" +
+					counter + ". " + element.name +
+					"</th>" +
+					"/td> </tr>"
+			});
+			counter++;
+		}
+		$('#show-providers').html(detailsHtml);
+		$('#show-users').modal('show');
 	});
 
 	function servicestatus(id) {
