@@ -15,6 +15,12 @@ class ComplaintService
         return Complaint::with('user')->orderBy('id', 'desc')->get();
     }
 
+    public function usersComplaint()
+    {
+        $user_id = auth()->user()->id;
+        return Complaint::with('replies')->where('user_id', $user_id)->orderBy('id', 'desc')->get();
+    }
+
     public function show($complaintId)
     {
         return Complaint::with(['user:id,name', 'replies.user:id,name'])->where('id', $complaintId)->first();
@@ -28,7 +34,8 @@ class ComplaintService
     public function create($validatedData)
     {
         DB::beginTransaction();
-
+        
+        $validatedData['user_id'] = auth()->user()->id;
         $complaint = Complaint::create($validatedData);
 
         DB::commit();

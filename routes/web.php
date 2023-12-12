@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UserController::class, 'index'])->name('users.admin.index');
+        Route::get('/providers', [UserController::class, 'indexProviders'])->name('users.admin.providers');
+        Route::get('/providers-requests', [UserController::class, 'providersRequests'])->name('users.admin.providersRequests');
         Route::get('/create',        [UserController::class, 'create'])->name('users.admin.create');
         Route::post('/bulk-delete',  [UserController::class, 'bulkDelete'])->name('users.admin.bulkDelete');
         Route::post('/',        [UserController::class, 'store'])->name('users.admin.store');
@@ -52,8 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{userId}/edit',  [UserController::class, 'edit'])->name('users.admin.edit');
         Route::post('/add-points/{userId}',   [UserController::class, 'addPoints'])->name('users.admin.addPoints');
         Route::post('/{userId}',      [UserController::class, 'update'])->name('users.admin.update');
-        Route::get('/status/{userId}',  [UserController::class, 'status'])->name('users.admin.status');
-        Route::delete('/{userId}',      [UserController::class, 'delete'])->name('users.admin.delete');
+        Route::get('/status/{userId}',   [UserController::class, 'status'])->name('users.admin.status');
+        Route::get('/accept/{userId}', [UserController::class, 'accept'])->name('users.admin.accept');
+        Route::delete('/{userId}',       [UserController::class, 'delete'])->name('users.admin.delete');
     });
 
     Route::group(['prefix' => 'states'], function () {

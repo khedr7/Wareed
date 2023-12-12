@@ -94,6 +94,13 @@ class UserAuthController extends Controller
         return $this->successResponse($details, 'userSuccessfullySignedIn', 200);
     }
 
+    public function providerRegister(UserRequest $request)
+    {
+        $validatedData = $request->validated();
+        $details = $this->userAuthService->providerRegister($validatedData);
+        return $this->successResponse([], 'Your request is being processed.', 200);
+    }
+
     public function getAllProviders(Request $request)
     {
         $providers = $this->userService->getAllProviders($request);

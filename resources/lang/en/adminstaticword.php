@@ -299,6 +299,7 @@ return array (
   'Instructor' => 'Instructor',
   'InstructorPayout' => 'Instructors Payout',
   'InstructorPlan' => 'Instructor Plan',
+  'Providers Requests' => 'Providers Requests',
   'InstructorRequest' => 'Instructors Request',
   'InstructorRevenue' => 'Instructors Revenue',
   'InstructorSettings' => 'Instructor Settings',

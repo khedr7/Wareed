@@ -24,6 +24,20 @@ class UserController extends Controller
         return view('users.index', compact("users"));
     }
 
+    public function indexProviders(Request $request)
+    {
+        $users = $this->userService->indexProviders($request);
+
+        return view('users.index', compact("users"));
+    }
+
+    public function providersRequests(Request $request)
+    {
+        $users = $this->userService->providersRequests($request);
+
+        return view('users.providerRequests', compact("users"));
+    }
+
     public function unacceptedUsers(Request $request)
     {
         $users = $this->userService->unacceptedUsers($request);
@@ -100,6 +114,13 @@ class UserController extends Controller
     public function status($id)
     {
         $message = $this->userService->status($id);
+
+        return response()->json($message);
+    }
+
+    public function accept($id)
+    {
+        $message = $this->userService->accept($id);
 
         return response()->json($message);
     }

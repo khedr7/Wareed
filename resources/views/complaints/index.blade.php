@@ -99,8 +99,8 @@
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<button type="button" data-toggle="modal" data-target="#myModal" data-complaint-id=""
-								rel="tooltip" class="btn btn-success btn-sm btn-icon">
+							<button type="button" data-toggle="modal" data-target="#myModal" data-complaint-id="" rel="tooltip"
+								class="btn btn-success btn-sm btn-icon">
 								{{ __('adminstaticword.Reply') }}
 							</button>
 						</div>
@@ -213,11 +213,11 @@
 				var detailsHtml =
 					"<div class='row'>" +
 					"<div class='col-lg-3'></div>" +
-					"<div class='col-lg-9 text-right'>" +
-					"<button class='btn btn-default' style='display: flex;flex-direction: column;'>" +
+					"<div class='col-lg-9' style='display: flex;flex-direction: column;justify-content: flex-end;align-items: flex-end;'>" +
+					"<button class='btn btn-default' style='display: flex; flex-direction: column;justify-content: flex-start;align-items: flex-start;'>" +
 					"<span  style='color: blue'>" + data.complaint.user.name +
-					" : </span>" +
-					data.complaint.details +
+					" : </span>" + "<div style='text-align: left;'>" +
+					data.complaint.details + "</div>" +
 					"</button>" +
 					"<small >" + formatDate(data.complaint.created_at) + "</small>" +
 					"</div>" +
@@ -229,11 +229,13 @@
 						detailsHtml +=
 							"<div class='row'>" +
 							"<div class='col-lg-3'></div>" +
-							"<div class='col-lg-9 text-right'>" +
-							"<button class='btn btn-default' style='display: flex;flex-direction: column;'>" +
+							"<div class='col-lg-9 ' style='display: flex;flex-direction: column;justify-content: flex-end;align-items: flex-end;'>" +
+							"<button class='btn btn-default' style='display: flex; flex-direction: column;justify-content: flex-start;align-items: flex-start;'>" +
 							"<span  style='color: blue'>" + element.user
 							.name + " : </span>" +
+							"<div style='text-align: left;'>" +
 							element.details +
+							"</div>" +
 							"</button>" + "<small>" + formatDate(data.complaint
 								.created_at) + "</small>" +
 							"</div>" +
@@ -245,7 +247,9 @@
 							"<button class='btn btn-primary' style='display: flex;flex-direction: column;'>" +
 							"<span >" + element.user
 							.name + " : </span>" +
+							"<div style='text-align: right;'>" +
 							element.details +
+							"</div>" +
 							"</button>" + "<small class='text-left'>" + formatDate(data.complaint
 								.created_at) + "</small>" +
 							"</div>" +
@@ -267,10 +271,9 @@
 
 	function submitForm() {
 		// Serialize the form data
-        console.log(complaintData.complaint.id);
+		var complaintId = complaintData.complaint.id;
 		var formData = $("#demo-form2").serialize();
-        formData += "&complaint_id=" + complaintData.complaint.id;
-        console.log(formData);
+		formData += "&complaint_id=" + complaintId;
 
 		// Make an AJAX request
 		$.ajax({
@@ -295,9 +298,10 @@
 				notification.get().click(function() {
 					notification.remove();
 				});
-
-                $('#myModal').hide();
-                getDate(complaintId);
+				$('.modal-backdrop').last().remove();
+				$('#myModal').hide();
+				$('#myModal').css("display", "none");
+				getDate(complaintId);
 			},
 			error: function(data) {
 				var notification = new PNotify({
@@ -337,7 +341,7 @@
 		return date.toLocaleString('en-US', options);
 	}
 
-    $(document).on('click', '.edit-category', function() {
+	$(document).on('click', '.edit-category', function() {
 		var categoryId = $(this).data('category-id');
 
 		$('#category-id').val(categoryId);
@@ -364,6 +368,7 @@
 		}
 	}
 </style>
+
 <style>
 	.modal-v2 {
 		width: 490px;

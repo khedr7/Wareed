@@ -53,7 +53,7 @@
 								<div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }} form-group">
 									<label>{{ __('adminstaticword.Category') }} <sup style="color: red">*</sup></label>
 									<select name="category_id" id="category_id"
-										class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }} form-control select2">
+										class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }} form-control select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($categories as $category)
 											<option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }}>
@@ -70,7 +70,7 @@
 								<div class="form-group{{ $errors->has('user_id') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.User') }} <sup style="color: red">*</sup></label>
 									<select required name="user_id" id="user_id"
-										class="form-control{{ $errors->has('user_id') ? ' is-invalid' : '' }}">
+										class="form-control{{ $errors->has('user_id') ? ' is-invalid' : '' }} select2bs4">
 										<option selected disabled value="none">{{ __('select') }}</option>
 										@foreach ($users as $user)
 											<option value="{{ $user->id }}" {{ $user->id == old('user_id') ? 'selected' : '' }}>
@@ -123,8 +123,7 @@
 						</div>
 						<br>
 
-						<div class="row">
-
+						{{-- <div class="row">
 							<div class="col-md-6 form-group">
 								<div class="form-group @error('code') is-invalid @enderror">
 									<label>{{ __('adminstaticword.MapLatitude') }} <sup style="color: red">*</sup></label>
@@ -144,7 +143,7 @@
 								<div class="map" id="map"></div>
 
 							</div>
-						</div>
+						</div> --}}
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
@@ -189,13 +188,15 @@
 <script src="{{ asset('vendor/jquery-validation/additional-methods.min.js') }}"></script>
 
 <script>
-	//Initialize Select2 Elements
-	// $('.select2').select2()
+	$(function() {
+		//Initialize Select2 Elements
+		$('.select2').select2()
 
-	//Initialize Select2 Elements
-	// $('.select2bs4').select2({
-	// 	theme: 'bootstrap4'
-	// })
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme: 'bootstrap4'
+		})
+	});
 </script>
 
 <script>
