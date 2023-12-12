@@ -44,7 +44,8 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         });
     });
 
-    Route::get('/home',  [HomeController::class, 'appHomePage'])->name('app.home');
+    Route::get('/home',    [HomeController::class, 'appHomePage'])->name('app.home');
+    Route::get('/config',  [HomeController::class, 'config'])->name('app.config');
 
     Route::group([
         'prefix' => '/users',
@@ -162,4 +163,3 @@ Route::group([
 //     Route::put('/{id}', 'update');
 //     Route::delete('/{id}', 'delete');
 // });
-

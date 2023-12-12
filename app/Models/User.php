@@ -17,7 +17,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Codebyray\ReviewRateable\Traits\ReviewRateable as ReviewRateableTrait;
 
-class User extends Authenticatable implements HasMedia , ReviewRateable
+class User extends Authenticatable implements HasMedia, ReviewRateable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use InteractsWithMedia, HasRoles, ReviewRateableTrait;
@@ -78,11 +78,6 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
         return $this->hasMany(Order::class);
     }
 
-    public function services()
-    {
-        return $this->hasMany(Service::class);
-    }
-
     public function replies()
     {
         return $this->hasMany(ComplaintReply::class);
@@ -92,6 +87,12 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
     public function days()
     {
         return $this->belongsToMany(Day::class, 'day_user', 'user_id', 'day_id');
+    }
+
+    // many to many
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_user', 'user_id', 'service_id');
     }
 
     public function userRating()
@@ -109,9 +110,6 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
             ->when(request()->accepted == 1, function ($query) {
                 return $query->where('accepted', 1);
             })
-            // ->when(request()->has_residence == 1, function ($query) {
-            //     return $query->where('has_residence', 1);
-            // })
             ->when(request()->category_id, function ($query) {
                 return $query->whereHas('services', function ($query) {
                     $query->where('category_id', request()->category_id)->where('status', 1);
@@ -124,6 +122,11 @@ class User extends Authenticatable implements HasMedia , ReviewRateable
             })
             ->when(request()->city_id, function ($query) {
                 return $query->where('city_id', request()->city_id);
+            })
+            ->when(request()->service_id, function ($query) {
+                return $query->whereHas('services', function ($query) {
+                    $query->where('services.id', request()->service_id);
+                });
             })
             ->when(request()->gender, function ($query) {
                 return $query->where('gender', request()->gender);

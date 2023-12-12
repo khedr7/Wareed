@@ -15,6 +15,11 @@ class CategoryService
         return Category::orderBy('id', 'desc')->get();
     }
 
+    public function getAllApp()
+    {
+        return Category::with('services:id,name,category_id')->orderBy('name', 'asc')->get();
+    }
+
     public function find($categoryId)
     {
         return $this->findByIdOrFail(Category::class, 'category', $categoryId);

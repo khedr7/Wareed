@@ -24,20 +24,16 @@ class PaymentMethodResource extends JsonResource
     public function getAllResource()
     {
           return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'status' => $this->status,
-            'created_at' => $this->created_at
+            'id'         => $this->id,
+            'name'       => $this->name,
           ];
     }
 
     public function defaultResource()
     {
           return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'status' => $this->status,
-            'created_at' => $this->created_at
+            'id'         => $this->id,
+            'name'       => $this->name,
           ];
     }
 }

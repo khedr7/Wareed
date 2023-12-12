@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $users = $this->userService->indexProviders($request);
 
-        return view('users.index', compact("users"));
+        return view('users.providers', compact("users"));
     }
 
     public function providersRequests(Request $request)

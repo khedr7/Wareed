@@ -16,7 +16,7 @@ class Service extends Model implements HasMedia
 
     protected $fillable  = [
         'name', 'details', 'price', 'latitude', 'on_patient_site',
-        'longitude', 'status', 'featured', 'category_id', 'user_id',
+        'longitude', 'status', 'featured', 'category_id',
     ];
     const PATH = 'services';
 
@@ -28,7 +28,6 @@ class Service extends Model implements HasMedia
         'longitude'   => 'double',
         'status'      => 'integer',
         'featured'    => 'integer',
-        'user_id'     => 'integer',
         'category_id' => 'integer',
         'on_patient_site'   => 'integer',
     ];
@@ -38,9 +37,10 @@ class Service extends Model implements HasMedia
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function user()
+    // many to many
+    public function users()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsToMany(User::class, 'service_user', 'service_id', 'user_id');
     }
 
     public function orders()

@@ -22,4 +22,14 @@ class HomeController extends Controller
             'dataFetchedSuccessfully'
         );
     }
+
+    public function config()
+    {
+        $config = $this->homeService->config();
+
+        return $this->successResponse(
+            $this->resource($config, ConfigResource::class),
+            'dataFetchedSuccessfully'
+        );
+    }
 }
