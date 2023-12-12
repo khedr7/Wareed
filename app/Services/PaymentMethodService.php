@@ -15,6 +15,11 @@ class PaymentMethodService
         return PaymentMethod::all();
     }
 
+    public function getAllApp()
+    {
+        return PaymentMethod::where('status', 1)->get();
+    }
+
     public function find($payment_methodId)
     {
         return $this->findByIdOrFail(PaymentMethod::class, 'paymentMethod', $payment_methodId);

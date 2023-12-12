@@ -18,6 +18,7 @@ class ConfigResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'appHomePage' => $this->appHomePage(),
+            'config'      => $this->config(),
             default => []
         };
     }
@@ -29,6 +30,15 @@ class ConfigResource extends JsonResource
             'categories'   => CategoryResource::collection($this->resource['categories']),
             'topServices'  => ServiceResource::collection($this->resource['topServices']),
             'topProviders' => UserResource::collection($this->resource['topProviders']),
+        ];
+    }
+
+    public function config()
+    {
+        return [
+            'states'            => StateResource::collection($this->resource['states']),
+            'categories'        => CategoryResource::collection($this->resource['categories']),
+            'payment_methodes'  => PaymentMethodResource::collection($this->resource['payment_methodes']),
         ];
     }
 }

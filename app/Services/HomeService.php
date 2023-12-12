@@ -15,7 +15,8 @@ class HomeService
         private CategoryService $categoryService,
         private ServiceService  $serviceService,
         private UserService     $userService,
-
+        private StateService    $stateService,
+        private PaymentMethodService    $paymentMethodService,
     ) {
     }
 
@@ -26,6 +27,15 @@ class HomeService
             'categories'   => $this->categoryService->getAll(),
             'topServices'  => $this->serviceService->getTopRated(),
             'topProviders' => $this->userService->getTopRated(),
+        ];
+    }
+
+    public function config(): array
+    {
+        return [
+            'states'           => $this->stateService->getAllApp(),
+            'categories'       => $this->categoryService->getAllApp(),
+            'payment_methodes' => $this->paymentMethodService->getAllApp(),
         ];
     }
 }

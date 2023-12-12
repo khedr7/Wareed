@@ -20,6 +20,7 @@ class ServiceResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
+            'config' => $this->config(),
             default => $this->defaultResource(),
         };
     }
@@ -83,6 +84,15 @@ class ServiceResource extends JsonResource
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
+        ];
+    }
+
+    public function config()
+    {
+        return [
+            'id'    => $this->id,
+            'name'  => $this->name,
+            'image' => $this->image,
         ];
     }
 }

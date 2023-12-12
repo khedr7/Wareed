@@ -17,6 +17,7 @@ class CategoryResource extends JsonResource
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
             'getAll' => $this->getAllResource(),
+            'config' => $this->config(),
             default => $this->defaultResource(),
         };
     }
@@ -24,8 +25,8 @@ class CategoryResource extends JsonResource
     public function getAllResource()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
+            'id'    => $this->id,
+            'name'  => $this->name,
             'image' => $this->image,
         ];
     }
@@ -33,9 +34,19 @@ class CategoryResource extends JsonResource
     public function defaultResource()
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
+            'id'    => $this->id,
+            'name'  => $this->name,
             'image' => $this->image,
+        ];
+    }
+
+    public function config()
+    {
+        return [
+            'id'       => $this->id,
+            'name'     => $this->name,
+            'image'    => $this->image,
+            'services' => ServiceResource::collection($this->services) ,
         ];
     }
 }
