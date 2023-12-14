@@ -35,36 +35,36 @@ class OrderRequest extends FormRequest
     public function getCreateRules()
     {
         return [
-            'user_id' => '',
-            'service_id' => '',
-            'payment_method_id' => '',
-            'status' => '',
-            'payment_status' => '',
-            'date' => '',
-            'note' => '',
-            'user_id' => '',
-            'service_id' => '',
-            'payment_method_id' => '',
-            'patients_number' => '',
-            'end_date' => ''
+            'user_id'           => '',
+            'service_id'        => 'required|exists:services,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'status'            => 'sometimes|required|boolean',
+            'payment_status'    => 'sometimes|required|boolean',
+            'date'              => 'required|date',
+            'note'              => 'sometimes|required|string',
+            'patients_number'   => 'sometimes|required|integer',
+            'end_date'          => 'required|date',
+            'provider_id'       => 'required|exists:users,id',
+            'on_provider_site'  => 'sometimes|required|boolean',
+            'on_patient_site'   => 'sometimes|required|boolean',
         ];
     }
 
     public function getUpdateRules()
     {
         return [
-            'user_id' => '',
-            'service_id' => '',
-            'payment_method_id' => '',
-            'status' => '',
-            'payment_status' => '',
-            'date' => '',
-            'note' => '',
-            'user_id' => '',
-            'service_id' => '',
-            'payment_method_id' => '',
-            'patients_number' => '',
-            'end_date' => ''
+            'user_id'           => '',
+            'service_id'        => 'sometimes|required|exists:services,id',
+            'payment_method_id' => 'sometimes|required|exists:payment_methods,id',
+            'status'            => 'sometimes|required|boolean',
+            'payment_status'    => 'sometimes|required|boolean',
+            'date'              => 'sometimes|required|date',
+            'note'              => 'sometimes|required|string',
+            'patients_number'   => 'sometimes|required|integer',
+            'end_date'          => 'sometimes|required|date',
+            'provider_id'       => 'sometimes|required|exists:users,id',
+            'on_provider_site'  => 'sometimes|required|boolean',
+            'on_patient_site'   => 'sometimes|required|boolean',
         ];
     }
 

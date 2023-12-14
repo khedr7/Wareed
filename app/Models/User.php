@@ -77,6 +77,10 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     {
         return $this->hasMany(Order::class);
     }
+    public function providerOrders()
+    {
+        return $this->hasMany(Order::class,'provider_id');
+    }
 
     public function replies()
     {

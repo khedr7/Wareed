@@ -51,7 +51,7 @@ class UserResource extends JsonResource
             'fcm_token'     => $this->fcm_token,
             'created_at'    => $this->created_at,
             'days'          => $this->days->pluck('name')->toArray(),
-            'avg_rating'    => $this->user_rating_avg_rating ?? 0,
+            'avg_rating'    => $this->user_rating_avg_rating ?? "0",
             
         ];
     }
@@ -80,7 +80,7 @@ class UserResource extends JsonResource
                 'created_at'    => $this->created_at,
                 'days'          => $this->days->pluck('name')->toArray(),
                 'services'      => ServiceResource::collection($this->services->where('status', 1)),
-                'avg_rating'    => $this->averageRating() ?? 0,
+                'avg_rating'    => $this->averageRating() ?? "0",
                 'reviews'       => ReviewResource::collection($this->userRating) ,
 
 
