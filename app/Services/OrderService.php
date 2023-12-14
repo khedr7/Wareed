@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class OrderService
@@ -13,33 +14,15 @@ class OrderService
 
     public function getAll()
     {
+        
         if(request()->has('provider_id'))
         {
-            return Order::with([
-                'user:id,name',
-                'paymentMethod:id,name'
-            ])->whereHas('service', function ($query) {
-                $query->where('user_id', request()->provider_id);
-            })
-            ->orderBy('id', 'desc')->app();
+            $user = User::findOrFail(request()->provider_id);
+            return $user->providerOrders;
         }
-        if(request()->routeIs('app.orders.getAll'))
-        {
-            return Order::where('user_id',Auth::user()->id)->with([
-                'user:id,name',
-                'service' => function ($query) {
-                    $query->with('user:id,name')->select('id', 'name', 'user_id');
-                },
-                'paymentMethod:id,name'
-            ])->orderBy('id', 'desc')->app();
-        }
-        return Order::with([
-            'user:id,name',
-            'service' => function ($query) {
-                $query->with('user:id,name')->select('id', 'name', 'user_id');
-            },
-            'paymentMethod:id,name'
-        ])->orderBy('id', 'desc')->app();
+        $user = Auth::user();
+        return $user->orders;
+
     }
 
     public function find($orderId)

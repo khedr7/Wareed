@@ -13,7 +13,7 @@ class Order extends Model
     protected $fillable  = [
         'user_id', 'service_id', 'payment_method_id',
         'status', 'payment_status', 'date', 'note','patients_number',
-        'end_date'
+        'end_date','provider_id','on_provider_site','on_patient_site'
     ];
 
     protected $casts = [
@@ -25,12 +25,20 @@ class Order extends Model
         'date'              => 'datetime',
         'note'              => 'string',
         'patients_number'   => 'integer',
-        'end_date'          => 'datetime'
+        'end_date'          => 'datetime',
+        'provider_id'       => 'integer',
+        'on_provider_site'  => 'boolean',
+        'on_patient_site'   => 'boolean',
+
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function provider()
+    {
+        return $this->belongsTo(User::class, 'provider_id', 'id');
     }
 
     public function service()
