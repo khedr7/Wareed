@@ -36,7 +36,7 @@ class UserAuthService
             'password' => $validatedData['password']
         ];
         if (!Auth::attempt($attemptedData)) {
-            throw new Exception(__('messages.incorrectPassword'), 401);
+            throw new Exception(__('messages.incorrect_password'), 401);
         }
         $token = Auth::attempt($attemptedData);
         $accessToken = $user->createToken('auth');
@@ -115,7 +115,22 @@ class UserAuthService
     }
     public function register($validatedData)
     {
-        return $this->userService->store($validatedData);
+        DB::beginTransaction();
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['accepted'] = 1;
+        $validatedData['status']   = 1;
+        $validatedData['role']     = 'user';
+        $user = User::create($validatedData);
+
+        $user->assignRole($validatedData['role']);
+
+        DB::commit();
+        $accessToken = $user->createToken('auth');
+        return [
+            'user' => $user,
+            'token' => $accessToken->plainTextToken
+        ];
     }
 
     public function providerRegister($validatedData)

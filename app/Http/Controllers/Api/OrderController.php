@@ -27,6 +27,16 @@ class OrderController extends Controller
         );
     }
 
+    public function calendar()
+    {
+        $orders = $this->orderService->calendar();
+
+        return $this->successResponse(
+            OrderResource::collection($orders),
+            'dataFetchedSuccessfully'
+        );
+    }
+
     public function find($orderId)
     {
         $order = $this->orderService->find($orderId);

@@ -101,6 +101,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         'middleware' => 'auth:sanctum'
     ], function () {
         Route::get('/', 'getAll')->name('app.orders.getAll');
+        Route::get('/calendar', 'calendar')->name('app.orders.calendar');
         Route::get('/{id}', 'find');
         Route::post('/', 'create')->name('app.orders.create');
         Route::post('/status/{orderId}', 'status')->name('app.orders.status');
