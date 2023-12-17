@@ -53,7 +53,6 @@ class UserResource extends JsonResource
             'avg_rating'    => $this->user_rating_avg_rating ?? 0,
             'on_patient_site'    => $this->pivot->on_patient_site ?? 0,
             'on_provider_site'   => $this->pivot->on_provider_site ?? 0,
-
         ];
     }
 
@@ -83,6 +82,8 @@ class UserResource extends JsonResource
                 'services'      => ServiceResource::collection($this->services->where('status', 1)),
                 'avg_rating'    => $this->averageRating() ?? 0,
                 'reviews'       => ReviewResource::collection($this->userRating),
+                'avg_rating'    => $this->averageRating() ?? "0",
+                'reviews'       => ReviewResource::collection($this->userRating) ,
             ];
         } else {
             return [
