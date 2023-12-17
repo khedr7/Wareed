@@ -15,7 +15,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         if (request()->routeIs('app.service.find')) {
-            return $this->getAllResource();
+            return $this->getAllAppResource();
         }
 
         $actionMethod = $request->route()->getActionMethod();
@@ -30,6 +30,33 @@ class UserResource extends JsonResource
     }
 
     public function getAllResource()
+    {
+        return [
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'email'         => $this->email,
+            'address'       => $this->address,
+            'profile'       => $this->profile,
+            'phone'         => $this->phone,
+            'role'          => $this->role,
+            'status'        => $this->status,
+            'accepted'      => $this->accepted,
+            // 'has_residence' => $this->has_residence,
+            'gender'        => $this->gender,
+            'birthday'      => $this->birthday,
+            'details'       => $this->details,
+            'latitude'      => $this->latitude,
+            'longitude'     => $this->longitude,
+            'fcm_token'     => $this->fcm_token,
+            'created_at'    => $this->created_at,
+            'days'          => $this->days->pluck('name')->toArray(),
+            'avg_rating'    => $this->user_rating_avg_rating ?? 0,
+            // 'on_patient_site'    => (int) $this->pivot->on_patient_site ?? 0,
+            // 'on_provider_site'   => (int) $this->pivot->on_provider_site ?? 0,
+        ];
+    }
+
+    public function getAllAppResource()
     {
         return [
             'id'            => $this->id,
