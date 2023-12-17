@@ -36,18 +36,17 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
-            'users'               => UserResource::collection($this->users),
+            // 'users'              => UserResource::collection($this->users),
         ];
     }
 
     public function defaultResource()
     {
+        // dd($this->users);
         return [
             'id'                 => $this->id,
             'name'               => $this->name,
@@ -57,13 +56,11 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
-            'users'               => UserResource::collection($this->users),
+            'users'              => UserResource::collection($this->users),
         ];
     }
 
@@ -78,11 +75,11 @@ class ServiceResource extends JsonResource
             // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
-            // 'on_patient_site'    => $this->on_patient_site,
             'category_id'        => $this->category_id,
-            // 'user_id'            => $this->user_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
+            'on_patient_site'    => $this->pivot->on_patient_site ?? 0,
+            'on_provider_site'   => $this->pivot->on_provider_site ?? 0,
             'category'           => CategoryResource::make($this->category),
         ];
     }

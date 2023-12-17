@@ -92,7 +92,8 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     // many to many
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'service_user', 'user_id', 'service_id');
+        return $this->belongsToMany(Service::class, 'service_user', 'user_id', 'service_id')
+            ->withPivot(['on_patient_site', 'on_provider_site']);
     }
 
     public function userRating()

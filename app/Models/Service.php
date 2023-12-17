@@ -40,7 +40,8 @@ class Service extends Model implements HasMedia
     // many to many
     public function users()
     {
-        return $this->belongsToMany(User::class, 'service_user', 'service_id', 'user_id');
+        return $this->belongsToMany(User::class, 'service_user', 'service_id', 'user_id')
+            ->withPivot(['on_patient_site', 'on_provider_site']);
     }
 
     public function orders()
