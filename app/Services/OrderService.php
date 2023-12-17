@@ -12,16 +12,19 @@ class OrderService
 {
     use ModelHelper;
 
+    public function getAllDashboard()
+    {
+        $data = Order::with(['paymentMethod','user', 'provider','service'  => function ($query) {
+            $query->withTrashed();
+        }])->get();
+        return $data;
+    }
+
     public function getAll()
     {
 
         if (request()->has('provider_id')) {
             $user = User::findOrFail(request()->provider_id);
-            // $data = [
-            //     'Pending'   => $user->providerOrders()->wherestatus('Pending')->get(),
-            //     'Confirmed' => $user->providerOrders()->wherestatus('Confirmed')->get(),
-            //     'Cancelled' => $user->providerOrders()->wherestatus('Cancelled')->get(),
-            // ];
             $data = [
                 'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('provider_id', request()->provider_id)->get(),
                 'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('provider_id', request()->provider_id)->get(),

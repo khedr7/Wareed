@@ -32,12 +32,15 @@ class UserService
 
     public function getTopRated()
     {
-        return User::with('days')->withAvg('userRating','rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->get()->take(5);
+        return User::with('days')->withAvg('userRating', 'rating')
+            ->where('accepted', 1)->where('status', 1)->where('role', 'provider')
+            ->orderByDesc('user_rating_avg_rating')
+            ->get()->take(5);
     }
 
     public function getAllProviders($request)
     {
-        return User::with('days')->withAvg('userRating','rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
+        return User::with('days')->withAvg('userRating', 'rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
     }
 
     public function unacceptedUsers()
@@ -128,6 +131,8 @@ class UserService
         DB::beginTransaction();
 
         $user->clearMediaCollection('profile');
+        $user->orders()->delete();
+        $user->providerOrders()->delete();
         $user->delete();
 
 
@@ -144,6 +149,8 @@ class UserService
 
         foreach ($users as $user) {
             $user->clearMediaCollection('profile');
+            $user->orders()->delete();
+            $user->providerOrders()->delete();
             $user->delete();
         }
 

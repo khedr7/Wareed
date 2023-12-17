@@ -27,7 +27,7 @@
 
 									<span style="margin-left: 25px;">#</span>
 								</th>
-								<th>{{ __('adminstaticword.Service') }}</th>
+								<th>{{ __('adminstaticword.Provider') }}</th>
 								<th>{{ __('adminstaticword.User') }}</th>
 								<th>{{ __('adminstaticword.PaymentMethod') }}</th>
 								<th>{{ __('adminstaticword.Status') }}</th>
@@ -46,13 +46,13 @@
 
 									<td>
 										{{-- <a href="{{ route('services.admin.edit', $order->service->id) }}"> --}}
-											{{ $order->service->name }}
-                                        {{-- </a> --}}
+										{{ $order->provider->name }}
+										{{-- </a> --}}
 									</td>
 									<td>
 										{{-- <a href="{{ route('users.admin.edit', $order->user->id) }}"> --}}
-											{{ $order->user->name }}
-                                        {{-- </a> --}}
+										{{ $order->user->name }}
+										{{-- </a> --}}
 									</td>
 									<td>
 										{{ $order->paymentMethod->name }}
@@ -78,10 +78,10 @@
 									<td>
 										<button type="button" data-toggle="modal" data-target="#show-order" data-order-id="{{ $order->id }}"
 											data-user-name="{{ $order->user->name }}" data-service-name="{{ $order->service->name }}"
-											data-service-user-name="{{ $order->service->user->name }}"
-											data-payment-method-name ="{{ $order->paymentMethod->name }}" data-status="{{ $order->status }}"
-											data-payment_status="{{ $order->payment_status }}" data-note="{{ $order->note }}" rel="tooltip"
-											class="btn btn-primary btn-sm btn-icon show-order">
+											data-service-user-name="{{ $order->provider->name }}" data-date="{{ $order->date }}"
+											data-end_date="{{ $order->end_date }}" data-payment-method-name ="{{ $order->paymentMethod->name }}"
+											data-status="{{ $order->status }}" data-payment_status="{{ $order->payment_status }}" data-on_patient_site	="{{ $order->on_patient_site	 }}"
+											data-note="{{ $order->note }}" rel="tooltip" class="btn btn-primary btn-sm btn-icon show-order">
 											<i class="fa fa-eye" aria-hidden="true"></i>
 										</button>
 									</td>
@@ -182,14 +182,33 @@
 													</tr>
 													<tr>
 														<th scope="row" class="p-1">
-															{{ __('adminstaticword.Service') }} :</th>
-														<td class="p-1" id="order-service-name">
+															{{ __("adminstaticword.Service's Provider") }} :</th>
+														<td class="p-1" id="order-service-user-name">
 														</td>
 													</tr>
 													<tr>
 														<th scope="row" class="p-1">
-															{{ __("adminstaticword.Service's user") }} :</th>
-														<td class="p-1" id="order-service-user-name">
+															{{ __('adminstaticword.Service') }} :</th>
+														<td class="p-1" id="order-service-name">
+														</td>
+													</tr>
+
+													<tr>
+														<th scope="row" class="p-1">
+															{{ __('adminstaticword.StartDate') }} :</th>
+														<td class="p-1" id="order-date">
+														</td>
+													</tr>
+													<tr>
+														<th scope="row" class="p-1">
+															{{ __('adminstaticword.EndDate') }} :</th>
+														<td class="p-1" id="order-end-date">
+														</td>
+													</tr>
+													<tr>
+														<th scope="row" class="p-1">
+															{{ __('adminstaticword.Site') }} :</th>
+														<td class="p-1" id="order-site">
 														</td>
 													</tr>
 													<tr>
@@ -307,14 +326,19 @@
 		var serviceName = $(this).data('service-name');
 		var serviceUserName = $(this).data('service-user-name');
 		var paymentMethod = $(this).data('payment-method-name');
+		var date = $(this).data('date');
+		var end_date = $(this).data('end_date');
 		var status = $(this).data('status');
 		var payment_status = $(this).data('payment_status');
+		var on_patient_site = $(this).data('on_patient_site');
 		var note = $(this).data('note');
 
 
 		$('#order-user-name').text(userName);
 		$('#order-service-name').text(serviceName);
 		$('#order-service-user-name').text(serviceUserName);
+		$('#order-date').text(date);
+		$('#order-end-date').text(end_date);
 		$('#order-payment-method-name').text(paymentMethod);
 		$('#order-status').text(status);
 
@@ -323,6 +347,13 @@
 		} else {
 			$('#order-payment_status').text('{{ __('adminstaticword.Unsent') }}');
 		}
+
+		if (on_patient_site == 1) {
+			$('#order-site').text('{{ __('adminstaticword.on_patient_site') }}');
+		} else {
+			$('#order-site').text('{{ __('adminstaticword.on_provider_site') }}');
+		}
+
 		$('#order-note').text(note);
 
 		$('#edit-o-form').attr('action', "{{ url('orders/status') }}/" + orderId);

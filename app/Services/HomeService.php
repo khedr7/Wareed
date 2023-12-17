@@ -25,7 +25,7 @@ class HomeService
         return [
             'banners'      => $this->bannerService->getAllActive(),
             'categories'   => $this->categoryService->getAll(),
-            'topServices'  => $this->serviceService->getTopRated(),
+            'topServices'  => $this->serviceService->getTopRated(), //Featured
             'topProviders' => $this->userService->getTopRated(),
         ];
     }
