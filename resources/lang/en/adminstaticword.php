@@ -369,6 +369,7 @@ return array (
   'Message' => 'Message',
   'MetaDataDescription' => 'Meta Data Description',
   'MetaDataKeywords' => 'Meta Data Keywords',
+  'Keywords' => 'Keywords',
   'MinAmount' => 'Min Amount',
   'Mobile' => 'Mobile',
   'MoneyBack' => 'Money Back',

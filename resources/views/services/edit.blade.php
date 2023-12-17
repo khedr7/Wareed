@@ -28,24 +28,25 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group @error('code') is-invalid @enderror">
-									<label>{{ __('adminstaticword.Name') }} <sup style="color: red">*</sup></label>
-									<input required type="text" name="name"
-										class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-										placeholder="{{ __('adminstaticword.Name') }}" value="{{ old('name', $service->name) }}">
-									@include('alerts.feedback', ['field' => 'name'])
+									<label>{{ __('adminstaticword.English Name') }} <sup style="color: red">*</sup></label>
+									<input required type="text" name="name_en"
+										class="form-control{{ $errors->has('name_en') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.English Name') }}"
+										value="{{ old('name_en', $service->getTranslation('name', 'en', false)) }}">
+									@include('alerts.feedback', ['field' => 'name_en'])
 								</div>
 							</div>
 
 							<div class="col-md-6">
-								<div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
-									<label>{{ __('adminstaticword.Price') }} <sup style="color: red">*</sup></label>
-									<input required type="number" step="0.001" name="price"
-										class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}"
-										placeholder="{{ __('adminstaticword.Price') }}" min="0" value="{{ old('price', $service->price) }}">
-									@include('alerts.feedback', ['field' => 'price'])
+								<div class="form-group @error('code') is-invalid @enderror">
+									<label>{{ __('adminstaticword.Arabic Name') }} <sup style="color: red">*</sup></label>
+									<input required type="text" name="name_ar"
+										class="form-control{{ $errors->has('name_ar') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Arabic Name') }}"
+										value="{{ old('name_ar', $service->getTranslation('name', 'ar', false)) }}">
+									@include('alerts.feedback', ['field' => 'name_ar'])
 								</div>
 							</div>
-
 						</div>
 
 						<div class="row">
@@ -65,6 +66,15 @@
 								</div>
 							</div>
 
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
+									<label>{{ __('adminstaticword.Price') }} <sup style="color: red">*</sup></label>
+									<input required type="number" step="0.001" name="price"
+										class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}"
+										placeholder="{{ __('adminstaticword.Price') }}" min="0" value="{{ old('price', $service->price) }}">
+									@include('alerts.feedback', ['field' => 'price'])
+								</div>
+							</div>
 
 							{{-- <div class="col-md-6">
 								<div class="form-group{{ $errors->has('user_id') ? ' has-danger' : '' }}">
@@ -82,7 +92,12 @@
 								</div>
 							</div> --}}
 
-                            <div class="col-md-6">
+						</div>
+
+						<div class="row">
+
+
+							<div class="col-md-6">
 								<div class="form-group"{{ $errors->has('image') ? ' has-danger' : '' }}>
 									<label>{{ __('adminstaticword.Image') }}</label>
 									<div class="input-group mb-3">
@@ -99,8 +114,19 @@
 									@endif
 								</div>
 							</div>
-						</div>
 
+							<div class="col-md-6 form-group">
+								<label>{{ __('adminstaticword.Keywords') }}:</span></label>
+								<select class="form-control" id="keys" name="keys[]" multiple="multiple" placeholder="">
+									@foreach ($service->keywords as $key)
+										<option value="{{ $key->key }}" selected>
+											{{ $key->key }}
+										</option>
+									@endforeach
+								</select>
+							</div>
+
+						</div>
 						<div class="row">
 
 							<div class="col-md-6 form-group">
@@ -154,12 +180,20 @@
 							</div>
 						</div> --}}
 						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group{{ $errors->has('details') ? ' has-danger' : '' }}">
-									<label for="details">{{ __('Details') }}</label>
-									<textarea id="summernote" class="form-control{{ $errors->has('details') ? ' is-invalid' : '' }}" name="details"
-									 rows="10">{{ old('details', $service->details) }}</textarea>
-									@include('alerts.feedback', ['field' => 'details'])
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('details_en') ? ' has-danger' : '' }}">
+									<label for="details_en">{{ __('adminstaticword.English Detail') }}</label>
+									<textarea id="summernote" class="form-control{{ $errors->has('details_en') ? ' is-invalid' : '' }}" name="details_en"
+									 rows="10">{{ old('details', $service->getTranslation('details', 'en', false)) }}</textarea>
+									@include('alerts.feedback', ['field' => 'details_en'])
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group{{ $errors->has('details_ar') ? ' has-danger' : '' }}">
+									<label for="details_ar">{{ __('adminstaticword.Arabic Detail') }}</label>
+									<textarea id="summernote" class="form-control{{ $errors->has('details_ar') ? ' is-invalid' : '' }}"
+									 name="details_ar" rows="10">{{ old('details_ar', $service->getTranslation('details', 'ar', false)) }}</textarea>
+									@include('alerts.feedback', ['field' => 'details_ar'])
 								</div>
 							</div>
 						</div>
@@ -205,6 +239,12 @@
 		$('.select2bs4').select2({
 			theme: 'bootstrap4'
 		})
+
+		$("#keys").select2({
+			tags: true,
+			tokenSeparators: [','],
+			theme: 'bootstrap4'
+		});
 	});
 </script>
 

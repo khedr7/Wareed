@@ -33,8 +33,10 @@ class ServiceRequest extends FormRequest
     public function getCreateRules()
     {
         return [
-            'name'               => 'required',
-            'details'            => '',
+            'name_en'            => 'required',
+            'name_ar'            => 'required',
+            'details_en'         => '',
+            'details_ar'         => '',
             'price'              => 'nullable|numeric',
             // 'latitude'           => 'nullable|numeric',
             // 'longitude'          => 'nullable|numeric',
@@ -43,6 +45,7 @@ class ServiceRequest extends FormRequest
             // 'on_patient_site'    => '',
             'image'              => 'required|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
+            'keys'               => '',
             // 'user_id'            => 'required|exists:users,id',
         ];
     }
@@ -50,8 +53,10 @@ class ServiceRequest extends FormRequest
     public function getUpdateRules()
     {
         return [
-            'name'               => 'required',
-            'details'            => '',
+            'name_en'            => 'required',
+            'name_ar'            => 'required',
+            'details_en'         => '',
+            'details_ar'         => '',
             'price'              => 'nullable|numeric',
             // 'latitude'           => 'nullable|numeric',
             // 'longitude'          => 'nullable|numeric',
@@ -60,6 +65,7 @@ class ServiceRequest extends FormRequest
             // 'on_patient_site'    => '',
             'image'              => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
+            'keys'               => '',
             // 'user_id'            => 'required|exists:users,id',
         ];
     }

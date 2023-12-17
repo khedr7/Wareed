@@ -17,7 +17,7 @@ class UserAuthService
     public function __construct(private UserService $userService)
     {
     }
-   
+
     public function login($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();
@@ -72,15 +72,15 @@ class UserAuthService
         if (isset($otp)) {
             $otp->delete();
         }
-        if (isset($user)) {
-            $data = [
-                'phone' => $user->phone,
-                'otp' => random_int(100000, 999999),
-            ];
-            $otp = OTP::create($data);
-            return $otp;
-        }
-        throw new Exception(__('messages.userNotFound'), 403);
+        // if (isset($user)) {
+        $data = [
+            'phone' =>  $validatedData['phone'],
+            'otp' => random_int(100000, 999999),
+        ];
+        $otp = OTP::create($data);
+        return $otp;
+        // }
+        // throw new Exception(__('messages.userNotFound'), 403);
     }
     public function verifyOTP($validatedData)
     {
@@ -115,7 +115,7 @@ class UserAuthService
     }
     public function register($validatedData)
     {
-       return $this->userService->store($validatedData);
+        return $this->userService->store($validatedData);
     }
 
     public function providerRegister($validatedData)

@@ -365,6 +365,7 @@ return array(
     'Message' => 'رسالة',
     'MetaDataDescription' => 'وصف بيانات التعريف',
     'MetaDataKeywords' => 'كلمة بيانات البيانات المعتوية',
+    'Keywords' => 'الكلمات المفتاحية',
     'MinAmount' => 'مبلغ دقيقة',
     'Mobile' => 'متحرك',
     'MoneyBack' => 'إرجاع النقود',
