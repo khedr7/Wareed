@@ -106,6 +106,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::post('/status/{orderId}', 'status')->name('app.orders.status');
         Route::put('/{id}', 'update');
         Route::delete('/{id}', 'delete');
+        Route::post('/cancel-order/{orderId}', 'cancelOrder')->name('app.orders.cancelOrder');
     });
 
     Route::group([

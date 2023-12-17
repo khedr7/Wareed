@@ -45,7 +45,6 @@ class OrderRequest extends FormRequest
             'patients_number'   => 'sometimes|required|integer',
             'end_date'          => 'required|date',
             'provider_id'       => 'required|exists:users,id',
-            'on_provider_site'  => 'sometimes|required|boolean',
             'on_patient_site'   => 'sometimes|required|boolean',
         ];
     }
@@ -63,7 +62,6 @@ class OrderRequest extends FormRequest
             'patients_number'   => 'sometimes|required|integer',
             'end_date'          => 'sometimes|required|date',
             'provider_id'       => 'sometimes|required|exists:users,id',
-            'on_provider_site'  => 'sometimes|required|boolean',
             'on_patient_site'   => 'sometimes|required|boolean',
         ];
     }
