@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Translatable\HasTranslations;
 
 class Service extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasTranslations;
 
     protected $fillable  = [
         'name', 'details', 'price', 'latitude', 'on_patient_site',
@@ -20,7 +21,7 @@ class Service extends Model implements HasMedia
     ];
     const PATH = 'services';
 
-    // public $translatable = ['name', 'details'];
+    public $translatable = ['name', 'details'];
 
     protected $casts = [
         'price'       => 'double',
@@ -49,6 +50,11 @@ class Service extends Model implements HasMedia
         return $this->hasMany(Order::class);
     }
 
+    public function keywords()
+    {
+        return $this->hasMany(ServiceKeyWord::class);
+    }
+
     public function getImageAttribute()
     {
         if ($this->getMedia('image')->first())
@@ -59,14 +65,14 @@ class Service extends Model implements HasMedia
     protected $appends = ['image'];
 
 
-    // public function toArray()
-    // {
-    //     $attributes = parent::toArray();
-    //     foreach ($this->getTranslatableAttributes() as $field) {
-    //         $attributes[$field] = $this->getTranslation($field, app()->getLocale());
-    //     }
-    //     return $attributes;
-    // }
+    public function toArray()
+    {
+        $attributes = parent::toArray();
+        foreach ($this->getTranslatableAttributes() as $field) {
+            $attributes[$field] = $this->getTranslation($field, app()->getLocale());
+        }
+        return $attributes;
+    }
 
     public function scopeApp($query)
     {
@@ -99,7 +105,16 @@ class Service extends Model implements HasMedia
             })
             ->when(request()->search, function ($query) {
                 return $query->where(DB::raw("lower(name)"), 'like', '%' . strtolower(request()->search) . '%')
-                    ->orWhere("name->ar", 'like', '%' . request()->search . '%');
+                    ->orWhere("name->ar", 'like', '%' . request()->search . '%')
+                    ->orWhere(DB::raw("lower(details)"), 'like', '%' . strtolower(request()->search) . '%')
+                    ->orWhere("details->ar", 'like', '%' . request()->search . '%')
+                    ->orWhereHas('keywords', function ($query) {
+                        $query->where(
+                            DB::raw("lower(service_key_words.key)"),
+                            'like',
+                            '%' . strtolower(request()->search) . '%'
+                        );
+                    });
             })
             ->when(isset(request()->sort_by_name), function ($query) {
                 $sortOrder = request()->sort_by_name == '1' ? 'ASC' : 'DESC';

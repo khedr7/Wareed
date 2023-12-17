@@ -50,7 +50,21 @@ class ServiceService
     {
         DB::beginTransaction();
 
+        $validatedData['name'] = [
+            'en' => $validatedData['name_en'],
+            'ar' => $validatedData['name_ar'],
+        ];
+
+        $validatedData['details'] = [
+            'en' => $validatedData['details_en'],
+            'ar' => $validatedData['details_en'],
+        ];
+
         $service = Service::create($validatedData);
+
+        foreach ($validatedData['keys'] as $key) {
+            $service->keywords()->create(['key' => $key]);
+        }
 
         DB::commit();
 
@@ -63,7 +77,21 @@ class ServiceService
 
         DB::beginTransaction();
 
+        $validatedData['name'] = [
+            'en' => $validatedData['name_en'],
+            'ar' => $validatedData['name_ar'],
+        ];
+
+        $validatedData['details'] = [
+            'en' => $validatedData['details_en'],
+            'ar' => $validatedData['details_en'],
+        ];
+
         $service->update($validatedData);
+        $service->keywords()->delete();
+        foreach ($validatedData['keys'] as $key) {
+            $service->keywords()->create(['key' => $key]);
+        }
 
         DB::commit();
 

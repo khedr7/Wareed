@@ -79,7 +79,7 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     }
     public function providerOrders()
     {
-        return $this->hasMany(Order::class,'provider_id');
+        return $this->hasMany(Order::class, 'provider_id');
     }
 
     public function replies()
@@ -137,7 +137,16 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
                 return $query->where('gender', request()->gender);
             })
             ->when(request()->search, function ($query) {
-                return $query->Where("name", 'like', '%' . request()->search . '%');
+                return $query->Where("name", 'like', '%' . request()->search . '%')
+                    ->orWhereHas('services', function ($query) {
+                        $query->where(DB::raw("lower(services.name)"), 'like', '%' . strtolower(request()->search) . '%')
+                            ->orWhere("services.name->ar", 'like', '%' . request()->search . '%')
+                            ->orWhere(DB::raw("lower(services.details)"), 'like', '%' . strtolower(request()->search) . '%')
+                            ->orWhere("services.details->ar", 'like', '%' . request()->search . '%')
+                            ->orWhereHas('keywords', function ($query) {
+                                $query->where('service_key_words.key', 'like', '%' . request()->search . '%');
+                            });
+                    });
             })
             ->when(isset(request()->sort_by_name), function ($query) {
                 $sortOrder = request()->sort_by_name == '1' ? 'ASC' : 'DESC';
