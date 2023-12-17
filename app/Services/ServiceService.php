@@ -19,7 +19,7 @@ class ServiceService
 
     public function getTopRated()
     {
-        return Service::with(['users', 'category:id,name'])->where('status', 1)->orderBy('id', 'desc')->get()->take(5);
+        return Service::with(['users', 'category:id,name'])->where('status', 1)->where('Featured', 1)->orderBy('id', 'desc')->get();
     }
 
     public function find($serviceId)
