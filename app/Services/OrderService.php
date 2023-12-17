@@ -14,21 +14,45 @@ class OrderService
 
     public function getAll()
     {
-        
-        if(request()->has('provider_id'))
-        {
+
+        if (request()->has('provider_id')) {
             $user = User::findOrFail(request()->provider_id);
-            return $user->providerOrders;
+            // $data = [
+            //     'Pending'   => $user->providerOrders()->wherestatus('Pending')->get(),
+            //     'Confirmed' => $user->providerOrders()->wherestatus('Confirmed')->get(),
+            //     'Cancelled' => $user->providerOrders()->wherestatus('Cancelled')->get(),
+            // ];
+            $data = [
+                'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('provider_id', request()->provider_id)->get(),
+                'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('provider_id', request()->provider_id)->get(),
+                'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('provider_id', request()->provider_id)->get(),
+            ];
+            return $data;
         }
         $user = Auth::user();
         $user = User::findOrFail($user->id);
         $data = [
-            'Pending'   => $user->orders()->wherestatus('Pending')->get(),
-            'Confirmed' => $user->orders()->wherestatus('Confirmed')->get(),
-            'Cancelled' => $user->orders()->wherestatus('Cancelled')->get(),
+            'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('user_id', $user->id)->get(),
+            'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('user_id', $user->id)->get(),
+            'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('user_id', $user->id)->get(),
         ];
         return $data;
+    }
 
+    public function calendar()
+    {
+        $user = Auth::user();
+        $data = Order::with(['user', 'provider', 'service', 'paymentMethod'])
+            ->where('provider_id', $user->id)
+            ->where(function ($query) {
+                $query->whereYear('date', request('year'))
+                    ->whereMonth('date', request('month'))
+                    ->orWhere(function ($subquery) {
+                        $subquery->whereYear('end_date', request('year'))
+                            ->whereMonth('end_date', request('month'));
+                    });
+            })->get();
+        return $data;
     }
 
     public function find($orderId)
@@ -119,9 +143,10 @@ class OrderService
 
         DB::beginTransaction();
 
-        $order->update([
-            'status' => 'Cancelled',
-        ]
+        $order->update(
+            [
+                'status' => 'Cancelled',
+            ]
         );
 
         DB::commit();
