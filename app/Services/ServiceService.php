@@ -61,9 +61,10 @@ class ServiceService
         ];
 
         $service = Service::create($validatedData);
-
-        foreach ($validatedData['keys'] as $key) {
-            $service->keywords()->create(['key' => $key]);
+        if (isset($validatedData['keys'])) {
+            foreach ($validatedData['keys'] as $key) {
+                $service->keywords()->create(['key' => $key]);
+            }
         }
 
         DB::commit();
@@ -89,8 +90,10 @@ class ServiceService
 
         $service->update($validatedData);
         $service->keywords()->delete();
-        foreach ($validatedData['keys'] as $key) {
-            $service->keywords()->create(['key' => $key]);
+        if (isset($validatedData['keys'])) {
+            foreach ($validatedData['keys'] as $key) {
+                $service->keywords()->create(['key' => $key]);
+            }
         }
 
         DB::commit();
