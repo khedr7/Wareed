@@ -31,7 +31,6 @@ class UserResource extends JsonResource
 
     public function getAllResource()
     {
-       
         return [
             'id'            => $this->id,
             'name'          => $this->name,
@@ -51,8 +50,9 @@ class UserResource extends JsonResource
             'fcm_token'     => $this->fcm_token,
             'created_at'    => $this->created_at,
             'days'          => $this->days->pluck('name')->toArray(),
-            'avg_rating'    => $this->user_rating_avg_rating ?? "0",
-            
+            'avg_rating'    => $this->user_rating_avg_rating ?? 0,
+            'on_patient_site'    => $this->pivot->on_patient_site ?? 0,
+            'on_provider_site'   => $this->pivot->on_provider_site ?? 0,
         ];
     }
 
@@ -80,10 +80,10 @@ class UserResource extends JsonResource
                 'created_at'    => $this->created_at,
                 'days'          => $this->days->pluck('name')->toArray(),
                 'services'      => ServiceResource::collection($this->services->where('status', 1)),
+                'avg_rating'    => $this->averageRating() ?? 0,
+                'reviews'       => ReviewResource::collection($this->userRating),
                 'avg_rating'    => $this->averageRating() ?? "0",
                 'reviews'       => ReviewResource::collection($this->userRating) ,
-
-
             ];
         } else {
             return [
