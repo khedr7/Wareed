@@ -78,8 +78,8 @@ class ServiceResource extends JsonResource
             'category_id'        => $this->category_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
-            'on_patient_site'    => $this->pivot->on_patient_site ?? 0,
-            'on_provider_site'   => $this->pivot->on_provider_site ?? 0,
+            'on_patient_site'    => (int) $this->pivot->on_patient_site ?? 0,
+            'on_provider_site'   => (int) $this->pivot->on_provider_site ?? 0,
             'category'           => CategoryResource::make($this->category),
         ];
     }
