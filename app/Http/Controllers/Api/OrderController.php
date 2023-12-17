@@ -16,9 +16,13 @@ class OrderController extends Controller
     public function getAll()
     {
         $orders = $this->orderService->getAll();
-
+        $data = [
+            'Pending'   => OrderResource::collection($orders['Pending']),
+            'Confirmed' => OrderResource::collection($orders['Confirmed']),
+            'Cancelled' => OrderResource::collection($orders['Cancelled']),
+        ];
         return $this->successResponse(
-            $this->resource($orders, OrderResource::class),
+          $data,
             'dataFetchedSuccessfully'
         );
     }
@@ -80,6 +84,16 @@ class OrderController extends Controller
         $validatedData = $request->validated();
 
         $message = $this->orderService->status($validatedData, $id);
+
+        return $this->successResponse(
+            null,
+            'dataUpdatedSuccessfully'
+        );
+    }
+    public function cancelOrder( $id)
+    {
+
+        $message = $this->orderService->cancelOrder($id);
 
         return $this->successResponse(
             null,

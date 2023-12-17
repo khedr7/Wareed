@@ -21,7 +21,13 @@ class OrderService
             return $user->providerOrders;
         }
         $user = Auth::user();
-        return $user->orders;
+        $user = User::findOrFail($user->id);
+        $data = [
+            'Pending'   => $user->orders()->wherestatus('Pending')->get(),
+            'Confirmed' => $user->orders()->wherestatus('Confirmed')->get(),
+            'Cancelled' => $user->orders()->wherestatus('Cancelled')->get(),
+        ];
+        return $data;
 
     }
 
@@ -102,6 +108,21 @@ class OrderService
         DB::beginTransaction();
 
         $order->update($validatedData);
+
+        DB::commit();
+
+        return true;
+    }
+    public function cancelOrder($order_id)
+    {
+        $order = $this->find($order_id);
+
+        DB::beginTransaction();
+
+        $order->update([
+            'status' => 'Cancelled',
+        ]
+        );
 
         DB::commit();
 
