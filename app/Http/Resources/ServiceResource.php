@@ -14,8 +14,11 @@ class ServiceResource extends JsonResource
      */
     public function toArray($request)
     {
-        if (request()->routeIs('app.user.find') || request()->routeIs('app.home')) {
+        if (request()->routeIs('app.user.find')) {
             return $this->getForProvider();
+        }
+        if ( request()->routeIs('app.home')) {
+            return $this->getForHomeProvider();
         }
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
@@ -80,6 +83,24 @@ class ServiceResource extends JsonResource
             'created_at'         => $this->created_at,
             'on_patient_site'    => (int) $this->pivot->on_patient_site ?? 0,
             'on_provider_site'   => (int) $this->pivot->on_provider_site ?? 0,
+            'category'           => CategoryResource::make($this->category),
+        ];
+    }
+
+    public function getForHomeProvider()
+    {
+        return [
+            'id'                 => $this->id,
+            'name'               => $this->name,
+            'details'            => $this->details,
+            'price'              => $this->price,
+            // 'latitude'           => $this->latitude,
+            // 'longitude'          => $this->longitude,
+            'status'             => $this->status,
+            'featured'           => $this->featured,
+            'category_id'        => $this->category_id,
+            'image'              => $this->image,
+            'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
         ];
     }

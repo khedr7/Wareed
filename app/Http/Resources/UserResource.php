@@ -51,8 +51,6 @@ class UserResource extends JsonResource
             'created_at'    => $this->created_at,
             'days'          => $this->days->pluck('name')->toArray(),
             'avg_rating'    => $this->user_rating_avg_rating ?? 0,
-            // 'on_patient_site'    => (int) $this->pivot->on_patient_site ?? 0,
-            // 'on_provider_site'   => (int) $this->pivot->on_provider_site ?? 0,
         ];
     }
 
