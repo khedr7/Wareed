@@ -79,7 +79,7 @@
 										<button type="button" data-toggle="modal" data-target="#show-order" data-order-id="{{ $order->id }}"
 											data-user-name="{{ $order->user->name }}" data-service-name="{{ $order->service->name }}"
 											data-service-user-name="{{ $order->provider->name }}" data-date="{{ $order->date }}"
-											data-end_date="{{ $order->end_date }}" data-payment-method-name ="{{ $order->paymentMethod->name }}"
+											data-end_date="{{ $order->end_date }}" data-payment-method-name ="{{ $order->paymentMethod->name }}"  data-created_at="{{ $order->created_at }}"
 											data-status="{{ $order->status }}" data-payment_status="{{ $order->payment_status }}" data-on_patient_site	="{{ $order->on_patient_site	 }}"
 											data-note="{{ $order->note }}" rel="tooltip" class="btn btn-primary btn-sm btn-icon show-order">
 											<i class="fa fa-eye" aria-hidden="true"></i>
@@ -229,6 +229,12 @@
 														<td class="p-1" id="order-payment_status">
 														</td>
 													</tr>
+                                                    <tr>
+														<th scope="row" class="p-1">
+															{{ __('adminstaticword.CreatedAt') }} :</th>
+														<td class="p-1" id="review-Created_at">
+														</td>
+													</tr>
 													<tr>
 														<td class="p-1" colspan="2">
 															<div style="display: flex; justify-content: flex-end; flex-direction: column;">
@@ -331,6 +337,7 @@
 		var status = $(this).data('status');
 		var payment_status = $(this).data('payment_status');
 		var on_patient_site = $(this).data('on_patient_site');
+        var createdAt = $(this).data('created_at');
 		var note = $(this).data('note');
 
 
@@ -341,6 +348,8 @@
 		$('#order-end-date').text(end_date);
 		$('#order-payment-method-name').text(paymentMethod);
 		$('#order-status').text(status);
+		$('#review-Created_at').text(createdAt);
+
 
 		if (payment_status == 1) {
 			$('#order-payment_status').text('{{ __('adminstaticword.Sent') }}');

@@ -8,6 +8,7 @@ use App\Models\State;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\User;
+use Codebyray\ReviewRateable\Models\Rating;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -46,6 +47,21 @@ class UserService
     public function unacceptedUsers()
     {
         return User::with('days')->where('accepted', 0)->orderBy('role', 'asc')->get();
+    }
+
+    public function allReviews()
+    {
+        $reviews = Rating::with(['author', 'reviewrateable'])->orderBy('id', 'desc')->get();
+        return $reviews;
+    }
+
+    public function providerReviews($userId)
+    {
+        $user = User::with(['userRating' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'userRating.author'])
+            ->where('id', $userId)->first();
+        return $user;
     }
 
     public function find($userId)
@@ -159,6 +175,33 @@ class UserService
         return true;
     }
 
+    public function deleteReviews($reviewId)
+    {
+        $review = Rating::where('id', $reviewId)->first();
+
+        DB::beginTransaction();
+        $review->delete();
+
+        DB::commit();
+
+        return true;
+    }
+
+    public function reviewsBulkDelete($checked)
+    {
+        $reviews = Rating::whereIn('id', $checked)->get();
+
+        DB::beginTransaction();
+
+        foreach ($reviews as $user) {
+            $user->delete();
+        }
+
+        DB::commit();
+
+        return true;
+    }
+
     public function status($userId)
     {
         $user = $this->find($userId);
@@ -203,6 +246,32 @@ class UserService
         } else {
             $user->accepted = 0;
             $user->save();
+            $message = [
+                'status'   => 'delete',
+                'message'  => 'Status changed to deactive !',
+            ];
+        }
+
+        DB::commit();
+
+        return $message;
+    }
+    public function reviewApprove($reviewId)
+    {
+        $review = Rating::where('id', $reviewId)->first();
+
+        DB::beginTransaction();
+
+        if ($review->approved == 0) {
+            $review->approved = 1;
+            $review->save();
+            $message = [
+                'status'   => 'success',
+                'message'  => 'Status changed to active !',
+            ];
+        } else {
+            $review->approved = 0;
+            $review->save();
             $message = [
                 'status'   => 'delete',
                 'message'  => 'Status changed to deactive !',

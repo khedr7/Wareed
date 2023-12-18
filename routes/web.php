@@ -46,17 +46,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UserController::class, 'index'])->name('users.admin.index');
         Route::get('/providers', [UserController::class, 'indexProviders'])->name('users.admin.providers');
+        Route::get('/reviews', [UserController::class, 'providersReviews'])->name('users.admin.providersReviews');
+        Route::get('/reviews/all', [UserController::class, 'allReviews'])->name('users.admin.allReviews');
+        Route::get('/reviews/{userId}', [UserController::class, 'providerReviews'])->name('users.admin.providerReviews');
         Route::get('/providers-requests', [UserController::class, 'providersRequests'])->name('users.admin.providersRequests');
         Route::get('/create',        [UserController::class, 'create'])->name('users.admin.create');
         Route::post('/bulk-delete',  [UserController::class, 'bulkDelete'])->name('users.admin.bulkDelete');
+        Route::post('/reviews/bulk-delete',  [UserController::class, 'reviewsBulkDelete'])->name('users.admin.reviewsBulkDelete');
         Route::post('/',        [UserController::class, 'store'])->name('users.admin.store');
         Route::get('/{userId}', [UserController::class, 'show'])->name('users.admin.show');
         Route::get('/{userId}/edit',  [UserController::class, 'edit'])->name('users.admin.edit');
         Route::post('/add-points/{userId}',   [UserController::class, 'addPoints'])->name('users.admin.addPoints');
         Route::post('/{userId}',      [UserController::class, 'update'])->name('users.admin.update');
         Route::get('/status/{userId}',   [UserController::class, 'status'])->name('users.admin.status');
-        Route::get('/accept/{userId}', [UserController::class, 'accept'])->name('users.admin.accept');
-        Route::delete('/{userId}',       [UserController::class, 'delete'])->name('users.admin.delete');
+        Route::get('/accept/{userId}',   [UserController::class, 'accept'])->name('users.admin.accept');
+        Route::get('/reviews/approved/{reviewId}', [UserController::class, 'reviewApprove'])->name('users.admin.reviewApprove');
+        Route::delete('/{userId}',          [UserController::class, 'delete'])->name('users.admin.delete');
+        Route::delete('reviews/{reviewId}', [UserController::class, 'deleteReviews'])->name('users.admin.deleteReviews');
     });
 
     Route::group(['prefix' => 'states'], function () {

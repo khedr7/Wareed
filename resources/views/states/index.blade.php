@@ -19,7 +19,6 @@
 						<div class="col-6 text-right">
 							<a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">
 								{{ __('adminstaticword.AddCountry') }}</a>
-
 						</div>
 					</div>
 				</div>

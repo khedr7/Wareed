@@ -31,6 +31,26 @@ class UserController extends Controller
         return view('users.providers', compact("users"));
     }
 
+    public function providersReviews(Request $request)
+    {
+        $users = $this->userService->indexProviders($request);
+
+        return view('reviews.providers', compact("users"));
+    }
+
+    public function allReviews(Request $request)
+    {
+        $reviews = $this->userService->allReviews($request);
+
+        return view('reviews.all', compact("reviews"));
+    }
+    public function providerReviews($userId)
+    {
+        $user = $this->userService->providerReviews($userId);
+        // dd()
+        return view('reviews.index', compact("user"));
+    }
+
     public function providersRequests(Request $request)
     {
         $users = $this->userService->providersRequests($request);
@@ -125,6 +145,13 @@ class UserController extends Controller
         return response()->json($message);
     }
 
+    public function reviewApprove($id)
+    {
+        $message = $this->userService->reviewApprove($id);
+
+        return response()->json($message);
+    }
+
     public function delete($userId)
     {
         $this->userService->delete($userId);
@@ -141,6 +168,27 @@ class UserController extends Controller
         }
 
         $this->userService->bulkDelete($request->checked);
+
+
+        return back()->with('success',  __('messages.dataAddedSuccessfully'));
+    }
+
+    public function deleteReviews($reviewId)
+    {
+        $this->userService->deleteReviews($reviewId);
+
+        return back()->with('success', __('messages.dataDeletedSuccessfully'));
+    }
+
+    public function reviewsBulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), ['checked' => 'required']);
+
+        if ($validator->fails()) {
+            return back()->with('error',  __('messages.Please select field to be deleted.'));
+        }
+
+        $this->userService->reviewsBulkDelete($request->checked);
 
 
         return back()->with('success',  __('messages.dataAddedSuccessfully'));

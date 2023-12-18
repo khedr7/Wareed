@@ -38,7 +38,7 @@ class OrderRequest extends FormRequest
             'user_id'           => '',
             'service_id'        => 'required|exists:services,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'status'            => 'sometimes|required|boolean',
+            // 'status'            => 'sometimes|required',
             'payment_status'    => 'sometimes|required|boolean',
             'date'              => 'required|date',
             'note'              => 'sometimes|required|string',

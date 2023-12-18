@@ -32,6 +32,7 @@ return [
     'Terms and Conditions'          => 'الأحكام والشروط',
     'Privacy Policy'                => 'سياسة الخصوصية',
     'Banners'                       => 'الإعلانات',
-    'Complaints'                    => 'الشكاوي',
+    'Complaints'                    => 'الشكاوي', 
+    'Reviews'                       => 'التقييمات',
 
 ];

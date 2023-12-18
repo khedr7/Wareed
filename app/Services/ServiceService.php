@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceService
 {
@@ -36,6 +37,7 @@ class ServiceService
 
         return $data;
     }
+
     public function edit($id)
     {
         $data = [
@@ -156,5 +158,11 @@ class ServiceService
         DB::commit();
 
         return $message;
+    }
+
+    public function ChangeProviderServices($validatedData)
+    {
+        $provider = User::where('id', Auth::user()->id)->first();
+        $provider->services()->sync($validatedData['services']);
     }
 }

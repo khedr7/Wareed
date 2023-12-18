@@ -25,8 +25,9 @@ class ServiceRequest extends FormRequest
     {
 
         return match ($this->route()->getActionMethod()) {
-            'store'   =>  $this->getCreateRules(),
+            'store'    =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
+            'ChangeProviderServices'   =>  $this->ChangeProviderServices(),
         };
     }
 
@@ -42,11 +43,9 @@ class ServiceRequest extends FormRequest
             // 'longitude'          => 'nullable|numeric',
             'status'             => '',
             'featured'           => '',
-            // 'on_patient_site'    => '',
             'image'              => 'required|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
             'keys'               => '',
-            // 'user_id'            => 'required|exists:users,id',
         ];
     }
 
@@ -62,11 +61,19 @@ class ServiceRequest extends FormRequest
             // 'longitude'          => 'nullable|numeric',
             'status'             => '',
             'featured'           => '',
-            // 'on_patient_site'    => '',
             'image'              => 'sometimes|nullable|image|mimes:png,jpg,jpeg',
             'category_id'        => 'required|exists:categories,id',
             'keys'               => '',
-            // 'user_id'            => 'required|exists:users,id',
+        ];
+    }
+
+    public function ChangeProviderServices()
+    {
+        return [
+            'services'                   => 'array',
+            'service.*.service_id'       => 'exists:services,id',
+            'service.*.on_patient_site'  => 'boolean',
+            'service.*.on_provider_site' => 'boolean',
         ];
     }
 }

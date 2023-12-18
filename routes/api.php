@@ -81,6 +81,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
     ], function () {
         Route::get('/', 'getAll');
         Route::get('/{id}', 'find')->name('app.service.find');
+        Route::post('/change', 'ChangeProviderServices')->name('app.service.ChangeProviderServices')->middleware('auth:sanctum');
     });
 
     Route::group([
