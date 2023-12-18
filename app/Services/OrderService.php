@@ -14,7 +14,7 @@ class OrderService
 
     public function getAllDashboard()
     {
-        $data = Order::with(['paymentMethod','user', 'provider','service'  => function ($query) {
+        $data = Order::with(['paymentMethod', 'user', 'provider', 'service'  => function ($query) {
             $query->withTrashed();
         }])->get();
         return $data;
@@ -23,30 +23,47 @@ class OrderService
     public function getAll()
     {
 
-        if (request()->has('provider_id')) {
-            $user = User::findOrFail(request()->provider_id);
+        if (request()->has('status')) {
+            if (request()->has('provider_id')) {
+                $user = User::findOrFail(request()->provider_id);
+                $data =  Order::with(['user', 'provider', 'service', 'paymentMethod'])
+                    ->where('status', request()->status)->where('provider_id', request()->provider_id)->get();
+
+                return $data;
+            }
+            $user = Auth::user();
+            $user = User::findOrFail($user->id);
+            $data =  Order::with(['user', 'provider', 'service', 'paymentMethod'])
+                ->where('status', request()->status)->where('user_id', $user->id)->get();
+
+            return $data;
+        } else {
+            if (request()->has('provider_id')) {
+                $user = User::findOrFail(request()->provider_id);
+                $data = [
+                    'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('provider_id', request()->provider_id)->get(),
+                    'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('provider_id', request()->provider_id)->get(),
+                    'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('provider_id', request()->provider_id)->get(),
+                ];
+                return $data;
+            }
+            $user = Auth::user();
+            $user = User::findOrFail($user->id);
             $data = [
-                'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('provider_id', request()->provider_id)->get(),
-                'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('provider_id', request()->provider_id)->get(),
-                'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('provider_id', request()->provider_id)->get(),
+                'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('user_id', $user->id)->get(),
+                'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('user_id', $user->id)->get(),
+                'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('user_id', $user->id)->get(),
             ];
             return $data;
         }
-        $user = Auth::user();
-        $user = User::findOrFail($user->id);
-        $data = [
-            'Pending'   => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Pending')->where('user_id', $user->id)->get(),
-            'Confirmed' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Confirmed')->where('user_id', $user->id)->get(),
-            'Cancelled' => Order::with(['user', 'provider', 'service', 'paymentMethod'])->where('status', 'Cancelled')->where('user_id', $user->id)->get(),
-        ];
-        return $data;
     }
+
 
     public function calendar()
     {
         $user = Auth::user();
         $data = Order::with(['user', 'provider', 'service', 'paymentMethod'])
-            ->where('provider_id', $user->id)
+            ->where('provider_id', $user->id)->where('status', '!=', 'Cancelled')
             ->where(function ($query) {
                 $query->whereYear('date', request('year'))
                     ->whereMonth('date', request('month'))

@@ -16,13 +16,18 @@ class OrderController extends Controller
     public function getAll()
     {
         $orders = $this->orderService->getAll();
-        $data = [
-            'Pending'   => OrderResource::collection($orders['Pending']),
-            'Confirmed' => OrderResource::collection($orders['Confirmed']),
-            'Cancelled' => OrderResource::collection($orders['Cancelled']),
-        ];
+
+        if (request()->has('status')) {
+            $data = OrderResource::collection($orders);
+        } else {
+            $data = [
+                'Pending'   => OrderResource::collection($orders['Pending']),
+                'Confirmed' => OrderResource::collection($orders['Confirmed']),
+                'Cancelled' => OrderResource::collection($orders['Cancelled']),
+            ];
+        }
         return $this->successResponse(
-          $data,
+            $data,
             'dataFetchedSuccessfully'
         );
     }
@@ -100,7 +105,7 @@ class OrderController extends Controller
             'dataUpdatedSuccessfully'
         );
     }
-    public function cancelOrder( $id)
+    public function cancelOrder($id)
     {
 
         $message = $this->orderService->cancelOrder($id);

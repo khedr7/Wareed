@@ -348,11 +348,11 @@ return [
                 ],
             ],
         ],
-        // [
-        //     'text' => 'Users',
-        //     'url'  => 'users',
-        //     'icon' => 'fas fa-fw fa-users',
-        // ],
+        [
+            'text' => 'Reviews',
+            'url'  => 'users/reviews',
+            'icon' => 'fas fa-fw fa-star',
+        ],
         [
             'text' => 'Countries & Cities',
             'url'  => 'states',

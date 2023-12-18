@@ -33,5 +33,6 @@ return [
     'Privacy Policy'                => 'Privacy Policy',
     'Banners'                       => 'Banners',
     'Complaints'                    => 'Complaints',
+    'Reviews'                       => 'Reviews',
 
 ];
