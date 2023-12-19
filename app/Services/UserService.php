@@ -66,7 +66,7 @@ class UserService
 
     public function find($userId)
     {
-        return User::with('userRating.author')->findOrFail($userId);
+        return User::with('userAppRating.author')->findOrFail($userId);
     }
 
     public function create()
@@ -149,6 +149,7 @@ class UserService
         $user->clearMediaCollection('profile');
         $user->orders()->delete();
         $user->providerOrders()->delete();
+        $user->requests()->delete();
         $user->delete();
 
 
@@ -167,6 +168,7 @@ class UserService
             $user->clearMediaCollection('profile');
             $user->orders()->delete();
             $user->providerOrders()->delete();
+            $user->requests()->delete();
             $user->delete();
         }
 

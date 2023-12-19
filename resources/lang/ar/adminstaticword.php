@@ -374,6 +374,8 @@ return array(
     'MonthlyDiscountPrice' => 'سعر الخصم الشهري',
     'MonthlyPriceId' => 'معرف سعر الشريط الشهري',
     'Moreinfo' => 'مزيد من المعلومات',
+    'Read More' => 'اقرأ المزيد',
+    'Read Less' => 'اقرأ أقل',
     'MultipleInstructor' => 'مدرس متعدد',
     'MyRevenue' => 'إيراداتي',
     'Name' => 'اسم',

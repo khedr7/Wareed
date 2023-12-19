@@ -8,6 +8,7 @@ use App\Http\Controllers\ComplaintReplyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\TermsPolicyController;
 use App\Http\Controllers\UserController;
@@ -109,6 +110,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{serviceId}',      [ServiceController::class, 'update'])->name('services.admin.update');
         Route::get('/status/{serviceId}',  [ServiceController::class, 'status'])->name('services.admin.status');
         Route::delete('/{serviceId}',      [ServiceController::class, 'delete'])->name('services.admin.delete');
+    });
+
+    Route::group(['prefix' => 'service-requests'], function () {
+        Route::get('/', [ServiceRequestController::class, 'index'])->name('serviceRequests.admin.index');
+        Route::post('/bulk-delete',   [ServiceRequestController::class, 'bulkDelete'])->name('serviceRequests.admin.bulkDelete');
+        Route::delete('/{requestId}', [ServiceRequestController::class, 'delete'])->name('serviceRequests.admin.delete');
     });
 
     Route::group(['prefix' => 'payment-methods'], function () {

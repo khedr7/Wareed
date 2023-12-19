@@ -34,5 +34,6 @@ return [
     'Banners'                       => 'Banners',
     'Complaints'                    => 'Complaints',
     'Reviews'                       => 'Reviews',
+    'Service Requests'              => 'Service Requests',
 
 ];

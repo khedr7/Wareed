@@ -170,7 +170,7 @@ class UserController extends Controller
         $this->userService->bulkDelete($request->checked);
 
 
-        return back()->with('success',  __('messages.dataAddedSuccessfully'));
+        return back()->with('success',  __('messages.dataDeletedSuccessfully'));
     }
 
     public function deleteReviews($reviewId)
@@ -191,6 +191,6 @@ class UserController extends Controller
         $this->userService->reviewsBulkDelete($request->checked);
 
 
-        return back()->with('success',  __('messages.dataAddedSuccessfully'));
+        return back()->with('success',  __('messages.dataDeletedSuccessfully'));
     }
 }
