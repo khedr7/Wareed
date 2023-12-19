@@ -27,7 +27,9 @@ class ServiceRequest extends FormRequest
         return match ($this->route()->getActionMethod()) {
             'store'    =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
-            'ChangeProviderServices'   =>  $this->ChangeProviderServices(),
+            'ChangeProviderServices' =>  $this->ChangeProviderServices(),
+            'addProviderServices'    =>  $this->addProviderServices(),
+            'removeProviderServices' =>  $this->removeProviderServices(),
         };
     }
 
@@ -74,6 +76,22 @@ class ServiceRequest extends FormRequest
             'service.*.service_id'       => 'exists:services,id',
             'service.*.on_patient_site'  => 'boolean',
             'service.*.on_provider_site' => 'boolean',
+        ];
+    }
+
+    public function addProviderServices()
+    {
+        return [
+            'service_id'       => 'required|exists:services,id',
+            'on_patient_site'  => 'required|boolean',
+            'on_provider_site' => 'required|boolean',
+        ];
+    }
+
+    public function removeProviderServices()
+    {
+        return [
+            'service_id' => 'required|exists:services,id',
         ];
     }
 }

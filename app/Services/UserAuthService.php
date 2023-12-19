@@ -64,6 +64,7 @@ class UserAuthService
     {
         Auth::guard('user')->logout();
     }
+    
     public function generateOTP($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();

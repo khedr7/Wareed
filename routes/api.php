@@ -80,8 +80,11 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         // 'middleware' => ''
     ], function () {
         Route::get('/', 'getAll');
+        Route::get('/change', 'getAll')->name('app.service.getForProviderChange');
         Route::get('/{id}', 'find')->name('app.service.find');
-        Route::post('/change', 'ChangeProviderServices')->name('app.service.ChangeProviderServices')->middleware('auth:sanctum');
+        Route::post('/change', 'changeProviderServices')->name('app.service.changeProviderServices')->middleware('auth:sanctum');
+        Route::post('/add', 'addProviderServices')->name('app.service.addProviderServices')->middleware('auth:sanctum');
+        Route::post('/remove', 'removeProviderServices')->name('app.service.removeProviderServices')->middleware('auth:sanctum');
     });
 
     Route::group([

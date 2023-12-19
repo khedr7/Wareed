@@ -34,7 +34,7 @@ class OrderResource extends JsonResource
             'end_date'          => $this->end_date,
             'note'              => $this->note,
             'user'              => $this->user ? $this->user->only('id', 'name', 'phone', 'latitude', 'longitude', 'address') : null,
-            'provider'          => $this->provider ? $this->provider->only('id', 'name', 'latitude', 'longitude', 'address') : null,
+            'provider'          => $this->provider ? $this->provider->only('id', 'name', 'phone', 'latitude', 'longitude', 'address') : null,
             'service'           =>  $this->service ? $this->service->only('id', 'name', 'details', 'price') : null,
             'patients_number'   => $this->patients_number,
             'on_patient_site'   => $this->on_patient_site,
@@ -55,7 +55,7 @@ class OrderResource extends JsonResource
             'end_date'          => $this->end_date,
             'note'              => $this->note,
             'user'              => $this->user ? $this->user->only('id', 'name', 'phone', 'latitude', 'longitude', 'address') : null,
-            'provider'          => $this->provider ? $this->provider->only('id', 'name', 'latitude', 'longitude', 'address') : null,
+            'provider'          => $this->provider ? $this->provider->only('id', 'name', 'phone', 'latitude', 'longitude', 'address') : null,
             'service'           => $this->service ? $this->service->only('id', 'name', 'details', 'price') : null,
             'patients_number'   => $this->patients_number,
             'created_at'        => $this->created_at

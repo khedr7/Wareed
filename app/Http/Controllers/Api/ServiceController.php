@@ -34,14 +34,37 @@ class ServiceController extends Controller
         );
     }
 
-    public function ChangeProviderServices(ServiceRequest $request)
+    public function changeProviderServices(ServiceRequest $request)
     {
         $validatedData = $request->validated();
-        $service = $this->serviceService->ChangeProviderServices($validatedData);
+        $service = $this->serviceService->changeProviderServices($validatedData);
 
         return $this->successResponse(
             [],
             'dataUpdatedSuccessfully'
         );
     }
+
+    public function addProviderServices(ServiceRequest $request)
+    {
+        $validatedData = $request->validated();
+        $service = $this->serviceService->addProviderServices($validatedData);
+
+        return $this->successResponse(
+            [],
+            'dataUpdatedSuccessfully'
+        );
+    }
+
+    public function removeProviderServices(ServiceRequest $request)
+    {
+        $validatedData = $request->validated();
+        $service = $this->serviceService->removeProviderServices($validatedData);
+
+        return $this->successResponse(
+            [],
+            'dataUpdatedSuccessfully'
+        );
+    }
+
 }
