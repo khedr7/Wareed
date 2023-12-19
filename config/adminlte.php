@@ -365,9 +365,19 @@ return [
             'icon' => 'fas fa-fw fa-heartbeat',
         ],
         [
-            'text' => 'Services',
-            'url'  => 'services',
-            'icon' => 'fas fa-fw fa-medkit',
+            'text'    => 'Services',
+            'icon'    => 'fas fa-fw fa-medkit',
+            'submenu' => [
+                [
+                    'text' => 'Services',
+                    'url'  => 'services',
+                ],
+                [
+                    'text' => "Service Requests",
+                    'url'  => 'service-requests',
+                ],
+
+            ],
         ],
         ['header' => 'financial_section'],
         [

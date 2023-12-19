@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceKeyWord extends Model
+class ServiceRequest extends Model
 {
     use HasFactory;
 
     protected $fillable  = [
-        'key', 'service_id',
+        'title', 'details', 'user_id'
     ];
 
-    public function service()
+    public function user()
     {
-        return $this->belongsTo(Service::class, 'service_id', 'id');
+        return $this->belongsTo(user::class, 'user_id', 'id');
     }
 }

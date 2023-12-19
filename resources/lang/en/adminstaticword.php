@@ -379,6 +379,8 @@ return array (
   'MonthlyDiscountPrice' => 'Monthly Discount Price',
   'MonthlyPriceId' => 'Monthly Stripe Price Id',
   'Moreinfo' => 'More info',
+  'Read More' => 'Read More',
+  'Read Less' => 'Read Less',
   'MultipleInstructor' => 'Multiple Instructor',
   'MyRevenue' => 'My Revenue',
   'Name' => 'Name',

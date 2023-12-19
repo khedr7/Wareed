@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest;
+use App\Http\Requests\ServiceRequestRequest;
 use App\Http\Resources\ServiceResource;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
@@ -64,6 +65,17 @@ class ServiceController extends Controller
         return $this->successResponse(
             [],
             'dataUpdatedSuccessfully'
+        );
+    }
+
+    public function orderService(ServiceRequestRequest $request)
+    {
+        $validatedData = $request->validated();
+        $service = $this->serviceService->orderService($validatedData);
+
+        return $this->successResponse(
+            [],
+            'dataAddedSuccessfully'
         );
     }
 

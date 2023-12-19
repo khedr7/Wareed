@@ -85,6 +85,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::post('/change', 'changeProviderServices')->name('app.service.changeProviderServices')->middleware('auth:sanctum');
         Route::post('/add', 'addProviderServices')->name('app.service.addProviderServices')->middleware('auth:sanctum');
         Route::post('/remove', 'removeProviderServices')->name('app.service.removeProviderServices')->middleware('auth:sanctum');
+        Route::post('/request', 'orderService')->name('app.service.orderService')->middleware('auth:sanctum');
     });
 
     Route::group([
@@ -122,10 +123,24 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::get('/', 'find');
     });
 
+
+
     Route::group([
-        'prefix' => '/banners',
-        'controller' => BannerController::class,
-        // 'middleware' => ''
+        'prefix' => '/complaints',
+        'controller' => ComplaintController::class,
+        'middleware' => 'auth:sanctum'
+    ], function () {
+        Route::get('/', 'getAll')->name('app.complaints.get');
+        Route::get('/{id}', 'find');
+        Route::post('/', 'create');
+        Route::post('/reply', 'reply');
+    });
+
+
+    Route::group([
+        'prefix' => '/reviews',
+        'controller' => ReviewController::class,
+        'middleware' => 'auth:sanctum'
     ], function () {
         Route::get('/', 'getAll');
         Route::get('/{id}', 'find');
@@ -134,38 +149,3 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::delete('/{id}', 'delete');
     });
 });
-
-Route::group([
-    'prefix' => '/complaints',
-    'controller' => ComplaintController::class,
-    'middleware' => 'auth:sanctum'
-], function () {
-    Route::get('/', 'getAll')->name('app.complaints.get');
-    Route::get('/{id}', 'find');
-    Route::post('/', 'create');
-    Route::post('/reply', 'reply');
-});
-
-
-Route::group([
-    'prefix' => '/reviews',
-    'controller' => ReviewController::class,
-    'middleware' => 'auth:sanctum'
-], function () {
-    Route::get('/', 'getAll');
-    Route::get('/{id}', 'find');
-    Route::post('/', 'create');
-    Route::put('/{id}', 'update');
-    Route::delete('/{id}', 'delete');
-});
-// Route::group([
-//     'prefix' => '/complaint-replies',
-//     'controller' => ComplaintReplyController::class,
-//     // 'middleware' => ''
-// ], function () {
-//     Route::get('/', 'getAll');
-//     Route::get('/{id}', 'find');
-//     Route::post('/', 'create');
-//     Route::put('/{id}', 'update');
-//     Route::delete('/{id}', 'delete');
-// });

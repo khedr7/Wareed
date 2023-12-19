@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\Service;
+use App\Models\ServiceRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -186,5 +187,17 @@ class ServiceService
             ->where('user_id', $provider->id)
             ->where('service_id', $validatedData['service_id'])
             ->delete();
+    }
+
+    public function orderService($validatedData)
+    {
+        DB::beginTransaction();
+
+        $validatedData['user_id'] = Auth::user()->id;
+        $serviceRequest = ServiceRequest::create($validatedData);
+
+        DB::commit();
+
+        return $serviceRequest;
     }
 }

@@ -94,6 +94,12 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     }
 
     // many to many
+    public function requests()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
+
+    // many to many
     public function services()
     {
         return $this->belongsToMany(Service::class, 'service_user', 'user_id', 'service_id')
@@ -103,6 +109,11 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     public function userRating()
     {
         return $this->morphMany(Rating::class, 'reviewrateable');
+    }
+
+    public function userAppRating()
+    {
+        return $this->morphMany(Rating::class, 'reviewrateable')->where('approved', true);
     }
 
     public function scopeApp($query)

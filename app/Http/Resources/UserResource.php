@@ -65,7 +65,6 @@ class UserResource extends JsonResource
             'role'          => $this->role,
             'status'        => $this->status,
             'accepted'      => $this->accepted,
-            // 'has_residence' => $this->has_residence,
             'gender'        => $this->gender,
             'birthday'      => $this->birthday,
             'details'       => $this->details,
@@ -94,7 +93,6 @@ class UserResource extends JsonResource
                 'role'          => $this->role,
                 'status'        => $this->status,
                 'accepted'      => $this->accepted,
-                // 'has_residence' => $this->has_residence,
                 'gender'        => $this->gender,
                 'birthday'      => $this->birthday,
                 'details'       => $this->details,
@@ -105,9 +103,9 @@ class UserResource extends JsonResource
                 'days'          => $this->days->pluck('name')->toArray(),
                 'services'      => ServiceResource::collection($this->services->where('status', 1)),
                 'avg_rating'    => $this->averageRating() ?? 0,
-                'reviews'       => ReviewResource::collection($this->userRating),
-                'avg_rating'    => $this->averageRating() ?? "0",
-                'reviews'       => ReviewResource::collection($this->userRating) ,
+                'reviews'       => ReviewResource::collection($this->userAppRating),
+                // 'avg_rating'    => $this->averageRating() ?? "0",
+                // 'reviews'       => ReviewResource::collection($this->userRating) ,
             ];
         } else {
             return [
@@ -120,7 +118,6 @@ class UserResource extends JsonResource
                 'role'          => $this->role,
                 'status'        => $this->status,
                 'accepted'      => $this->accepted,
-                // 'has_residence' => $this->has_residence,
                 'gender'        => $this->gender,
                 'birthday'      => $this->birthday,
                 'details'       => $this->details,
