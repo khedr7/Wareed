@@ -160,9 +160,31 @@ class ServiceService
         return $message;
     }
 
-    public function ChangeProviderServices($validatedData)
+    public function changeProviderServices($validatedData)
     {
         $provider = User::where('id', Auth::user()->id)->first();
         $provider->services()->sync($validatedData['services']);
+    }
+
+    public function addProviderServices($validatedData)
+    {
+        $provider = User::where('id', Auth::user()->id)->first();
+
+        $pivotRow = DB::table('service_user')
+            ->where('user_id', $provider->id)
+            ->where('service_id', $validatedData['service_id'])
+            ->delete();
+
+        $provider->services()->attach($validatedData['service_id'], $validatedData);
+    }
+
+    public function removeProviderServices($validatedData)
+    {
+        $provider = User::where('id', Auth::user()->id)->first();
+
+        $pivotRow = DB::table('service_user')
+            ->where('user_id', $provider->id)
+            ->where('service_id', $validatedData['service_id'])
+            ->delete();
     }
 }

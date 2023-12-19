@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ServiceResource extends JsonResource
 {
@@ -17,8 +19,11 @@ class ServiceResource extends JsonResource
         if (request()->routeIs('app.user.find')) {
             return $this->getForProvider();
         }
-        if ( request()->routeIs('app.home')) {
+        if (request()->routeIs('app.home')) {
             return $this->getForHomeProvider();
+        }
+        if (request()->routeIs('app.service.getForProviderChange')) {
+            return $this->getForProviderChange();
         }
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
@@ -35,8 +40,6 @@ class ServiceResource extends JsonResource
             'name'               => $this->name,
             'details'            => $this->details,
             'price'              => $this->price,
-            // 'latitude'           => $this->latitude,
-            // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
             'category_id'        => $this->category_id,
@@ -49,14 +52,11 @@ class ServiceResource extends JsonResource
 
     public function defaultResource()
     {
-        // dd($this->users);
         return [
             'id'                 => $this->id,
             'name'               => $this->name,
             'details'            => $this->details,
             'price'              => $this->price,
-            // 'latitude'           => $this->latitude,
-            // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
             'category_id'        => $this->category_id,
@@ -74,8 +74,6 @@ class ServiceResource extends JsonResource
             'name'               => $this->name,
             'details'            => $this->details,
             'price'              => $this->price,
-            // 'latitude'           => $this->latitude,
-            // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
             'category_id'        => $this->category_id,
@@ -94,14 +92,39 @@ class ServiceResource extends JsonResource
             'name'               => $this->name,
             'details'            => $this->details,
             'price'              => $this->price,
-            // 'latitude'           => $this->latitude,
-            // 'longitude'          => $this->longitude,
             'status'             => $this->status,
             'featured'           => $this->featured,
             'category_id'        => $this->category_id,
             'image'              => $this->image,
             'created_at'         => $this->created_at,
             'category'           => CategoryResource::make($this->category),
+        ];
+    }
+
+    public function getForProviderChange()
+    {
+        if (Auth::guard('sanctum')->user()) {
+            $pivotRow = DB::table('service_user')
+                ->where('user_id', Auth::guard('sanctum')->user()->id)
+                ->where('service_id', $this->id)
+                ->first();
+
+            if (isset($pivotRow)) {
+                return [
+                    'id'                 => $this->id,
+                    'name'               => $this->name,
+                    'provides_service'   => 1,
+                    'on_patient_site'    => (int) $pivotRow->on_patient_site,
+                    'on_provider_site'   => (int) $pivotRow->on_provider_site,
+                ];
+            }
+        }
+        return [
+            'id'                 => $this->id,
+            'name'               => $this->name,
+            'provides_service'   => 0,
+            'on_patient_site'    => 0,
+            'on_provider_site'   => 0,
         ];
     }
 
