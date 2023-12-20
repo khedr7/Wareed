@@ -113,6 +113,8 @@ class ServiceResource extends JsonResource
                 return [
                     'id'                 => $this->id,
                     'name'               => $this->name,
+                    'category_name'      => $this->category->name,
+                    'image'              => $this->image,
                     'provides_service'   => 1,
                     'on_patient_site'    => (int) $pivotRow->on_patient_site,
                     'on_provider_site'   => (int) $pivotRow->on_provider_site,
@@ -122,6 +124,8 @@ class ServiceResource extends JsonResource
         return [
             'id'                 => $this->id,
             'name'               => $this->name,
+            'category_name'      => $this->category->name,
+            'image'              => $this->image,
             'provides_service'   => 0,
             'on_patient_site'    => 0,
             'on_provider_site'   => 0,
