@@ -164,7 +164,10 @@ class ServiceService
     public function changeProviderServices($validatedData)
     {
         $provider = User::where('id', Auth::user()->id)->first();
-        $provider->services()->sync($validatedData['services']);
+        foreach($validatedData['services'] as $service){
+            $this->addProviderServices($service);
+        }
+        // $provider->services()->sync($validatedData['services']);
     }
 
     public function addProviderServices($validatedData)
@@ -176,7 +179,11 @@ class ServiceService
             ->where('service_id', $validatedData['service_id'])
             ->delete();
 
+        if ($validatedData['on_patient_site'] == 0 && $validatedData['on_patient_site'] == 0)
+            return true;
+
         $provider->services()->attach($validatedData['service_id'], $validatedData);
+        return true;
     }
 
     public function removeProviderServices($validatedData)

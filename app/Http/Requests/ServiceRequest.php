@@ -27,7 +27,7 @@ class ServiceRequest extends FormRequest
         return match ($this->route()->getActionMethod()) {
             'store'    =>  $this->getCreateRules(),
             'update'   =>  $this->getUpdateRules(),
-            'ChangeProviderServices' =>  $this->ChangeProviderServices(),
+            'changeProviderServices' =>  $this->changeProviderServices(),
             'addProviderServices'    =>  $this->addProviderServices(),
             'removeProviderServices' =>  $this->removeProviderServices(),
         };
@@ -69,7 +69,7 @@ class ServiceRequest extends FormRequest
         ];
     }
 
-    public function ChangeProviderServices()
+    public function changeProviderServices()
     {
         return [
             'services'                   => 'array',

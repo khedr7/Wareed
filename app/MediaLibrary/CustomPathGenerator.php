@@ -24,21 +24,8 @@ class CustomPathGenerator implements PathGenerator
     public function getPath(Media $media): string
     {
         switch ($media->model_type) {
-
-            case ProductType::class:
-                return ProductType::PATH . '/' . $media->id . '/';
-                break;
-            case Client::class:
-                return Client::PATH . '/' . $media->id . '/';
-                break;
             case User::class:
                 return User::PATH . '/' . $media->id . '/';
-                break;
-            case Product::class:
-                return Product::PATH . '/' . $media->id . '/';
-                break;
-            case JobRequest::class:
-                return JobRequest::PATH . '/' . $media->id . '/';
                 break;
             default:
                 return $media->id . '/';
