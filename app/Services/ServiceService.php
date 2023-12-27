@@ -164,7 +164,7 @@ class ServiceService
     public function changeProviderServices($validatedData)
     {
         $provider = User::where('id', Auth::user()->id)->first();
-        foreach($validatedData['services'] as $service){
+        foreach ($validatedData['services'] as $service) {
             $this->addProviderServices($service);
         }
         // $provider->services()->sync($validatedData['services']);
@@ -172,6 +172,7 @@ class ServiceService
 
     public function addProviderServices($validatedData)
     {
+
         $provider = User::where('id', Auth::user()->id)->first();
 
         $pivotRow = DB::table('service_user')
@@ -179,7 +180,7 @@ class ServiceService
             ->where('service_id', $validatedData['service_id'])
             ->delete();
 
-        if ($validatedData['on_patient_site'] == 0 && $validatedData['on_patient_site'] == 0)
+        if ($validatedData['on_patient_site'] == 0 && $validatedData['on_provider_site'] == 0)
             return true;
 
         $provider->services()->attach($validatedData['service_id'], $validatedData);

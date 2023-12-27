@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -96,6 +97,21 @@ class UserController extends Controller
         return view('users.edit', compact('user', "roles", 'cities', 'states', 'days'));
     }
 
+    public function editProfile()
+    {
+        DB::beginTransaction();
+
+        $data = $this->userService->edit(Auth::user()->id);
+        $user = $data['user'];
+        $roles = $data['roles'];
+        $cities = $data['cities'];
+        $states = $data['states'];
+        $days   = $data['days'];
+        DB::commit();
+
+        return view('users.editProfile', compact('user', "roles", 'cities', 'states', 'days'));
+    }
+
     public function store(UserRequest $request)
     {
         $validatedData = $request->validated();
@@ -110,6 +126,19 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request, $userId)
+    {
+        $validatedData = $request->validated();
+
+        $user = $this->userService->update($validatedData, $userId);
+
+        if ($request->file('profile') && $request->file('profile')->isValid()) {
+            $user->clearMediaCollection('profile');
+            $user->addMedia($request->profile)->toMediaCollection('profile');
+        }
+        return redirect('users')->with('success', __('messages.dataUpdatedSuccessfully'));
+    }
+
+    public function updateProfileDashboard(UserRequest $request, $userId)
     {
         $validatedData = $request->validated();
 

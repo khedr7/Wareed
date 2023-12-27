@@ -48,11 +48,17 @@ class UserAuthService
 
     public function changePassword($validatedData)
     {
-        /**
-         * @var $user=App\Models\Employee
-         */
-        $user = Auth::guard('user')->user();
+        // $auth = Auth::guard('sanctum')->user();
+        $user = User::where('id',  Auth::user()->id)->first();
 
+        $attemptedData = [
+            'phone'    => $user->phone,
+            'password' => $validatedData['old_password']
+        ];
+        // if (!Auth::attempt($attemptedData)) {
+        if (!Hash::check($validatedData['old_password'], $user->password)) {
+            throw new Exception(__('messages.incorrect_password'), 401);
+        }
         DB::beginTransaction();
 
         $user->update(['password' => Hash::make($validatedData['new_password'])]);
@@ -64,7 +70,7 @@ class UserAuthService
     {
         Auth::guard('user')->logout();
     }
-    
+
     public function generateOTP($validatedData)
     {
         $user = User::where('phone', $validatedData['phone'])->first();
@@ -112,6 +118,10 @@ class UserAuthService
             throw new Exception(__('messages.userNotFound'), 403);
         }
         $user->update($validatedData);
+
+        if (!isset($validatedData['days']))
+            $validatedData['days'] = [];
+        $user->days()->sync($validatedData['days']);
         return $user;
     }
     public function register($validatedData)
@@ -125,7 +135,6 @@ class UserAuthService
         $user = User::create($validatedData);
 
         $user->assignRole($validatedData['role']);
-
         DB::commit();
         $accessToken = $user->createToken('auth');
         return [
@@ -144,6 +153,11 @@ class UserAuthService
         $validatedData['role'] = 'provider';
 
         $user = User::create($validatedData);
+
+        if (!isset($validatedData['days']))
+            $validatedData['days'] = [];
+        $user->days()->sync($validatedData['days']);
+
 
         $user->assignRole('provider');
 

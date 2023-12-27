@@ -57,8 +57,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/',        [UserController::class, 'store'])->name('users.admin.store');
         Route::get('/{userId}', [UserController::class, 'show'])->name('users.admin.show');
         Route::get('/{userId}/edit',  [UserController::class, 'edit'])->name('users.admin.edit');
+        Route::get('/edit/profile',  [UserController::class, 'editProfile'])->name('users.admin.editProfile');
         Route::post('/add-points/{userId}',   [UserController::class, 'addPoints'])->name('users.admin.addPoints');
         Route::post('/{userId}',      [UserController::class, 'update'])->name('users.admin.update');
+        Route::post('/update-profile/{userId}',      [UserController::class, 'updateProfileDashboard'])->name('users.admin.updateProfile');
         Route::get('/status/{userId}',   [UserController::class, 'status'])->name('users.admin.status');
         Route::get('/accept/{userId}',   [UserController::class, 'accept'])->name('users.admin.accept');
         Route::get('/reviews/approved/{reviewId}', [UserController::class, 'reviewApprove'])->name('users.admin.reviewApprove');

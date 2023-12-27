@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\ConfigResource;
 use App\Services\HomeService;
+use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {

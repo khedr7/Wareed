@@ -46,6 +46,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
 
     Route::get('/home',    [HomeController::class, 'appHomePage'])->name('app.home');
     Route::get('/config',  [HomeController::class, 'config'])->name('app.config');
+    // Route::get('/test',  [HomeController::class, 'containsLocationAtLatLng']);
 
     Route::group([
         'prefix' => '/users',
