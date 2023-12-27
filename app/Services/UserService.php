@@ -41,7 +41,7 @@ class UserService
 
     public function getAllProviders($request)
     {
-        return User::with('days')->withAvg('userRating', 'rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
+        return User::with(['days', 'city.state'])->withAvg('userRating', 'rating')->where('accepted', 1)->where('status', 1)->where('role', 'provider')->app();
     }
 
     public function unacceptedUsers()

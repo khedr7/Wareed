@@ -14,18 +14,18 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-6">
-							<h3 class="card-title">{{ __('adminstaticword.Edit') }} {{ __('adminstaticword.User') }}</h3>
+							<h3 class="card-title">{{ __('adminstaticword.Edit') }} {{ __('adminstaticword.Profile') }}</h3>
 						</div>
 					</div>
 				</div>
 				<!-- /.card-header -->
-				<form method="post" action="{{ route('users.admin.update', $user->id) }}" autocomplete="off"
+				<form method="post" action="{{ route('users.admin.updateProfile', $user->id) }}" autocomplete="off"
 					enctype="multipart/form-data">
 					<div class="card-body">
 						@csrf
 
 						@include('alerts.success')
-						{{-- <input hidden type="text" name="old_phone" value="{{ $user->phone }}"> --}}
+						<input hidden type="text" name="old_phone" value="{{ $user->phone }}">
 						<input hidden type="text" name="old_email" value="{{ $user->email }}">
 
 						<div class="row">
@@ -51,7 +51,7 @@
 						</div>
 
 						<div class="row">
-							{{-- <div class="col-md-6">
+							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Phone') }} <sup style="color: red">*</sup></label>
 									<input required type="text" name="phone"
@@ -60,9 +60,9 @@
 										value="{{ old('phone', $user->phone) }}">
 									@include('alerts.feedback', ['field' => 'phone'])
 								</div>
-							</div> --}}
+							</div>
 
-							<div class="col-md-6">
+							{{-- <div class="col-md-6">
 								<div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
 									<label for="role">{{ __('adminstaticword.Role') }} <sup style="color: red">*</sup></label>
 									<select required name="role" id="role"
@@ -76,7 +76,7 @@
 									</select>
 									@include('alerts.feedback', ['field' => 'role'])
 								</div>
-							</div>
+							</div> --}}
 
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
@@ -178,7 +178,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-3 form-group">
+                            <div class="col-md-3 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input value="1" id="status" type="checkbox" name="status" class="custom-control-input"
@@ -214,17 +214,6 @@
 						</div>
 
 						<div class="row">
-
-
-							{{-- <div class="col-md-3 form-group">
-								<label>{{ __('adminstaticword.Residence') }}</label> <br>
-								<div class="custom-switch">
-									<input value="1" id="has_residence" type="checkbox" name="has_residence" class="custom-control-input"
-										{{ $user->has_residence == '1' ? 'checked' : '' }}>
-									<label class="custom-control-label" for="has_residence"></label>
-								</div>
-							</div> --}}
-
 							<div class="col-md-6" @if ($user->role != 'provider') style="display: none;" @endif id="rolebox">
 								<div class="form-group{{ $errors->has('days[]') ? ' has-danger' : '' }}">
 									<label for="days">{{ __('adminstaticword.Days') }} <sup style="color: red">*</sup></label>

@@ -28,6 +28,7 @@ class UserRequest extends FormRequest
         return match ($this->route()->getActionMethod()) {
             'store'            =>  $this->getCreateRules(),
             'update'           =>  $this->getUpdateRules(),
+            'updateProfileDashboard' =>  $this->updateProfileDashboardRules(),
             'generateOTP'      =>  $this->generateOTP(),
             'verifyOTP'        =>  $this->verifyOTP(),
             'resetPassword'    =>  $this->resetPassword(),
@@ -80,6 +81,7 @@ class UserRequest extends FormRequest
             'fcm_token'     => '',
             'latitude'      => 'nullable|numeric',
             'longitude'     => 'nullable|numeric',
+            'days'          => 'sometimes|array',
         ];
     }
 
@@ -98,9 +100,32 @@ class UserRequest extends FormRequest
             'gender'               => 'required',
             'birthday'             => 'sometimes|date',
             'details'              => '',
-            'profile'              => 'sometimes|image|mimes:png,jpg,jpeg',
+            'profile'              => 'nullable|image|mimes:png,jpg,jpeg',
             'fcm_token'            => '',
             'confirm_password'     => 'sometimes|same:password',
+            'days'                 => 'sometimes|array',
+            'latitude'             => 'nullable|numeric',
+            'longitude'            => 'nullable|numeric',
+        ];
+    }
+
+    public function updateProfileDashboardRules()
+    {
+        return [
+            'name'                 => 'required|min:3',
+            'email'                => 'required|email|unique:users,email,' . request()->old_email . ',email',
+            'password'             => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
+            'address'              => '',
+            'phone'                => 'sometimes|required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
+            'role'                 => 'required|exists:roles,name',
+            'city_id'              => 'required|exists:cities,id',
+            'status'               => 'sometimes|required|boolean',
+            'gender'               => 'required',
+            'birthday'             => 'sometimes|date',
+            'details'              => '',
+            'profile'              => 'nullable|image|mimes:png,jpg,jpeg',
+            'fcm_token'            => '',
+            // 'confirm_password'     => 'sometimes|same:password',
             'days'                 => 'sometimes|array',
             'latitude'             => 'nullable|numeric',
             'longitude'            => 'nullable|numeric',
@@ -112,19 +137,19 @@ class UserRequest extends FormRequest
         return [
             'name'                 => 'required|min:3',
             'email'                => 'required|email|unique:users,email,' . auth()->id(),
-            'password'             => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
+            // 'password'             => 'nullable|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
             'address'              => '',
             // 'phone'                => 'sometimes|required|min:9|max:10|unique:users,phone,' . request()->old_phone . ',phone',
             'city_id'              => 'required|exists:cities,id',
-            // 'has_residence'        => '',
             'gender'               => 'required',
             'birthday'             => 'sometimes|date',
             'details'              => '',
             'profile'              => 'sometimes|image|mimes:png,jpg,jpeg',
-            'fcm_token'            => '',
-            'confirm_password'     => 'sometimes|same:password',
+            // 'fcm_token'            => '',
+            // 'confirm_password'     => 'sometimes|same:password',
             'latitude'             => 'nullable|numeric',
             'longitude'            => 'nullable|numeric',
+            'days'                 => 'sometimes|array',
         ];
     }
 
@@ -162,6 +187,7 @@ class UserRequest extends FormRequest
     public function changePassword()
     {
         return [
+            'old_password' => 'required',
             'new_password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/',
         ];
     }

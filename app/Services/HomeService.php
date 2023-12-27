@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use App\Models\Day;
 use App\Traits\ModelHelper;
 use Exception;
 
@@ -36,6 +36,8 @@ class HomeService
             'states'           => $this->stateService->getAllApp(),
             'categories'       => $this->categoryService->getAllApp(),
             'payment_methodes' => $this->paymentMethodService->getAllApp(),
+            'days'             => Day::get(),
         ];
     }
+
 }

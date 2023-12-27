@@ -82,6 +82,12 @@ class UserAuthController extends Controller
     {
         $validatedData = $request->validated();
         $data = $this->userAuthService->updateProfile($validatedData);
+        
+        if ($request->file('profile') && $request->file('profile')->isValid()) {
+            $data->clearMediaCollection('profile');
+            $data->addMedia($request->profile)->toMediaCollection('profile');
+        }
+
         $user = UserResource::make($data);
         return $this->successResponse($user, 'dataUpdatedSuccessfully', 200);
     }
