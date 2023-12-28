@@ -17,7 +17,7 @@ return [
     'warning'                       => 'تحذير',
     'information'                   => 'معلومات',
     'Users'                         => 'المستخدمين',
-    'All Users'                     => 'جمسع المستخدمين',
+    'All Users'                     => 'جميع المستخدمين',
     'All Providers'                 => 'جميع مقدمي الخدمة',
     'Providers Requests'            => 'طلبات مقدمي الخدمة',
     'users_section'                 => 'قسم المستخدمين',

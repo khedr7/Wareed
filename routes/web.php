@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ComplaintReplyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
@@ -31,8 +32,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'SetWebLanguage']);
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'SetWebLanguage']);
+Route::get('/lang/{lang}', [HomeController::class, 'lang'])->name('lang.admin.change');
 
 Auth::routes();
 
@@ -41,7 +43,7 @@ Auth::routes();
 // })->name('home')->middleware('auth');
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'SetWebLanguage']], function () {
     Route::resource('user', UserController::class);
 
     Route::group(['prefix' => 'users'], function () {
@@ -157,4 +159,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/status/{bannerId}',  [BannerController::class, 'status'])->name('banners.admin.status');
         Route::delete('/{bannerId}',      [BannerController::class, 'delete'])->name('banners.admin.delete');
     });
+
+
 });

@@ -7,7 +7,9 @@ use App\Models\Order;
 use App\Models\Service;
 use App\Models\State;
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -98,5 +100,13 @@ class HomeController extends Controller
             'country_names',
             'country_counts'
         ));
+    }
+
+
+    public function lang($lang)
+    {
+        session(['changed_language' => $lang]);
+        App::setLocale(session('changed_language'));
+        return back();
     }
 }

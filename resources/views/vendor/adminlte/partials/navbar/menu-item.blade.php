@@ -20,6 +20,7 @@
         :dropdown-footer-label="$item['dropdown_flabel'] ?? null"
     />
 
+
 @elseif ($navbarItemHelper->isFullscreen($item))
 
     {{-- Fullscreen toggle widget --}}
