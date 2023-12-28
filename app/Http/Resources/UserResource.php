@@ -53,7 +53,7 @@ class UserResource extends JsonResource
             'state_name'    => $this->city ? ($this->city->state ? $this->city->state->name : null) : null,
             'fcm_token'     => $this->fcm_token,
             'created_at'    => $this->created_at,
-            'days'          => DayResource::collection($this->days),
+            'days'          => $this->days ? DayResource::collection($this->days) : null,
             'avg_rating'    => $this->user_rating_avg_rating ?? 0,
         ];
     }
@@ -81,7 +81,7 @@ class UserResource extends JsonResource
             'state_name'    => $this->city ? ($this->city->state ? $this->city->state->name : null) : null,
             'fcm_token'     => $this->fcm_token,
             'created_at'    => $this->created_at,
-            'days'          => DayResource::collection($this->days),
+            'days'          => $this->days ? DayResource::collection($this->days) : null,
             'avg_rating'    => $this->user_rating_avg_rating ?? 0,
             'on_patient_site'    => (int) $this->pivot->on_patient_site ?? 0,
             'on_provider_site'   => (int) $this->pivot->on_provider_site ?? 0,
@@ -113,7 +113,7 @@ class UserResource extends JsonResource
                 'state_name'    => $this->city ? ($this->city->state ? $this->city->state->name : null) : null,
                 'fcm_token'     => $this->fcm_token,
                 'created_at'    => $this->created_at,
-                'days'          => DayResource::collection($this->days),
+                'days'          => $this->days ? DayResource::collection($this->days) : null,
                 'services'      => ServiceResource::collection($this->services->where('status', 1)),
                 'avg_rating'    => $this->averageRating() ?? 0,
                 'reviews'       => ReviewResource::collection($this->userAppRating),
@@ -142,7 +142,7 @@ class UserResource extends JsonResource
                 'state_name'    => $this->city ? ($this->city->state ? $this->city->state->name : null) : null,
                 'fcm_token'     => $this->fcm_token,
                 'created_at'    => $this->created_at,
-                'days'          => DayResource::collection($this->days),
+                'days'          => $this->days ? DayResource::collection($this->days) : null,
             ];
         }
     }

@@ -312,6 +312,7 @@ return array (
   'InvolvementCourse' => 'Involvement Courses',
   'InvolvementRequest' => 'Involvement Request',
   'InvolvementRequests' => 'Involvement Requests',
+  'Requests' => 'Requests',
   'JitsiMeeting' => 'Jitsi Meeting',
   'JoinMeeting' => 'Join Meeting',
   'Language' => 'Language',

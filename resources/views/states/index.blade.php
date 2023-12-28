@@ -30,7 +30,8 @@
 								<th>
 									<span style="margin-left: 25px;">#</span>
 								</th>
-								<th>{{ __('adminstaticword.Title') }}</th>
+								<th>{{ __('adminstaticword.Title') }}
+                                </th>
 								<th>{{ __('adminstaticword.Action') }}</th>
 							</tr>
 						</thead>
@@ -47,12 +48,6 @@
 										{{ $state->name }}
 									</td>
 									<td>
-										{{--
-										<a type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon"
-											href="{{ route('users.admin.edit', $state->id) }}">
-											<i class="fa fa-pen" aria-hidden="true"></i>
-										</a> --}}
-
 										<a type="button"href="{{ route('states.admin.cities', $state->id) }}" class="btn btn-xs btn-primary">
 											{{ __('adminstaticword.Cities') }}</a>
 
