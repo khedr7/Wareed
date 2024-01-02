@@ -2,15 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
+use App\Traits\NotificationTrait;
 use App\Models\Order;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class OrderService
 {
-    use ModelHelper;
+    use ModelHelper, NotificationTrait;
 
     public function getAllDashboard()
     {
@@ -83,9 +86,38 @@ class OrderService
     public function create($validatedData)
     {
         DB::beginTransaction();
-
         $validatedData['user_id'] = Auth::user()->id;
         $order = Order::create($validatedData);
+
+        if ($order) {
+            $provider = $order->provider;
+            $service = $order->service;
+
+            $notificationData = [
+                'title' => ['en' => 'New Order', 'ar' => 'طلب جديد'],
+                'body' => [
+                    'en' => 'A new Order has been created for service: ' . $service->getTranslation('name', 'en', false),
+                    'ar' => 'تم انشاء طلب جديد للخدمة :  ' . $service->getTranslation('name', 'ar', false),
+                ],
+                'service_id' => $order->id,
+                'service_type' => 'order'
+            ];
+
+            $notification = Notification::create($notificationData);
+            $provider->notifications()->attach($notification);
+
+            if (isset($provider->fcm_token) && $provider->enable_notification == 1) {
+                $lang = $provider->app_lang;
+                $data = [
+                    'title' => $notificationData['title'][$lang],
+                    'body' => $notificationData['body'][$lang],
+                    'service_id' => $order->id,
+                    'service_type' => 'order'
+                ];
+
+                $this->send_notification($provider->fcm_token, $data);
+            }
+        }
 
         DB::commit();
 
@@ -148,10 +180,58 @@ class OrderService
     public function status($validatedData, $order_id)
     {
         $order = $this->find($order_id);
-
+        $auth = User::where('id', Auth::user()->id)->first();
         DB::beginTransaction();
 
-        $order->update($validatedData);
+        $updated = $order->update($validatedData)
+        ;
+        if ($updated) {
+            $provider = $order->provider;
+            $service  = $order->service;
+            $user     = $order->user;
+            $notificationData = [
+                'title' => ['en' => 'Change order status', 'ar' => 'تغيير حالة الطلب'],
+                'body' => [
+                    'en' => 'The order status has been changed for service : ' . $service->getTranslation('name', 'en', false),
+                    'ar' => 'تم تغيير حالة طلب الخدمة : ' . $service->getTranslation('name', 'ar', false),
+                ],
+                'service_id' => $order->id,
+                'service_type' => 'order'
+            ];
+
+            $notification = Notification::create($notificationData);
+
+            if ($auth->role == 'admin') {
+
+                $provider->notifications()->attach($notification);
+
+                if (isset($provider->fcm_token) && $provider->enable_notification == 1) {
+                    $lang = $provider->app_lang;
+                    $data = [
+                        'title' => $notificationData['title'][$lang],
+                        'body' => $notificationData['body'][$lang],
+                        'service_id' => $order->id,
+                        'service_type' => 'order'
+                    ];
+
+                    $this->send_notification($provider->fcm_token, $data);
+                }
+            }
+            
+            $user->notifications()->attach($notification);
+            if (isset($user->fcm_token) && $user->enable_notification == 1) {
+                $lang = $user->app_lang;
+                $data = [
+                    'title' => $notificationData['title'][$lang],
+                    'body' => $notificationData['body'][$lang],
+                    'service_id' => $order->id,
+                    'service_type' => 'order'
+                ];
+
+                $this->send_notification($user->fcm_token, $data);
+            }
+        }
+
 
         DB::commit();
 
@@ -163,11 +243,42 @@ class OrderService
 
         DB::beginTransaction();
 
-        $order->update(
+        $updated = $order->update(
             [
                 'status' => 'Cancelled',
             ]
         );
+
+        if ($updated) {
+            $provider = $order->provider;
+            $service  = $order->service;
+            $user     = $order->user;
+
+            $notificationData = [
+                'title' => ['en' => 'Cancell order', 'ar' => 'إلغاء الطلب'],
+                'body' => [
+                    'en' => $user->name . ' cancelled the order for service : ' . $service->getTranslation('name', 'en', false),
+                    'ar' =>  $user->name .  ' ألغى طلب الخدمة : ' . $service->getTranslation('name', 'ar', false),
+                ],
+                'service_id' => $order->id,
+                'service_type' => 'order'
+            ];
+
+            $notification = Notification::create($notificationData);
+            $provider->notifications()->attach($notification);
+
+            if (isset($provider->fcm_token) && $provider->enable_notification == 1) {
+                $lang = $provider->app_lang;
+                $data = [
+                    'title' => $notificationData['title'][$lang],
+                    'body' => $notificationData['body'][$lang],
+                    'service_id' => $order->id,
+                    'service_type' => 'order'
+                ];
+
+                $this->send_notification($provider->fcm_token, $data);
+            }
+        }
 
         DB::commit();
 

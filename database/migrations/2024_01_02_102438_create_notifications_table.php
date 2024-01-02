@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string("title")->nullable();
             $table->text("body");
             $table->boolean('by_admin')->default(0)->nullable();
-            $table->enum('to_type', ['user', 'provider', 'user_provider']);
+            $table->enum('to_type', ['user', 'provider', 'user_provider'])->nullable();
             $table->string('service_type')->nullable();
             $table->bigInteger('service_id')->nullable();
-
             $table->timestamps();
         });
     }

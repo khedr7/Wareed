@@ -30,7 +30,7 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
      */
     protected $fillable = [
         'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points', 'enable_notification',
-        'latitude', 'longitude', 'status', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
+        'latitude', 'longitude', 'status', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted', 'app_lang'
     ];
     const PATH = 'users';
     /**
