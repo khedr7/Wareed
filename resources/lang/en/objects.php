@@ -14,5 +14,6 @@ return [
     'order'      => 'order',
     'paymentMethod'    => 'payment Method',
     'complaint'    => 'complaint',
+    'notification' => 'notification',
 
 ];

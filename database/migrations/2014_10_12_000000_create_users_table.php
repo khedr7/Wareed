@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->double('longitude')->nullable();
             $table->double('points')->default(0)->nullable();
             $table->string('fcm_token', 255)->nullable();
+            $table->boolean('enable_notification')->default(1)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

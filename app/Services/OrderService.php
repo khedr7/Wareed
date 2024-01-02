@@ -16,7 +16,7 @@ class OrderService
     {
         $data = Order::with(['paymentMethod', 'user', 'provider', 'service'  => function ($query) {
             $query->withTrashed();
-        }])->get();
+        }])->orderBy('created_at', 'desc')->get();
         return $data;
     }
 

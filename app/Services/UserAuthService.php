@@ -165,4 +165,18 @@ class UserAuthService
 
         return true;
     }
+
+    public function enableNotification($validatedData)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+
+        DB::beginTransaction();
+
+        $user->enable_notification = $validatedData['enable_notification'];
+        $user->save();
+
+        DB::commit();
+
+        return $user;
+    }
 }

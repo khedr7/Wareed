@@ -29,7 +29,7 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points',
+        'name', 'email', 'password', 'address', 'phone', 'role', 'details', 'points', 'enable_notification',
         'latitude', 'longitude', 'status', 'gender', 'birthday', 'fcm_token', 'city_id', 'accepted'
     ];
     const PATH = 'users';
@@ -49,14 +49,15 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'status'            => 'integer',
-        'accepted'          => 'integer',
-        'city_id'           => 'integer',
-        'points'            => 'double',
-        'latitude'          => 'double',
-        'longitude'         => 'double',
-        'birthday'          => 'date',
+        'email_verified_at'   => 'datetime',
+        'status'              => 'integer',
+        'accepted'            => 'integer',
+        'enable_notification' => 'integer',
+        'city_id'             => 'integer',
+        'points'              => 'double',
+        'latitude'            => 'double',
+        'longitude'           => 'double',
+        'birthday'            => 'date',
     ];
 
     public function getProfileAttribute()
@@ -104,6 +105,13 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     {
         return $this->belongsToMany(Service::class, 'service_user', 'user_id', 'service_id')
             ->withPivot(['on_patient_site', 'on_provider_site']);
+    }
+
+    // many to many
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class, 'notification_user', 'user_id', 'notification_id')
+            ->withPivot(['seen', 'seen_at']);
     }
 
     public function userRating()

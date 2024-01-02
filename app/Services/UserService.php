@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\ModelHelper;
 use App\Models\User;
 use Codebyray\ReviewRateable\Models\Rating;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -258,6 +259,7 @@ class UserService
 
         return $message;
     }
+
     public function reviewApprove($reviewId)
     {
         $review = Rating::where('id', $reviewId)->first();

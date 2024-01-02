@@ -34,7 +34,7 @@
 					<div class="icon">
 						<i class="fas fa-fw fa-users"></i>
 					</div>
-					<a href="{{ route('users.admin.index') }}" class="small-box-footer">{{ __('adminstaticword.Moreinfo') }} <i
+					<a href="{{ route('users.admin.providers') }}" class="small-box-footer">{{ __('adminstaticword.Moreinfo') }} <i
 							class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>

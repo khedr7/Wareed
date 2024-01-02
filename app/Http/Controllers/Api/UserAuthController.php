@@ -68,7 +68,7 @@ class UserAuthController extends Controller
     {
         $validatedData = $request->validated();
         $this->userAuthService->verifyOTP($validatedData);
-        return $this->successResponse([],'dataFetchedSuccessfully', 200);
+        return $this->successResponse([], 'dataFetchedSuccessfully', 200);
     }
 
     public function resetPassword(UserRequest $request)
@@ -82,7 +82,7 @@ class UserAuthController extends Controller
     {
         $validatedData = $request->validated();
         $data = $this->userAuthService->updateProfile($validatedData);
-        
+
         if ($request->file('profile') && $request->file('profile')->isValid()) {
             $data->clearMediaCollection('profile');
             $data->addMedia($request->profile)->toMediaCollection('profile');
@@ -116,6 +116,7 @@ class UserAuthController extends Controller
             'dataFetchedSuccessfully'
         );
     }
+
     public function find($userId)
     {
         $providers = $this->userService->find($userId);
@@ -124,5 +125,13 @@ class UserAuthController extends Controller
             $this->resource($providers, UserResource::class),
             'dataFetchedSuccessfully'
         );
+    }
+
+    public function enableNotification(UserRequest $request)
+    {
+        $validatedData = $request->validated();
+        $data = $this->userAuthService->enableNotification($validatedData);
+
+        return $this->successResponse(UserResource::make($data), 'dataUpdatedSuccessfully', 200);
     }
 }
