@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class SetLanguage
 {
@@ -20,6 +22,14 @@ class SetLanguage
         $lang = request()->header('lang') ?? 'en';
 
         App::setLocale($lang);
+
+        if (Auth::user()) {
+            $user = User::where('id', Auth::user()->id)->first();
+            if ($user->app_lang != $lang) {
+                $user->app_lang = $lang;
+                $user->save();
+            }
+        }
 
         return $next($request);
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ComplaintController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\StateController;
 use App\Http\Controllers\Api\TermsPolicyController;
@@ -41,6 +42,7 @@ Route::group(['middleware' => 'SetLanguage'], function () {
             Route::get('/profile-details',  [UserAuthController::class, 'getProfileDetails']);
             Route::post('/logout',          [UserAuthController::class, 'logout']);
             Route::post('/change-password', [UserAuthController::class, 'changePassword']);
+            Route::post('/enable-notification', [UserAuthController::class, 'enableNotification']);
         });
     });
 
@@ -147,6 +149,18 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::get('/{id}', 'find');
         Route::post('/', 'create');
         Route::put('/{id}', 'update');
+        Route::delete('/{id}', 'delete');
+    });
+
+    Route::group([
+        'prefix' => '/notifications',
+        'controller' => NotificationController::class,
+        'middleware' => 'auth:sanctum'
+    ], function () {
+        Route::get('/', 'userNotification');
+        Route::get('/see-all', 'seeAll');
+        Route::get('/unseen-count', 'unseenCount');
+        Route::delete('/all', 'deleteAll');
         Route::delete('/{id}', 'delete');
     });
 });

@@ -37,6 +37,7 @@ class UserRequest extends FormRequest
             'register'         =>  $this->getRegisterRules(),
             'providerRegister' =>  $this->getRegisterRules(),
             'addPoints'        =>  $this->getAddPointsRules(),
+            'enableNotification'    =>  $this->getEnableNotificationRules(),
         };
     }
 
@@ -196,7 +197,13 @@ class UserRequest extends FormRequest
     {
         return [
             'points' => 'required|numeric',
+        ];
+    }
 
+    public function getEnableNotificationRules()
+    {
+        return [
+            'enable_notification' => 'required|in:0,1',
         ];
     }
 }

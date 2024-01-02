@@ -14,6 +14,7 @@ return [
     'banner'     => 'الاعلان',
     'complaint'  => 'الشكوى',
     'paymentMethod'    => 'وسيلة الدفع',
+    'notification' => 'الاشعار',
 
 
 ];
