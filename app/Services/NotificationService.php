@@ -15,10 +15,9 @@ class NotificationService
     public function getAll($by_admin = 0)
     {
         if ($by_admin == 1) {
-            return Notification::where('by_admin', 1)->orderBy('created_at', 'desc')->get();
+            return Notification::with('order')->where('by_admin', 1)->orderBy('created_at', 'desc')->get();
         } else {
-            $user = User::where('id', Auth::user()->id)->with('notifications')->first();
-            return $user;
+            return User::where('id', Auth::user()->id)->with('notifications.order')->first();
         }
     }
 

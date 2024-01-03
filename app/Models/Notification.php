@@ -37,4 +37,10 @@ class Notification extends Model
     {
         return $this->belongsToMany(User::class, 'notification_user', 'notification_id', 'user_id');
     }
+
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'service_id');
+    }
 }

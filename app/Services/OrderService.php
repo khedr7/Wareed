@@ -112,7 +112,8 @@ class OrderService
                     'title' => $notificationData['title'][$lang],
                     'body' => $notificationData['body'][$lang],
                     'service_id' => $order->id,
-                    'service_type' => 'order'
+                    'service_type' => 'order',
+                    'order_status' => $order->status,
                 ];
 
                 $this->send_notification($provider->fcm_token, $data);
@@ -211,7 +212,9 @@ class OrderService
                         'title' => $notificationData['title'][$lang],
                         'body' => $notificationData['body'][$lang],
                         'service_id' => $order->id,
-                        'service_type' => 'order'
+                        'service_type' => 'order',
+                        'order_status' => $order->status,
+
                     ];
 
                     $this->send_notification($provider->fcm_token, $data);
@@ -239,7 +242,8 @@ class OrderService
                     'title' => $notificationData['title'][$lang],
                     'body' => $notificationData['body'][$lang],
                     'service_id' => $order->id,
-                    'service_type' => $notificationData['service_type']
+                    'service_type' => $notificationData['service_type'],
+                    'order_status' => $order->status,
                 ];
 
                 $this->send_notification($user->fcm_token, $data);
@@ -287,7 +291,8 @@ class OrderService
                     'title' => $notificationData['title'][$lang],
                     'body' => $notificationData['body'][$lang],
                     'service_id' => $order->id,
-                    'service_type' => 'order'
+                    'service_type' => 'order',
+                    'order_status' => $order->status,
                 ];
 
                 $this->send_notification($provider->fcm_token, $data);

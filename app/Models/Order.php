@@ -12,8 +12,8 @@ class Order extends Model
 
     protected $fillable  = [
         'user_id', 'service_id', 'payment_method_id',
-        'status', 'payment_status', 'date', 'note','patients_number',
-        'end_date','provider_id','on_patient_site'
+        'status', 'payment_status', 'date', 'note', 'patients_number',
+        'end_date', 'provider_id', 'on_patient_site'
     ];
 
     protected $casts = [
@@ -60,4 +60,5 @@ class Order extends Model
 
         return $newQuery->get();
     }
+
 }
