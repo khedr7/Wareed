@@ -20,13 +20,14 @@ class UserResource extends JsonResource
 
         $actionMethod = $request->route()->getActionMethod();
         return match ($actionMethod) {
-            'getAll'          => $this->getAllResource(),
-            'getAllProviders' => $this->getAllResource(),
-            'appHomePage'     => $this->getAllResource(),
-            'login'           => $this->getAllResource(),
-            'register'        => $this->getAllResource(),
-            'updateProfile'   => $this->getAllResource(),
-            default           => $this->defaultResource(),
+            'getAll'             => $this->getAllResource(),
+            'getAllProviders'    => $this->getAllResource(),
+            'appHomePage'        => $this->getAllResource(),
+            'login'              => $this->getAllResource(),
+            'register'           => $this->getAllResource(),
+            'updateProfile'      => $this->getAllResource(),
+            'enableNotification' => $this->getAllResource(),
+            default              => $this->defaultResource(),
         };
     }
 

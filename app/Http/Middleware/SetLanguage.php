@@ -23,12 +23,10 @@ class SetLanguage
 
         App::setLocale($lang);
 
-        if (Auth::user()) {
-            $user = User::where('id', Auth::user()->id)->first();
-            if ($user->app_lang != $lang) {
-                $user->app_lang = $lang;
-                $user->save();
-            }
+        if (Auth::guard('sanctum')->user()) {
+            $user = User::where('id',  Auth::guard('sanctum')->user()->id)->first();
+            $user->app_lang = $lang;
+            $user->save();
         }
 
         return $next($request);

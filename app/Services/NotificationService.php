@@ -18,7 +18,7 @@ class NotificationService
             return Notification::where('by_admin', 1)->orderBy('created_at', 'desc')->get();
         } else {
             $user = User::where('id', Auth::user()->id)->with('notifications')->first();
-            return $user->notifications;
+            return $user;
         }
     }
 

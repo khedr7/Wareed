@@ -111,7 +111,7 @@ class User extends Authenticatable implements HasMedia, ReviewRateable
     public function notifications()
     {
         return $this->belongsToMany(Notification::class, 'notification_user', 'user_id', 'notification_id')
-            ->withPivot(['seen', 'seen_at']);
+            ->orderBy('created_at', 'desc')->withPivot(['seen', 'seen_at']);
     }
 
     public function userRating()
