@@ -24,8 +24,9 @@ class UserAuthController extends Controller
     {
 
         $validatedData = $request->validate([
-            'phone'    => 'required',
-            'password' => 'required',
+            'phone'     => 'required',
+            'password'  => 'required',
+            'fcm_token' => 'nullable',
         ]);
         $details = $this->userAuthService->login($validatedData);
         $details['user'] = UserResource::make($details['user']);

@@ -39,7 +39,11 @@ class UserAuthService
             throw new Exception(__('messages.incorrect_password'), 401);
         }
         $token = Auth::attempt($attemptedData);
+        $user->fcm_token = $validatedData['fcm_token'];
+        $user->save();
+        
         $accessToken = $user->createToken('auth');
+
         return [
             'user' => $user,
             'token' => $accessToken->plainTextToken

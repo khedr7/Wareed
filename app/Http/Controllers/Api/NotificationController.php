@@ -17,10 +17,13 @@ class NotificationController extends Controller
     public function userNotification()
     {
         $by_admin = 0;
-        $data = $this->notificationService->getAll($by_admin);
+        $user = $this->notificationService->getAll($by_admin);
 
         return $this->successResponse(
-            $this->resource($data, NotificationResource::class),
+            [
+                'enable_notification' => $user->enable_notification,
+                'notifications'       => $this->resource($user->notifications, NotificationResource::class)
+            ],
             'dataFetchedSuccessfully'
         );
     }

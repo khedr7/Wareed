@@ -183,25 +183,25 @@ class OrderService
         $auth = User::where('id', Auth::user()->id)->first();
         DB::beginTransaction();
 
-        $updated = $order->update($validatedData)
-        ;
+        $updated = $order->update($validatedData);
         if ($updated) {
             $provider = $order->provider;
             $service  = $order->service;
             $user     = $order->user;
-            $notificationData = [
-                'title' => ['en' => 'Change order status', 'ar' => 'تغيير حالة الطلب'],
-                'body' => [
-                    'en' => 'The order status has been changed for service : ' . $service->getTranslation('name', 'en', false),
-                    'ar' => 'تم تغيير حالة طلب الخدمة : ' . $service->getTranslation('name', 'ar', false),
-                ],
-                'service_id' => $order->id,
-                'service_type' => 'order'
-            ];
-
-            $notification = Notification::create($notificationData);
-
             if ($auth->role == 'admin') {
+
+                $notificationData = [
+                    'title' => ['en' => 'Change order status', 'ar' => 'تغيير حالة الطلب'],
+                    'body' => [
+                        'en' => 'The order status has been changed for service : ' . $service->getTranslation('name', 'en', false),
+                        'ar' => 'تم تغيير حالة طلب الخدمة : ' . $service->getTranslation('name', 'ar', false),
+                    ],
+                    'service_id' => $order->id,
+                    'service_type' => 'order'
+                ];
+
+
+                $notification = Notification::create($notificationData);
 
                 $provider->notifications()->attach($notification);
 
@@ -217,15 +217,29 @@ class OrderService
                     $this->send_notification($provider->fcm_token, $data);
                 }
             }
-            
-            $user->notifications()->attach($notification);
+
             if (isset($user->fcm_token) && $user->enable_notification == 1) {
+
+                $notificationData = [
+                    'title' => ['en' => 'Change order status', 'ar' => 'تغيير حالة الطلب'],
+                    'body' => [
+                        'en' => 'The order status has been changed for service : ' . $service->getTranslation('name', 'en', false),
+                        'ar' => 'تم تغيير حالة طلب الخدمة : ' . $service->getTranslation('name', 'ar', false),
+                    ],
+                    'service_id' => $order->id,
+                    'service_type' => 'booking'
+                ];
+
+
+                $user_notification = Notification::create($notificationData);
+                $user->notifications()->attach($user_notification);
+
                 $lang = $user->app_lang;
                 $data = [
                     'title' => $notificationData['title'][$lang],
                     'body' => $notificationData['body'][$lang],
                     'service_id' => $order->id,
-                    'service_type' => 'order'
+                    'service_type' => $notificationData['service_type']
                 ];
 
                 $this->send_notification($user->fcm_token, $data);
