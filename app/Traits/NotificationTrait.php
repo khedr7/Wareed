@@ -16,8 +16,9 @@ trait NotificationTrait
                 'body' => $data['body'],
             ],
             'data' => [
-                'service_id' => $data['service_id'],
-                'service_type' => $data['service_type'],
+                'service_id' => $data['service_id'] ?? null,
+                'service_type' => $data['service_type'] ?? null,
+                'order_status' => $data['order_status'] ?? null,
             ]
         ];
 

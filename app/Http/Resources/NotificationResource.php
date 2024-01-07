@@ -31,6 +31,7 @@ class NotificationResource extends JsonResource
             // 'to_type'      => $this->to_type,
             'service_type' => $this->service_type,
             'service_id'   => $this->service_id,
+            'order_status' => $this->order ? $this->order->status : null,
             'seen'         => (int) $this->pivot->seen ?? 0,
             'seen_at'      => $this->pivot->seen_at ?? null,
             'created_at'   => $this->created_at
@@ -47,6 +48,7 @@ class NotificationResource extends JsonResource
             // 'to_type'      => $this->to_type,
             'service_type' => $this->service_type,
             'service_id'   => $this->service_id,
+            'order_status' => $this->order ? $this->order->status : null,
             'seen'         => (int) $this->pivot->seen ?? 0,
             'seen_at'      => $this->pivot->seen_at ?? null,
             'created_at'   => $this->created_at

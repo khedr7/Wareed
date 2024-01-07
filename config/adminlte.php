@@ -397,6 +397,11 @@ return [
             'icon' => 'fas fa-fw fa-image',
         ],
         [
+            'text' => 'Notifications',
+            'url'  => 'notifications',
+            'icon' => 'fas fa-fw  fa-paper-plane',
+        ],
+        [
             'text' => 'Complaints',
             'url'  => 'complaints',
             'icon' => 'fas fa-fw fa-comments',
