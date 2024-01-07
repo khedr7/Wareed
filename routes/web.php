@@ -6,6 +6,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ComplaintReplyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
@@ -158,6 +159,14 @@ Route::group(['middleware' => ['auth', 'SetWebLanguage']], function () {
         Route::post('/{bannerId}',        [BannerController::class, 'update'])->name('banners.admin.update');
         Route::get('/status/{bannerId}',  [BannerController::class, 'status'])->name('banners.admin.status');
         Route::delete('/{bannerId}',      [BannerController::class, 'delete'])->name('banners.admin.delete');
+    });
+
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('notifications.admin.index');
+        Route::get('/create',        [NotificationController::class, 'create'])->name('notifications.admin.create');
+        Route::delete('/{notificationId}', [NotificationController::class, 'delete'])->name('notifications.admin.delete');
+        Route::post('/',             [NotificationController::class, 'store'])->name('notifications.admin.store');
+        Route::post('/bulk-delete',  [NotificationController::class, 'bulkDelete'])->name('notifications.admin.bulkDelete');
     });
 
 

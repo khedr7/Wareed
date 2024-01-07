@@ -35,5 +35,6 @@ return [
     'Complaints'                    => 'Complaints',
     'Reviews'                       => 'Reviews',
     'Service Requests'              => 'Service Requests',
+    'Notifications'                 => 'Notifications',
 
 ];

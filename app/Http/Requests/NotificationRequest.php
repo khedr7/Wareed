@@ -9,7 +9,7 @@ class NotificationRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool     
+     * @return bool
      */
     public function authorize()
     {
@@ -24,29 +24,19 @@ class NotificationRequest extends FormRequest
     public function rules()
     {
 
-         return match ($this->route()->getActionMethod()) {
-            'create'   =>  $this->getCreateRules(),
-            'update'   =>  $this->getUpdateRules(),
+        return match ($this->route()->getActionMethod()) {
+            'store'   =>  $this->getCreateRules(),
         };
     }
 
     public function getCreateRules()
     {
-          return [
-            'by_admin' => '',
-            'to_type' => '',
-            'service_type' => '',
-            'service_id' => ''
-          ];
-    }
-
-    public function getUpdateRules()
-    {
-          return [
-            'by_admin' => '',
-            'to_type' => '',
-            'service_type' => '',
-            'service_id' => ''
-          ];
+        return [
+            'title_en'   => 'required',
+            'title_ar'   => 'required',
+            'details_en' => 'required',
+            'details_ar' => 'required',
+            'to_type'    => 'required',
+        ];
     }
 }

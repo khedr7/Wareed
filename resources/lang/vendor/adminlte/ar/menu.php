@@ -35,5 +35,6 @@ return [
     'Complaints'                    => 'الشكاوي',
     'Reviews'                       => 'التقييمات',
     'Service Requests'              => 'طلبات الخدمات',
+    'Notifications'                 => 'الاشعارات',
 
 ];

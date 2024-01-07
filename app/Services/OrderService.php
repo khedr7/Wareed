@@ -87,6 +87,7 @@ class OrderService
     {
         DB::beginTransaction();
         $validatedData['user_id'] = Auth::user()->id;
+        $validatedData['status']  = 'Pending';
         $order = Order::create($validatedData);
 
         if ($order) {
@@ -105,7 +106,6 @@ class OrderService
 
             $notification = Notification::create($notificationData);
             $provider->notifications()->attach($notification);
-
             if (isset($provider->fcm_token) && $provider->enable_notification == 1) {
                 $lang = $provider->app_lang;
                 $data = [
