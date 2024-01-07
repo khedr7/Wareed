@@ -19,6 +19,8 @@ return array(
     'AWSURL' => 'url out.',
     'AWSUpload' => 'تحميل AWS.',
     'About' => 'حول',
+    'Arabic About' => 'حولنا بالعربية',
+    'English About' => 'حولنا بالانجليزية',
     'Accept' => 'قبول',
     'Accepted' => 'وافقت',
     'AcceptedByInstructor' => 'قبلت من طرف',

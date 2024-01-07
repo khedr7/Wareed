@@ -19,6 +19,8 @@ return array (
   'AWSURL' => 'AWS URL',
   'AWSUpload' => 'AWS Upload',
   'About' => 'About',
+  'Arabic About' => 'Arabic About',
+  'English About' => 'English About',
   'Accept' => 'Accept',
   'Accepted' => 'Accepted',
   'AcceptedByInstructor' => 'Accepted By',

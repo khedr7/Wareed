@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AboutUsController;
 use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ComplaintController;
@@ -162,5 +163,13 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::get('/unseen-count', 'unseenCount');
         Route::delete('/all', 'deleteAll');
         Route::delete('/{id}', 'delete');
+    });
+
+    Route::group([
+        'prefix' => '/about-us',
+        'controller' => AboutUsController::class,
+        // 'middleware' => ''
+    ], function () {
+        Route::get('/', 'find');
     });
 });

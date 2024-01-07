@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
@@ -149,6 +150,12 @@ Route::group(['middleware' => ['auth', 'SetWebLanguage']], function () {
 
     Route::group(['prefix' => 'policy'], function () {
         Route::get('/',  [TermsPolicyController::class, 'editPolicy'])->name('policy.admin.edit');
+    });
+
+    Route::group(['prefix' => 'about-us'], function () {
+        Route::get('/',  [AboutUsController::class, 'find'])->name('about.admin.edit');
+        Route::post('/', [AboutUsController::class, 'update'])->name('about.admin.update');
+
     });
 
     Route::group(['prefix' => 'banners'], function () {

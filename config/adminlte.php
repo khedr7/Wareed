@@ -407,6 +407,11 @@ return [
             'icon' => 'fas fa-fw fa-comments',
         ],
         [
+            'text' => 'About Us',
+            'url'  => 'about-us',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [
             'text' => 'Terms and Conditions',
             'url'  => 'terms',
             'icon' => 'fas fa-fw fa-file',
