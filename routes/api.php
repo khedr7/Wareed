@@ -173,3 +173,15 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::get('/', 'find');
     });
 });
+
+Route::group([
+    'prefix' => '/settings',
+    'controller' => SettingController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
+});

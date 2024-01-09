@@ -14,7 +14,7 @@ class PaymentMethodsSeeder extends Seeder
      */
     public function run()
     {
-        $methods = ['E-cash', 'Cash', 'Points'];
+        $methods = ['E-cash', 'Cash'];
         foreach ($methods as $key => $method) {
             DB::table('payment_methods')->insert([
                 'id'         => $key + 1,

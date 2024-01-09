@@ -40,6 +40,7 @@ class ConfigResource extends JsonResource
             'categories'        => CategoryResource::collection($this->resource['categories']),
             'payment_methodes'  => PaymentMethodResource::collection($this->resource['payment_methodes']),
             'days'              => DayResource::collection($this->resource['days']),
+            'settings'          => SettingResource::make($this->resource['settings']),
         ];
     }
 }

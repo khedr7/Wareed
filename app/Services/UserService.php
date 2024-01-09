@@ -118,6 +118,12 @@ class UserService
         DB::beginTransaction();
         $validatedData['password'] = $validatedData['password'] ? Hash::make($validatedData['password']) : $user->password;
 
+        if (!isset($validatedData['status']))
+            $validatedData['status'] = 0;
+
+        if (!isset($validatedData['enable_cash']))
+            $validatedData['enable_cash'] = 0;
+
         $user->update($validatedData);
         $user->assignRole($validatedData['role']);
         if (!isset($validatedData['days']))

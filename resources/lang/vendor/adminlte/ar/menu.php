@@ -37,5 +37,6 @@ return [
     'Service Requests'              => 'طلبات الخدمات',
     'Notifications'                 => 'الاشعارات',
     'About Us'                      => 'عن التطبيق',
+    'Settings'                      => 'الاعدادات',
 
 ];

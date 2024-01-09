@@ -37,5 +37,6 @@ return [
     'Service Requests'              => 'Service Requests',
     'Notifications'                 => 'Notifications',
     'About Us'                      => 'About Us',
+    'Settings'                      => 'Settings',
 
 ];

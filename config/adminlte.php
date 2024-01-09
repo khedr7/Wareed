@@ -407,21 +407,29 @@ return [
             'icon' => 'fas fa-fw fa-comments',
         ],
         [
-            'text' => 'About Us',
-            'url'  => 'about-us',
-            'icon' => 'fas fa-fw fa-file',
+            'text' => 'Settings',
+            'url'  => 'settings',
+            'icon' => 'fas fa-fw fa-cog',
         ],
         [
-            'text' => 'Terms and Conditions',
-            'url'  => 'terms',
-            'icon' => 'fas fa-fw fa-file',
-        ],
-        [
-            'text' => 'Privacy Policy',
-            'url'  => 'policy',
-            'icon' => 'fas fa-fw fa-file',
-        ],
+            'text'    => 'About Us',
+            'icon'    => 'fas fa-fw fa-file',
+            'submenu' => [
+                [
+                    'text' => 'About Us',
+                    'url'  => 'about-us',
+                ],
+                [
+                    'text' => 'Terms and Conditions',
+                    'url'  => 'terms',
+                ],
+                [
+                    'text' => 'Privacy Policy',
+                    'url'  => 'policy',
+                ],
 
+            ],
+        ],
         // ['header' => 'labels'],
         // [
         //     'text'       => 'important',
