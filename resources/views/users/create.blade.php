@@ -180,12 +180,22 @@
 
 						<div class="row">
 
-							<div class="col-md-6 form-group">
+							<div class="col-md-3 form-group">
 								<label>{{ __('adminstaticword.Status') }}</label> <br>
 								<div class="custom-switch">
 									<input id="status" type="checkbox" name="status" value="1" class="custom-control-input">
 									<label class="custom-control-label" for="status"></label>
 								</div>
+							</div>
+
+							<div class="col-md-3 form-group">
+                                <div style="display: none;" id="rolebox1" >
+                                    <label>{{ __('adminstaticword.Enable Cash') }}</label> <br>
+                                    <div class="custom-switch">
+                                        <input id="enable_cash" type="checkbox" name="enable_cash" value="1" class="custom-control-input">
+                                        <label class="custom-control-label" for="enable_cash"></label>
+                                    </div>
+                                </div>
 							</div>
 
 							{{-- <div class="col-md-6 form-group">
@@ -196,7 +206,7 @@
 								</div>
 							</div> --}}
 
-                            <div class="col-md-6">
+							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
 									<label>{{ __('adminstaticword.Gender') }} <sup style="color: red">*</sup></label> <br>
 
@@ -238,7 +248,7 @@
 								</div>
 							</div>
 
-                            <div class="col-md-6">
+							<div class="col-md-6">
 							</div>
 						</div>
 
@@ -368,9 +378,11 @@
 
 			if (opt == 'provider') {
 				$('#rolebox').show();
+				$('#rolebox1').show();
 
 			} else {
 				$('#rolebox').hide('fast');
+				$('#rolebox1').hide('fast');
 			}
 		});
 	});

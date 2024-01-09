@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\AboutUs;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TermsPolicyResource extends JsonResource
+class AboutUsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,25 +23,15 @@ class TermsPolicyResource extends JsonResource
 
     public function getAllResource()
     {
-        $about = AboutUs::first();
         return [
-            // 'id'         => $this->id,
-            'terms'      => $this->terms,
-            'policy'     => $this->policy,
-            'about'      => $about->details,
-            // 'created_at' => $this->created_at
+            'details' => $this->details,
         ];
     }
 
     public function defaultResource()
     {
-        $about = AboutUs::first();
         return [
-            // 'id'     => $this->id,
-            'terms'  => $this->terms,
-            'policy' => $this->policy,
-            'about'      => $about->details,
-            // 'created_at' => $this->created_at
+            'details' => $this->details,
         ];
     }
 }

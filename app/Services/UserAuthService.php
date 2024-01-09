@@ -41,7 +41,7 @@ class UserAuthService
         $token = Auth::attempt($attemptedData);
         $user->fcm_token = $validatedData['fcm_token'];
         $user->save();
-        
+
         $accessToken = $user->createToken('auth');
 
         return [
@@ -125,6 +125,10 @@ class UserAuthService
 
         if (!isset($validatedData['days']))
             $validatedData['days'] = [];
+
+        if (!isset($validatedData['enable_cash']))
+            $validatedData['enable_cash'] = 0;
+
         $user->days()->sync($validatedData['days']);
         return $user;
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AboutUsController;
 use App\Http\Controllers\Api\PaymentMethodController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ComplaintController;
@@ -163,4 +164,24 @@ Route::group(['middleware' => 'SetLanguage'], function () {
         Route::delete('/all', 'deleteAll');
         Route::delete('/{id}', 'delete');
     });
+
+    Route::group([
+        'prefix' => '/about-us',
+        'controller' => AboutUsController::class,
+        // 'middleware' => ''
+    ], function () {
+        Route::get('/', 'find');
+    });
+});
+
+Route::group([
+    'prefix' => '/settings',
+    'controller' => SettingController::class,
+    // 'middleware' => ''
+], function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'find');
+    Route::post('/', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
 });

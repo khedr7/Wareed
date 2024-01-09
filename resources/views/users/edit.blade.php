@@ -240,6 +240,14 @@
 									@include('alerts.feedback', ['field' => 'days'])
 								</div>
 							</div>
+							<div class="col-md-6" @if ($user->role != 'provider') style="display: none;" @endif id="rolebox1">
+								<label>{{ __('adminstaticword.Enable Cash') }}</label> <br>
+								<div class="custom-switch">
+									<input value="1" id="enable_cash" type="checkbox" name="enable_cash" class="custom-control-input"
+										{{ $user->enable_cash == '1' ? 'checked' : '' }}>
+									<label class="custom-control-label" for="enable_cash"></label>
+								</div>
+							</div>
 						</div>
 						<br>
 
@@ -417,9 +425,11 @@
 
 			if (opt == 'provider') {
 				$('#rolebox').show();
+				$('#rolebox1').show();
 
 			} else {
 				$('#rolebox').hide('fast');
+				$('#rolebox1').hide('fast');
 			}
 		});
 	});

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
@@ -11,9 +12,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceRequestController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\TermsPolicyController;
 use App\Http\Controllers\UserController;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -149,6 +152,18 @@ Route::group(['middleware' => ['auth', 'SetWebLanguage']], function () {
 
     Route::group(['prefix' => 'policy'], function () {
         Route::get('/',  [TermsPolicyController::class, 'editPolicy'])->name('policy.admin.edit');
+    });
+
+    Route::group(['prefix' => 'about-us'], function () {
+        Route::get('/',  [AboutUsController::class, 'find'])->name('about.admin.edit');
+        Route::post('/', [AboutUsController::class, 'update'])->name('about.admin.update');
+
+    });
+
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/',  [SettingController::class, 'find'])->name('settings.admin.edit');
+        Route::post('/', [SettingController::class, 'update'])->name('settings.admin.update');
+
     });
 
     Route::group(['prefix' => 'banners'], function () {
